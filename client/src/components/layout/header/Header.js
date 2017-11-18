@@ -10,9 +10,9 @@ class Header extends Component {
     this.state = {
       title: 'DigitalDataUpload',
       navigationItems: [
-        {name: 'New records', iconClass: 'fa-plus', link: '#'},
-        {name: 'Records', iconClass: 'fa-list-alt', link: '#'},
-        {name: 'Account', iconClass: 'fa-user', link: '#'}
+        {name: 'New records', iconClass: 'fa-plus', link: '/new-record'},
+        {name: 'Records', iconClass: 'fa-list-alt', link: '/records', activeClass: 'active'},
+        {name: 'Account', iconClass: 'fa-user', link: '/account'}
       ]
     };
   }
@@ -28,9 +28,9 @@ class Header extends Component {
       <header>
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
           <div className="container">
-            <Link className="navbar-brand align-middle" href="#">
+            <Link className="navbar-brand align-middle" to="/">
               <i className="fa fa-folder-open" aria-hidden="true"/>
-              {` ${this.title}`}
+              {` ${this.state.title}`}
             </Link>
             <button className="navbar-toggler" type="button"
                     data-toggle="collapse" data-target="#navbarNav"
@@ -38,7 +38,8 @@ class Header extends Component {
                     aria-label="Toggle navigation">
               <span className="navbar-toggler-icon"/>
             </button>
-            <div className="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <div className="collapse navbar-collapse justify-content-end"
+                 id="navbarNav">
               <ul className="navbar-nav">
                 {this.mapNavigationItems()}
               </ul>
