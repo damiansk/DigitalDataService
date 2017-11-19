@@ -11,7 +11,7 @@ class Header extends Component {
   
     this.title = 'DigitalDataUpload';
     this.navigationItems = [
-        {name: 'New records', iconClass: 'fa-plus', link: '/new-record'},
+        {name: 'New record', iconClass: 'fa-plus', link: '/new-record'},
         {name: 'Records', iconClass: 'fa-list-alt', link: '/records', activeClass: 'active'},
         {name: 'Account', iconClass: 'fa-user', link: '/account'}
       ];
