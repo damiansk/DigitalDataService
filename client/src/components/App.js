@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { Route, Switch } from 'react-router';
 
 import Header from '../containers/layout/header/Header';
-import Footer from './layout/header/footer/Footer';
+import Footer from './layout/footer/Footer';
+import Records from '../containers/pages/records/Records';
 import NoMatch from './404';
 
 class App extends Component {
@@ -19,14 +20,13 @@ class App extends Component {
             <Route component={NoMatch}/>
           </Switch>
         </main>
-        <Footer />
+        <Footer/>
       </div>
     );
   }
 }
 
 const NewRecord = props => <div>newRecord</div>;
-const Records = props => <div>records</div>;
 const Account = props => <div>account</div>;
 
 export default App;
