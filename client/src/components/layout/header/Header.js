@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+
 import NavigationItem from './navigation/NavigationItem';
 
 class Header extends Component {
@@ -7,20 +9,32 @@ class Header extends Component {
   constructor(props) {
     super(props);
   
-    this.state = {
-      title: 'DigitalDataUpload',
-      navigationItems: [
+    this.title = 'DigitalDataUpload';
+    this.navigationItems = [
         {name: 'New records', iconClass: 'fa-plus', link: '/new-record'},
         {name: 'Records', iconClass: 'fa-list-alt', link: '/records', activeClass: 'active'},
         {name: 'Account', iconClass: 'fa-user', link: '/account'}
-      ]
-    };
+      ];
+  }
+  
+  componentWillMount() {
+    this.updateNavigationItems(this.props);
+  }
+  
+  componentWillUpdate(props) {
+    this.updateNavigationItems(props);
+  }
+  
+  updateNavigationItems(props) {
+    this.navigationItems = this.navigationItems
+      .map(item => item.link.match(props.location.pathname)
+        ? {...item, activeClass: 'active'}
+        : {...item, activeClass: null});
   }
   
   mapNavigationItems() {
-    return this.state
-      .navigationItems
-      .map(item => <NavigationItem {...item}/>);
+    return this.navigationItems
+      .map((item, index) => <NavigationItem key={index} {...item}/>);
   }
   
   render() {
@@ -30,7 +44,7 @@ class Header extends Component {
           <div className="container">
             <Link className="navbar-brand align-middle" to="/">
               <i className="fa fa-folder-open" aria-hidden="true"/>
-              {` ${this.state.title}`}
+              {` ${this.title}`}
             </Link>
             <button className="navbar-toggler" type="button"
                     data-toggle="collapse" data-target="#navbarNav"
@@ -51,4 +65,7 @@ class Header extends Component {
   }
 }
 
-export default Header;
+
+const mapStateToProps = ({router: {location}}) => ({location});
+
+export default connect(mapStateToProps)(Header);
