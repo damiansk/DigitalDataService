@@ -10,6 +10,8 @@ import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
 import reducers from './reducers';
 import App from './components/App';
 
+import './index.css';
+
 
 const history = createHistory();
 const store = createStore(reducers, composeWithDevTools(
