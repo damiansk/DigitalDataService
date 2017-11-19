@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import NavigationItem from './navigation/NavigationItem';
+import NavigationItem from '../../../components/layout/header/navigation/NavigationItem';
 
 class Header extends Component {
   

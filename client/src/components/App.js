@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router';
 
-import Header from './layout/header/Header';
+import Header from '../containers/layout/header/Header';
 import Footer from './layout/header/footer/Footer';
 import NoMatch from './404';
 
