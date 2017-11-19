@@ -3,16 +3,17 @@ import React, { Component } from 'react';
 class ContentTabsNavigation extends Component {
   
   mapTabsList() {
-    return Object.values(this.props.tabsList)
+    return Object.values(this.props.tabsItems)
       .map((tab, index) => (
         <a key={index}
-              className={`nav-item nav-link text-muted ${tab.isActive ? 'active' : ''}`}
-              id={`nav-${tab.id}-tab`}
-              data-toggle="tab"
-              href={`#nav-${tab.id}`}
-              role="tab"
-              aria-controls="nav-home"
-              aria-selected="true">{tab.name}</a>
+            className={`nav-item nav-link ${tab.isActive ? 'active' : 'text-muted'}`}
+            id={`nav-${tab.id}-tab`}
+            data-toggle="tab"
+            href={`#nav-${tab.id}`}
+            role="tab"
+            aria-controls="nav-home"
+            aria-selected="true"
+            onClick={() => this.props.onClick(tab)}>{tab.name}</a>
       ))
   }
   
