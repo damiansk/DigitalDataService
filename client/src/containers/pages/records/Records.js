@@ -3,7 +3,9 @@ import React, { Component } from 'react';
 import Heading from '../../../components/pages/heading/Heading';
 import ContentTabsNavigation from '../../../components/pages/contentTabsNavigation/ContentTabsNavigation';
 import ContentTabs from '../../../components/pages/contentTabs/ContentTabs';
-import ContentTab from '../../../components/pages/contentTabs/contentTab/ContentTab';
+import ContentTab from '../../../components/pages/contentTabs/ContentTab';
+import Table from '../../../components/pages/table/Table';
+import TableRow from '../../../components/pages/table/TableRow';
 
 class Records extends Component {
   
@@ -12,7 +14,7 @@ class Records extends Component {
     
     this.state = {
       activeTabId: 'new',
-      idList: ['new','reported','accepted','rejected'],
+      columns: ['new','reported','accepted','rejected'],
       tabsItems: {
         'new': {name: 'New', id: 'new', isActive: true },
         'reported': {name: 'Reported', id: 'reported', isActive: false },
@@ -21,7 +23,23 @@ class Records extends Component {
       }
     };
     
+    this.tableContent = {
+      columns: [
+        {name: 'Declarant', size: '2'},
+        {name: 'Title', size: '4'},
+        {name: 'Type', size: '2'},
+        {name: 'Keywords', size: '2'},
+        {name: 'Actions', size: '2'}
+      ],
+      tableRows: [
+        ['Mark', 'Otto', '@mdo', '', null],
+        ['Jacob', 'Thornton', '@fat', '', null],
+        ['Larry', 'the Bird', '@twitter', '', null],
+      ]
+    };
+    
     this.updateTabsItems = this.updateTabsItems.bind(this);
+    this.mapTableRows = this.mapTableRows.bind(this);
   }
   
   updateTabsItems(item) {
@@ -38,26 +56,36 @@ class Records extends Component {
     });
   }
   
+  mapTableRows() {
+    const { columns, tableRows } = this.tableContent;
+    return tableRows
+      .map((row, index) => <TableRow key={index} columns={columns} row={row}/>);
+  }
+  
   render() {
     const tabsItems = this.state.tabsItems;
     return (
       <div>
         <Heading title="Records"/>
-        <ContentTabsNavigation tabsItems={tabsItems} onClick={this.updateTabsItems}/>
-        <ContentTabs>
-          <ContentTab id={tabsItems['new'].id} isActive={tabsItems['new'].isActive}>
-            New
-          </ContentTab>
-          <ContentTab id={tabsItems['reported'].id} isActive={tabsItems['reported'].isActive}>
-            Reported
-          </ContentTab>
-          <ContentTab id={tabsItems['accepted'].id} isActive={tabsItems['accepted'].isActive}>
-            Accepted
-          </ContentTab>
-          <ContentTab id={tabsItems['rejected'].id} isActive={tabsItems['rejected'].isActive}>
-            Rejected
-          </ContentTab>
-        </ContentTabs>
+        <article>
+          <ContentTabsNavigation tabsItems={tabsItems} onClick={this.updateTabsItems}/>
+          <ContentTabs>
+            <ContentTab id={tabsItems['new'].id} isActive={tabsItems['new'].isActive}>
+              <Table columns={this.tableContent.columns}>
+                {this.mapTableRows()}
+              </Table>
+            </ContentTab>
+            <ContentTab id={tabsItems['reported'].id} isActive={tabsItems['reported'].isActive}>
+              Reported
+            </ContentTab>
+            <ContentTab id={tabsItems['accepted'].id} isActive={tabsItems['accepted'].isActive}>
+              Accepted
+            </ContentTab>
+            <ContentTab id={tabsItems['rejected'].id} isActive={tabsItems['rejected'].isActive}>
+              Rejected
+            </ContentTab>
+          </ContentTabs>
+        </article>
       </div>
     )
   }
