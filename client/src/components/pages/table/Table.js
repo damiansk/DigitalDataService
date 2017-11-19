@@ -12,7 +12,7 @@ class Table extends Component {
   mapColumns() {
     return this.props
       .columns
-      .map((column, index) => <th key={index} scope="col">{column}</th>);
+      .map((column, index) => <th key={index} scope="col">{column.name}</th>);
   }
   
   render() {
