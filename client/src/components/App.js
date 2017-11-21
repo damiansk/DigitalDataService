@@ -3,6 +3,7 @@ import { Route, Switch } from 'react-router';
 
 import Header from '../containers/layout/header/Header';
 import Footer from './layout/footer/Footer';
+import NewRecord from '../containers/pages/newRecord/NewRecord';
 import Records from '../containers/pages/records/Records';
 import NoMatch from './404';
 
@@ -26,7 +27,6 @@ class App extends Component {
   }
 }
 
-const NewRecord = props => <div>newRecord</div>;
 const Account = props => <div>account</div>;
 
 export default App;
