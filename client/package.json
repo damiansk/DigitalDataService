@@ -19,7 +19,8 @@
     "react-router-dom": "^4.2.2",
     "react-router-redux": "5.0.0-alpha.6",
     "react-scripts": "1.0.17",
-    "redux": "^3.7.2"
+    "redux": "^3.7.2",
+    "redux-form": "^7.1.2"
   },
   "devDependencies": {
     "redux-devtools-extension": "^2.13.2"
