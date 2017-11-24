@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
 
-import RenderField from '../../../../components/pages/renderField/RenderField';
+import CustomTextField from '../../../../components/pages/customTextField/CustomTextField';
 
 class RecordFiles extends Component {
   
@@ -12,7 +12,7 @@ class RecordFiles extends Component {
     const { handleSubmit, previousPage } = this.props;
     return (
       <form onSubmit={handleSubmit}>
-        <Field name="email" type="email" component={RenderField} label="Email" />
+        <Field name="email" type="email" component={CustomTextField} label="Email" />
         <div>
           <label>Sex</label>
           <div>

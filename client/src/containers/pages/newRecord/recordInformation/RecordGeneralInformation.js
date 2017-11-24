@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
 
-import RenderField from '../../../../components/pages/renderField/RenderField';
+import CustomTextField from '../../../../components/pages/customTextField/CustomTextField';
+import CustomTextArea from '../../../../components/pages/customTextArea/CustomTextArea';
 import SecondaryHeading from '../../../../components/pages/heading/SecondaryHeading';
 
 class RecordGeneralInformation extends Component {
@@ -9,7 +10,7 @@ class RecordGeneralInformation extends Component {
   constructor(props) {
     super(props);
     
-    this.title = "Complete record general information"
+    this.title = "Complete general information about record";
   }
   
   render() {
@@ -19,22 +20,24 @@ class RecordGeneralInformation extends Component {
       <article className="container">
         <SecondaryHeading title={this.title}/>
         <form onSubmit={handleSubmit}>
-          <section className="row">
-            <div className="col-sm-6">
+          <div className="form-row equal">
+            <div className="form-group col-lg-6">
               <Field name="title" type="text"
-                     component={RenderField} label="Title"/>
+                     component={CustomTextField} label="Title"/>
               <Field name="resourceType" type="text"
-                     component={RenderField} label="Resource type"/>
+                     component={CustomTextField} label="Resource type"/>
+              <Field name="keywords" type="text"
+                     component={CustomTextField} label="Keywords"/>
+              <Field name="destination" type="text"
+                     component={CustomTextField} label="Destination group"/>
             </div>
-            <div className="col-sm-6">
-              <Field name="title" type="text"
-                     component={RenderField} label="Title"/>
-              <Field name="resourceType" type="text"
-                     component={RenderField} label="Resource type"/>
+            <div className="form-group col-lg-6">
+              <Field name="description" type="text"
+                     component={CustomTextArea} label="Description"/>
             </div>
-          </section>
-          <div className="row justify-content-end">
-            <button type="submit" className="btn btn-primary">
+          </div>
+          <div className="form-row justify-content-end">
+            <button type="submit" className="btn btn-secondary">
               Next
             </button>
           </div>
