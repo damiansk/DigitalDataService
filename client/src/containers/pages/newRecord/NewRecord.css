@@ -1,5 +1,6 @@
 .wizard-bar {
     counter-reset: step;
+    height: 90px;
 }
 
 .wizard-step {
