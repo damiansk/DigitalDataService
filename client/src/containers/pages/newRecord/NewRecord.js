@@ -6,8 +6,6 @@ import RecordGeneralInformation from './recordInformation/RecordGeneralInformati
 import RecordFiles from './recordFiles/RecordFiles';
 import RecordSummary from './recordSummary/RecordSummary';
 
-import './NewRecord.css';
-
 class NewRecord extends Component {
   
   PREVIOUS = -1;
