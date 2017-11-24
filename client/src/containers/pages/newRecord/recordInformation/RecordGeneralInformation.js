@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
 
 import RenderField from '../../../../components/pages/renderField/RenderField';
-import Heading from '../../../../components/pages/heading/Heading';
+import SecondaryHeading from '../../../../components/pages/heading/SecondaryHeading';
 
 class RecordGeneralInformation extends Component {
   
@@ -17,7 +17,7 @@ class RecordGeneralInformation extends Component {
     
     return (
       <article className="container">
-        <Heading title={this.title} size={5}/>
+        <SecondaryHeading title={this.title}/>
         <form onSubmit={handleSubmit}>
           <section className="row">
             <div className="col-sm-6">

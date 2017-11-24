@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import Heading from '../../../components/pages/heading/Heading';
+import PrimaryHeading from '../../../components/pages/heading/PrimaryHeading';
 import ContentTabsNavigation from '../../../components/pages/contentTabsNavigation/ContentTabsNavigation';
 import ContentTabs from '../../../components/pages/contentTabs/ContentTabs';
 import ContentTab from '../../../components/pages/contentTabs/ContentTab';
@@ -66,7 +66,7 @@ class Records extends Component {
     const tabsItems = this.state.tabsItems;
     return (
       <section>
-        <Heading title="Records"/>
+        <PrimaryHeading title="Records"/>
         <article>
           <ContentTabsNavigation tabsItems={tabsItems} onClick={this.updateTabsItems}/>
           <ContentTabs>

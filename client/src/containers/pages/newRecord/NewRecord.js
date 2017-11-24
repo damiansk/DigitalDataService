@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import Heading from '../../../components/pages/heading/Heading';
+import PrimaryHeading from '../../../components/pages/heading/PrimaryHeading';
 import StepsProgress from '../../../components/pages/stepsProgress/StepsProgress';
 import RecordGeneralInformation from './recordInformation/RecordGeneralInformation';
 import RecordFiles from './recordFiles/RecordFiles';
@@ -70,7 +70,7 @@ class NewRecord extends Component {
     
     return (
       <section>
-        <Heading title="New record"/>
+        <PrimaryHeading title="New record"/>
         <StepsProgress stepsList={stepsList} currentStep={currentStep} />
         {this.generateStep(currentStep)}
       </section>
