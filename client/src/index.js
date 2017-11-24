@@ -8,7 +8,7 @@ import createHistory from 'history/createBrowserHistory';
 import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
 
 import reducers from './reducers';
-import App from './containers/App';
+import App from './containers/app/App';
 
 import './index.css';
 
