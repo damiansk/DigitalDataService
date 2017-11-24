@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import Heading from '../../../components/pages/heading/Heading';
 import StepsProgress from '../../../components/pages/stepsProgress/StepsProgress';
-import RecordInformation from './recordInformation/RecordInformation';
+import RecordGeneralInformation from './recordInformation/RecordGeneralInformation';
 import RecordFiles from './recordFiles/RecordFiles';
 import RecordSummary from './recordSummary/RecordSummary';
 
@@ -57,7 +57,7 @@ class NewRecord extends Component {
   generateStep(currentStep) {
     switch(currentStep) {
       case 'general':
-        return <RecordInformation onSubmit={this.nextStep}/>;
+        return <RecordGeneralInformation onSubmit={this.nextStep}/>;
       case 'files':
         return <RecordFiles previousPage={this.prevStep} onSubmit={this.nextStep}/>;
       case 'summary':
@@ -71,11 +71,11 @@ class NewRecord extends Component {
     const { currentStep, stepsList } = this.state;
     
     return (
-      <div>
+      <section>
         <Heading title="New record"/>
         <StepsProgress stepsList={stepsList} currentStep={currentStep} />
         {this.generateStep(currentStep)}
-      </div>
+      </section>
     )
   }
 }

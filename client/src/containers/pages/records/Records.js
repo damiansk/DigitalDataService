@@ -65,7 +65,7 @@ class Records extends Component {
   render() {
     const tabsItems = this.state.tabsItems;
     return (
-      <div>
+      <section>
         <Heading title="Records"/>
         <article>
           <ContentTabsNavigation tabsItems={tabsItems} onClick={this.updateTabsItems}/>
@@ -86,7 +86,7 @@ class Records extends Component {
             </ContentTab>
           </ContentTabs>
         </article>
-      </div>
+      </section>
     )
   }
 }
