@@ -1,57 +1,49 @@
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
 
-import CustomTextField from '../../../../components/pages/customTextField/CustomTextField';
+import SecondaryHeading from '../../../../components/pages/heading/SecondaryHeading';
+import CustomDropzone from '../../../../components/pages/customDropzone/CustomDropzone';
 
 class RecordFiles extends Component {
-  
-  RenderError = ({ meta: { touched, error } }) =>
-    touched && error ? <span>{error}</span> : false;
+
+  constructor(props) {
+    super(props);
+    
+    this.firstTitle = "Attach files";
+    this.secondTitle = "Attached files";
+    
+    this.state = {
+      filesCount: 0
+    }
+  }
   
   render() {
     const { handleSubmit, previousPage } = this.props;
+    const { filesCount: fileNumber } = this.state;
+    
     return (
-      <form onSubmit={handleSubmit}>
-        <Field name="email" type="email" component={CustomTextField} label="Email" />
-        <div>
-          <label>Sex</label>
-          <div>
-            <label>
-              <Field
-                name="sex"
-                component="input"
-                type="radio"
-                value="male"
-              />{' '}
-              Male
-            </label>
-            <label>
-              <Field
-                name="sex"
-                component="input"
-                type="radio"
-                value="female"
-              />{' '}
-              Female
-            </label>
-            <Field name="sex" component={this.RenderError} />
+      <article className="container">
+        <SecondaryHeading title={this.firstTitle}/>
+        <form onSubmit={handleSubmit}>
+          
+          <Field name={`file-${fileNumber}`} component={CustomDropzone}/>
+          
+          <div className="form-row justify-content-end mt-3">
+            <button type="button" className="btn btn-secondary" onClick={previousPage}>
+              Previous
+            </button>
+            <button type="submit" className="btn btn-primary">
+              Next
+            </button>
           </div>
-        </div>
-        <div>
-          <button type="button" className="previous" onClick={previousPage}>
-            Previous
-          </button>
-          <button type="submit" className="next">
-            Next
-          </button>
-        </div>
-      </form>
+        </form>
+      </article>
     );
   }
 }
 
 export default reduxForm({
-  form: 'wizard', //Form name is same
+  form: 'wizard',
   destroyOnUnmount: false,
-  forceUnregisterOnUnmount: true, // <------ unregister fields on unmount
+  forceUnregisterOnUnmount: true
 })(RecordFiles);
