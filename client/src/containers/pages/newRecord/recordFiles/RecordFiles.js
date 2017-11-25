@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 
-import { incrementFilesCount } from '../../../../actions/wizard';
+import { incrementFilesCounter, addFileName } from '../../../../actions/wizard';
 
 import SecondaryHeading from '../../../../components/pages/heading/SecondaryHeading';
 import CustomDropzone from '../../../../components/pages/customDropzone/CustomDropzone';
@@ -22,16 +22,20 @@ class RecordFiles extends Component {
     const {
       handleSubmit,
       previousPage,
-      filesCount,
-      incrementFilesCount
+      filesCounter,
+      incrementFilesCounter,
+      addFileName
     } = this.props;
     
+    const newFileName = `file-${filesCounter}`;
     
     return (
       <article className="container">
         <SecondaryHeading title={this.firstTitle}/>
         <form>
-          <Field name={`file-${filesCount}`} onNewFile={() => incrementFilesCount()} component={CustomDropzone}/>
+          <Field name={newFileName}
+                 onNewFile={() => incrementFilesCounter() && addFileName(newFileName)}
+                 component={CustomDropzone}/>
         </form>
         <SecondaryHeading title={this.secondTitle}/>
         <form onSubmit={handleSubmit}>
@@ -49,12 +53,9 @@ class RecordFiles extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch => bindActionCreators({ incrementFilesCount }, dispatch);
-const mapStateToProps = ({wizard: {filesCount}}) => ({filesCount});
-
 RecordFiles = connect(
-  mapStateToProps,
-  mapDispatchToProps
+  ({wizard: {filesCounter}}) => ({filesCounter}),
+  dispatch => bindActionCreators({ incrementFilesCounter, addFileName }, dispatch)
 )(RecordFiles);
 
 

@@ -1,7 +1,17 @@
-import { WIZARD_FILES_COUNT_INCREMENT } from '../constants/actions';
+import {
+  WIZARD_FILES_COUNTER_INCREMENT,
+  WIZARD_FILES_LIST_ADD
+} from '../constants/actions';
 
-export function incrementFilesCount() {
+export function incrementFilesCounter() {
   return {
-    type: WIZARD_FILES_COUNT_INCREMENT
+    type: WIZARD_FILES_COUNTER_INCREMENT
   };
+}
+
+export function addFileName(name) {
+  return {
+    type: WIZARD_FILES_LIST_ADD,
+    payload: name
+  }
 }
