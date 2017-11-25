@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
+
+import { incrementFilesCount } from '../../../../actions/wizard';
 
 import SecondaryHeading from '../../../../components/pages/heading/SecondaryHeading';
 import CustomDropzone from '../../../../components/pages/customDropzone/CustomDropzone';
@@ -12,22 +16,25 @@ class RecordFiles extends Component {
     this.firstTitle = "Attach files";
     this.secondTitle = "Attached files";
     
-    this.state = {
-      filesCount: 0
-    }
   }
   
   render() {
-    const { handleSubmit, previousPage } = this.props;
-    const { filesCount: fileNumber } = this.state;
+    const {
+      handleSubmit,
+      previousPage,
+      filesCount,
+      incrementFilesCount
+    } = this.props;
+    
     
     return (
       <article className="container">
         <SecondaryHeading title={this.firstTitle}/>
+        <form>
+          <Field name={`file-${filesCount}`} onNewFile={() => incrementFilesCount()} component={CustomDropzone}/>
+        </form>
+        <SecondaryHeading title={this.secondTitle}/>
         <form onSubmit={handleSubmit}>
-          
-          <Field name={`file-${fileNumber}`} component={CustomDropzone}/>
-          
           <div className="form-row justify-content-end mt-3">
             <button type="button" className="btn btn-secondary" onClick={previousPage}>
               Previous
@@ -41,6 +48,15 @@ class RecordFiles extends Component {
     );
   }
 }
+
+const mapDispatchToProps = dispatch => bindActionCreators({ incrementFilesCount }, dispatch);
+const mapStateToProps = ({wizard: {filesCount}}) => ({filesCount});
+
+RecordFiles = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(RecordFiles);
+
 
 export default reduxForm({
   form: 'wizard',
