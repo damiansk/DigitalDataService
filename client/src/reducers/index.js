@@ -5,8 +5,7 @@ import { reducer as form } from 'redux-form';
 import wizard from './wizard';
 
 export default combineReducers({
-  store: (state = {}) => state,
+  wizard,
   router,
-  form,
-  wizard
+  form
 });

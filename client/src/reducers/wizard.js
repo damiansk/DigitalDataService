@@ -5,9 +5,10 @@ const initialState = {
 };
 
 const wizard = (state = initialState, action) => {
-  switch (action.types) {
+  switch (action.type) {
     case WIZARD_FILES_COUNT_INCREMENT:
-      return {...state, initialState: initialState + 1};
+      const filesCount = state.filesCount + 1;
+      return {...state, filesCount};
     default:
       return state;
   }
