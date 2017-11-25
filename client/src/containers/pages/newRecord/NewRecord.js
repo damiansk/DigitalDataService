@@ -48,8 +48,8 @@ class NewRecord extends Component {
     }
   }
   
-  onSubmit() {
-  
+  onSubmit(values) {
+    console.log(values);
   }
   
   generateStep(currentStep) {
