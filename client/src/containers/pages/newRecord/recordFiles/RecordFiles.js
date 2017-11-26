@@ -1,22 +1,19 @@
 import React, { Component } from 'react';
 import { FieldArray, reduxForm } from 'redux-form';
 
-import AttachedFileForm from './AttachedFileForm';
+import AttachedFilesForm from './attachedFilesForm/AttachedFilesForm';
 
 
 class RecordFiles extends Component {
   
   render() {
-    const {
-      handleSubmit,
-      previousPage
-    } = this.props;
+    const {handleSubmit, previousPage} = this.props;
     
     return (
       <article className="container">
         <form onSubmit={handleSubmit}>
           <FieldArray name="files"
-                      component={AttachedFileForm}/>
+                      component={AttachedFilesForm}/>
           <div className="form-row justify-content-end mt-3">
             <button type="button" className="btn btn-secondary" onClick={previousPage}>
               Previous

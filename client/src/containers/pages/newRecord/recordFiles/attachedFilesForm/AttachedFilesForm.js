@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import { Field } from 'redux-form';
 import Dropzone from 'react-dropzone';
 
-import SecondaryHeading from '../../../../components/pages/heading/SecondaryHeading';
-import CustomTextField from '../../../../components/pages/customTextField/CustomTextField';
+import SecondaryHeading from '../../../../../components/pages/heading/SecondaryHeading';
+import AttachedFile from './attachedFile/AttachedFile';
 
-class AttachedFileForm extends Component {
+class AttachedFilesForm extends Component {
   
   constructor(props) {
     super(props);
@@ -14,12 +13,22 @@ class AttachedFileForm extends Component {
     this.secondTitle = "Attached files";
   }
   
+  renderAttachedFiles() {
+    const { fields } = this.props;
+    return fields.map((name, index) =>
+        <AttachedFile key={index}
+                      name={name}
+                      onRemove={() => fields.remove(index)}
+                      file={fields.get(index).file}/>
+      );
+  }
+  
   render() {
-    const {fields, meta: {error, touched}} = this.props;
-    
+    const {props: {fields}, firstTitle, secondTitle} = this;
+  
     return (
       <div>
-        <SecondaryHeading title={this.firstTitle}/>
+        <SecondaryHeading title={firstTitle}/>
   
         <div className="row justify-content-center">
           <Dropzone style={{border: '2px dashed', height: '150px', minHeight: '150px'}}
@@ -32,19 +41,12 @@ class AttachedFileForm extends Component {
              <span className="btn btn-secondary mt-3">Click here</span>
             </p>
           </Dropzone>
-          {touched && error && <span className="error">{error}</span>}
         </div>
-        <SecondaryHeading title={this.secondTitle}/>
-        {fields.map((member, index) =>
-          <div key={index}>
-            <Field name={`${member}.title`}
-                   label="title"
-                   type="text" component={CustomTextField}/>
-          </div>
-        )}
+        <SecondaryHeading title={secondTitle}/>
+        {this.renderAttachedFiles()}
       </div>
     );
   }
 }
 
-export default AttachedFileForm;
+export default AttachedFilesForm;
