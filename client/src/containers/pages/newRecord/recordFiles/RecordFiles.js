@@ -18,7 +18,7 @@ class RecordFiles extends Component {
             <button type="button" className="btn btn-secondary" onClick={previousPage}>
               Previous
             </button>
-            <button type="submit" className="btn btn-primary">
+            <button type="submit" className="ml-3 btn btn-primary">
               Next
             </button>
           </div>

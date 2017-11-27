@@ -37,7 +37,7 @@ class RecordGeneralInformation extends Component {
             </div>
           </div>
           <div className="form-row justify-content-end">
-            <button type="submit" className="btn btn-secondary">
+            <button type="submit" className="btn btn-primary">
               Next
             </button>
           </div>

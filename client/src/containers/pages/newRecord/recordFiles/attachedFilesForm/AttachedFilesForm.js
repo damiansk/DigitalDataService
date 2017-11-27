@@ -38,12 +38,20 @@ class AttachedFilesForm extends Component {
                     onDrop={(file, e) => fields.push({file: file[0]})}>
             <p className="text-center mt-4">
               Drop file here, or click to upload.<br/>
-             <span className="btn btn-secondary mt-3">Click here</span>
+             <span className="btn btn-primary mt-3">Click here</span>
             </p>
           </Dropzone>
         </div>
         <SecondaryHeading title={secondTitle}/>
-        {this.renderAttachedFiles()}
+        {fields.length > 0 ?
+          <ul className="list-group">
+            {this.renderAttachedFiles()}
+          </ul>
+          :
+          <div className="row justify-content-center">
+            <p className="font-weight-light">No attached files</p>
+          </div>
+        }
       </div>
     );
   }
