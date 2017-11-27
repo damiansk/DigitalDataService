@@ -45,7 +45,13 @@ class AttachedFilesForm extends Component {
                     className="form-control col-11 col-lg-10 col-xl-8"
                     activeClassName="bg-light border-success"
                     multiple={false}
-                    onDrop={(file, e) => fields.push({file: file[0]})}>
+                    onDrop={(file, e) =>
+                      fields.push({
+                        file: file[0],
+                        name: file[0].name,
+                        description: `Auto generated description for ${file[0].name}...`,
+                        thumbnail: ''
+                      })}>
             <p className="text-center mt-4">
               Drop file here, or click to upload.<br/>
              <span className="btn btn-primary mt-3">Click here</span>
