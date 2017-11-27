@@ -11,6 +11,10 @@ class AttachedFilesForm extends Component {
     
     this.firstTitle = "Attach files";
     this.secondTitle = "Attached files";
+    
+    this.state = {
+      editedFieldIndex: null
+    }
   }
   
   renderAttachedFiles() {
@@ -18,7 +22,13 @@ class AttachedFilesForm extends Component {
     return fields.map((name, index) =>
         <AttachedFile key={index}
                       name={name}
-                      onRemove={() => fields.remove(index)}
+                      isEdited={this.state.editedFieldIndex === index}
+                      onRemove={() => {
+                        this.setState({editedFieldIndex: null});
+                        fields.remove(index);
+                      }}
+                      onEdit={() => this.setState({editedFieldIndex: index})}
+                      onSave={() => this.setState({editedFieldIndex: null})}
                       file={fields.get(index).file}/>
       );
   }

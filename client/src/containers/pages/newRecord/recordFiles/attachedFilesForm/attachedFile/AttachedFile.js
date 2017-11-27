@@ -1,12 +1,25 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+import ButtonsToolbar from '../../../../../../components/pages/buttonsToolbar/ButtonsToolbar';
+import ButtonsGroup from '../../../../../../components/pages/buttonsToolbar/buttonsGroup/ButtonsGroup';
+import RemoveButton from '../../../../../../components/pages/buttonsToolbar/removeButton/RemoveButton';
+import EditOrSaveButton from '../../../../../../components/pages/buttonsToolbar/editOrSaveButton/EditOrSaveButton';
+
 class AttachedFile extends Component {
   
-  render() {
-    const { file: {name, size}, onRemove } = this.props;
+  constructor(props) {
+    super(props);
+  }
   
-    console.log(this.props.file);
+  render() {
+    const {
+      file: {name, size},
+      onRemove,
+      onEdit,
+      onSave,
+      isEdited
+    } = this.props;
   
     return (
       <li className="list-group-item position-relative">
@@ -17,21 +30,29 @@ class AttachedFile extends Component {
                  className="img-thumbnail"
                  alt="File thumbnail"/>
           </aside>
-          <article className="col col-md-9 col-lg-10 text-center align-self-end align-items-end">
+          
+          <article className="col col-md-9 col-lg-10 text-center pb-5 mt-2">
             <p className="mb-0 text-right font-weight-light">Size: <span className="font-weight-normal">{(size / (1024*1024)).toFixed(2)}MB</span></p>
             <h4 className="mb-1 text-left text-truncate">{name}</h4>
-            <p style={{height: '30px'}} className="text-left text-truncate font-weight-light">Auto generated description for {name}...</p>
-            <button className="btn btn-outline-secondary btn-sm" style={{width: '80px'}}>
-              <i className="fa fa-arrow-down m-auto" aria-hidden="true"/>
-            </button>
+            <p style={{height: '30px'}}
+               className="text-left text-truncate font-weight-light">
+              {isEdited && 'Edytuje...'} Auto generated description for {name}...
+            </p>
           </article>
         </section>
-        <button type="button"
-                style={{bottom: '12px', right: '20px'}}
-                className="btn btn-outline-danger position-absolute"
-                onClick={onRemove}>
-          <i className="fa fa-trash-o" aria-hidden="true"/>
-        </button>
+  
+        <ButtonsToolbar style={{bottom: '12px', right: '20px'}} className="position-absolute">
+          <ButtonsGroup label="Remove group">
+            <RemoveButton onRemove={onRemove}/>
+          </ButtonsGroup>
+          <ButtonsGroup label="Edit and save group">
+            <EditOrSaveButton isEdited={isEdited}
+                              onSave={onSave}
+                              onEdit={onEdit}
+                              isTextEnable={true}
+                              style={{width: '80px'}}/>
+          </ButtonsGroup>
+        </ButtonsToolbar>
       </li>
     )
   }
