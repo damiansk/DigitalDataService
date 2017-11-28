@@ -9,11 +9,20 @@ import RemoveButton from '../../../../../../components/pages/buttonsToolbar/remo
 import EditOrSaveButton from '../../../../../../components/pages/buttonsToolbar/editOrSaveButton/EditOrSaveButton';
 import CustomTextArea from '../../../../../../components/pages/customTextArea/CustomTextArea';
 import { Field, change } from 'redux-form';
+import FilePreview from '../../../../../../components/pages/filePreview/FilePreview';
 
 class AttachedFile extends Component {
   
   constructor(props) {
     super(props);
+  }
+  
+  generateFilePreviewComponent() {
+    return (
+      <section className="row mb-4">
+        <FilePreview file={this.props.file}/>
+      </section>
+    );
   }
   
   render() {
@@ -28,7 +37,7 @@ class AttachedFile extends Component {
   
     return (
       <li className="list-group-item position-relative">
-        <section className="row">
+        <section className="row mb-2">
           <aside className="col-xs col-md-4 col-lg-3">
             <img src="/default-thumbnail.png"
                  style={{maxHeight: '100%'}}
@@ -47,6 +56,8 @@ class AttachedFile extends Component {
           </article>
         </section>
   
+        {isEdited && this.generateFilePreviewComponent()}
+        
         <ButtonsToolbar style={{bottom: '12px', right: '20px'}} className="position-absolute">
           <ButtonsGroup label="Remove group">
             <RemoveButton onRemove={() => this.props.change('wizard', `${name}.description`, 'New value')}/>
