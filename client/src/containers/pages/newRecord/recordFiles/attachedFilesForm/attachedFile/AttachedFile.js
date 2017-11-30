@@ -13,10 +13,6 @@ import FilePreview from '../../../../../../components/pages/filePreview/FilePrev
 
 class AttachedFile extends Component {
   
-  constructor(props) {
-    super(props);
-  }
-  
   generateFilePreviewComponent() {
     return (
       <section className="row mb-4">
@@ -28,7 +24,7 @@ class AttachedFile extends Component {
   render() {
     const {
       file: {name: fileName, size},
-      onRemove,
+      // onRemove,
       onEdit,
       onSave,
       isEdited,

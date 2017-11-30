@@ -1,16 +1,20 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+import ModelPreview from '../ModelPreview/ModelPreview';
+
 class FilePreview extends Component {
   
   render() {
-    console.log(this.props.file);
+    const { file } = this.props;
     
     return (
-      <div className="container">
+      <div className="container mb-4">
         <article className="row">
-          <aside className="col-md-4 text-center">Super opcje</aside>
-          <main className="col text-center">Glowne mieso</main>
+          <aside className="col-md-6 text-center">Super opcje</aside>
+          <main className="col">
+            <ModelPreview file={file}/>
+          </main>
         </article>
       </div>
     );

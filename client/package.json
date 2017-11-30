@@ -21,7 +21,9 @@
     "react-router-redux": "5.0.0-alpha.6",
     "react-scripts": "1.0.17",
     "redux": "^3.7.2",
-    "redux-form": "^7.1.2"
+    "redux-form": "^7.1.2",
+    "three": "^0.88.0",
+    "three-orbitcontrols": "^2.0.0"
   },
   "devDependencies": {
     "redux-devtools-extension": "^2.13.2"
