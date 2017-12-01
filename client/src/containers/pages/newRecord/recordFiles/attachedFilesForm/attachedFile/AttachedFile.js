@@ -8,9 +8,9 @@ import ButtonsToolbar from '../../../../../../components/pages/buttonsToolbar/Bu
 import ButtonsGroup from '../../../../../../components/pages/buttonsToolbar/buttonsGroup/ButtonsGroup';
 import RemoveButton from '../../../../../../components/pages/buttonsToolbar/removeButton/RemoveButton';
 import EditOrSaveButton from '../../../../../../components/pages/buttonsToolbar/editOrSaveButton/EditOrSaveButton';
-import CustomTextArea from '../../../../../../components/pages/customTextArea/CustomTextArea';
 import FilePreview from '../../../../../../components/pages/filePreview/FilePreview';
 import ImageInputWithPreview from '../../../../../../components/pages/imageInputWithPreview/ImageInputWithPreview';
+import TextAreaToLabelField from '../../../../../../components/pages/textareaToLabelField/TextAreaToLabelField';
 
 class AttachedFile extends Component {
   
@@ -46,22 +46,23 @@ class AttachedFile extends Component {
     } = this.props;
     
     return (
-      <li className="list-group-item position-relative">
-        <section className="row mb-2">
-          <aside className="col-xs col-md-4 col-lg-3">
+      <li className="list-group-item position-relative mb-3">
+        <section className="row">
+          <aside className="col-xs col-md-3 col-lg-2">
             <Field name={`${name}.thumbnail`}
                    onThumbnailUpdate={this.updateThumbnail}
                    component={ImageInputWithPreview}/>
           </aside>
           
-          <article className="col col-md-8 col-lg-9 text-center pb-4 mt-2">
+          <article className="col col-md-9 col-lg-10 text-center pb-5">
             <p className="mb-0 text-right font-weight-light">Size: <span className="font-weight-normal">{(size / (1024*1024)).toFixed(2)}MB</span></p>
-            <h5 className="mb-1 text-left text-truncate">{fileName}</h5>
+            <h5 className="mb-1 text-left text-truncate w-100">{fileName}</h5>
             <Field name={`${name}.description`}
                    className="font-weight-light w-100"
                    type="text"
+                   disableHeight="30px"
                    disableArea={!isEdited}
-                   component={CustomTextArea}/>
+                   component={TextAreaToLabelField}/>
           </article>
         </section>
   

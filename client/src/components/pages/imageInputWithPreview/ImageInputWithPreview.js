@@ -26,7 +26,7 @@ class ImageInputWithPreview extends Component {
     return (
       <div>
         <label data-describe="Click here to change thumbnail"
-               className="thumbnailUploadLabel">
+               className="thumbnailUploadLabel mb-0">
           <img src={input.value || '/default-thumbnail.png'}
                style={{maxHeight: '100%'}}
                className="img-thumbnail"

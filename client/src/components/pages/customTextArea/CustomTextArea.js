@@ -1,16 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import './CustomTextArea.css';
-
-const CustomTextArea = ({ input, label, type, meta: { touched, error }, disableArea = false, className}) => (
+const CustomTextArea = ({ input, label, meta: { touched, error }}) => (
   <div className="form-group">
     <label>{label}</label>
     <div>
-      <textarea className={`form-control ${className} ${disableArea && 'disable-textarea'}`}
+      <textarea className="form-control"
                 placeholder={label}
-                type={type}
-                disabled={disableArea}
                 {...input}/>
       {touched && error && <span>{error}</span>}
     </div>
