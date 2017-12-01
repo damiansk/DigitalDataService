@@ -1,45 +1,47 @@
 import React, { Component } from 'react';
-import { Field, reduxForm } from 'redux-form';
+import { connect } from 'react-redux';
+import { reduxForm } from 'redux-form';
+import SecondaryHeading from '../../../../components/pages/heading/SecondaryHeading';
 
 class RecordSummary extends Component {
+  
+  constructor(props) {
+    super(props);
+    
+    this.title = 'Record summary';
+  }
   
   render() {
     const { handleSubmit, pristine, previousPage, submitting } = this.props;
     
     return (
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="employed">Employed</label>
+      <article className="container">
+        <SecondaryHeading title={this.title}/>
+        <form onSubmit={handleSubmit}>
           <div>
-            <Field
-              name="employed"
-              id="employed"
-              component="input"
-              type="checkbox"
-            />
+            <button type="button"
+                    className="btn btn-secondary"
+                    onClick={previousPage}>
+              Previous
+            </button>
+            <button type="submit"
+                    className="ml-3 btn btn-primary"
+                    disabled={pristine || submitting}>
+              Submit
+            </button>
           </div>
-        </div>
-        <div>
-          <label>Notes</label>
-          <div>
-            <Field name="notes" component="textarea" placeholder="Notes" />
-          </div>
-        </div>
-        <div>
-          <button type="button" className="previous" onClick={previousPage}>
-            Previous
-          </button>
-          <button type="submit" disabled={pristine || submitting}>
-            Submit
-          </button>
-        </div>
-      </form>
+        </form>
+      </article>
     );
   }
 }
 
+RecordSummary = connect(
+  ({form}) => ({wizardData: form.wizard.values})
+)(RecordSummary);
+
 export default reduxForm({
-  form: 'wizard', //Form name is same
+  form: 'wizard',
   destroyOnUnmount: false,
-  forceUnregisterOnUnmount: true, // <------ unregister fields on unmount
+  forceUnregisterOnUnmount: true,
 })(RecordSummary);
