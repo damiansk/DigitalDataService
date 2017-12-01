@@ -23,7 +23,9 @@ class AttachedFile extends Component {
   generateFilePreviewComponent() {
     return (
       <section className="row mb-4">
-        <FilePreview file={this.props.file}/>
+        <FilePreview
+          onSaveThumbnail={this.updateThumbnail}
+          file={this.props.file}/>
       </section>
     );
   }

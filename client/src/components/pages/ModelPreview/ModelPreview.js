@@ -12,7 +12,9 @@ class ModelPreview extends Component {
 		super(props);
 		
 		this.FPS = 24;
+		
 		this.loadObject = this.loadObject.bind(this);
+		this.onSaveThumbnail = this.onSaveThumbnail.bind(this);
 	}
  
 	componentDidMount() {
@@ -44,7 +46,8 @@ class ModelPreview extends Component {
     const directionalLight = new THREE.DirectionalLight( 0xffffff, 0.8 );
     camera.add( directionalLight );
     scene.add(camera);
-        
+    
+    this.renderer = renderer;
     this.light = directionalLight;
 		this.scene = scene;
 		this.camera = camera;
@@ -101,11 +104,24 @@ class ModelPreview extends Component {
 	
 	renderScene = () => this.renderer.render(this.scene, this.camera);
 	
+	onSaveThumbnail() {
+	  const {renderer, props: {onSaveThumbnail}} = this;
+	  
+    onSaveThumbnail(renderer
+        .domElement
+        .toDataURL("image/png"));
+  }
+	
 	render() {
 		return (
-			<div style={{ width: '720px', height: '720px', margin: '0 auto' }}
-           className="model-preview"
-			     ref={(previewContainer) => this.previewContainer = previewContainer} />
+      <div>
+        <div style={{ width: '720px', height: '720px', margin: '0 auto' }}
+             className="model-preview"
+             ref={(previewContainer) => this.previewContainer = previewContainer} />
+        <button className="btn btn-primary"
+                type="button"
+                onClick={this.onSaveThumbnail}>Save as thumbnail</button>
+      </div>
 		)
 	}
 
