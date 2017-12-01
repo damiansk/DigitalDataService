@@ -21,12 +21,12 @@ class ImageInputWithPreview extends Component {
   }
   
   render() {
-    const { input } = this.props;
+    const { input, activeEditing} = this.props;
     
     return (
       <div>
-        <label data-describe="Click here to change thumbnail"
-               className="thumbnailUploadLabel mb-0">
+        <label data-describe="Upload own thumbnail"
+               className={`mb-0 ${activeEditing ? 'thumbnailUploadLabel' : ''}`}>
           <img src={input.value || '/default-thumbnail.png'}
                style={{maxHeight: '100%'}}
                className="img-thumbnail"
@@ -34,6 +34,7 @@ class ImageInputWithPreview extends Component {
           <input onChange={this.uploadNewThumbnail}
                  accept="image/*"
                  type="file"
+                 disabled={!activeEditing}
                  style={{display: 'none'}}/>
         </label>
       </div>

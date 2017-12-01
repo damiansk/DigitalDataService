@@ -41,39 +41,40 @@ class AttachedFile extends Component {
       onRemove,
       onEdit,
       onSave,
-      isEdited,
+      activeEditing,
       name
     } = this.props;
     
     return (
       <li className="list-group-item position-relative mb-3">
         <section className="row">
-          <aside className="col-xs col-md-3 col-lg-2">
+          <aside className="col-xs col-md-3 col-xl-2">
             <Field name={`${name}.thumbnail`}
+                   activeEditing={activeEditing}
                    onThumbnailUpdate={this.updateThumbnail}
                    component={ImageInputWithPreview}/>
           </aside>
           
-          <article className="col col-md-9 col-lg-10 text-center pb-5">
+          <article className="col col-md-9 col-xl-10 text-center pb-5">
             <p className="mb-0 text-right font-weight-light">Size: <span className="font-weight-normal">{(size / (1024*1024)).toFixed(2)}MB</span></p>
             <h5 className="mb-1 text-left text-truncate w-100">{fileName}</h5>
             <Field name={`${name}.description`}
                    className="font-weight-light w-100"
                    type="text"
                    disableHeight="30px"
-                   disableArea={!isEdited}
+                   activeEditing={activeEditing}
                    component={TextAreaToLabelField}/>
           </article>
         </section>
   
-        {isEdited && this.generateFilePreviewComponent()}
+        {activeEditing && this.generateFilePreviewComponent()}
         
         <ButtonsToolbar style={{bottom: '12px', right: '20px'}} className="position-absolute">
           <ButtonsGroup label="Remove group">
             <RemoveButton onRemove={onRemove}/>
           </ButtonsGroup>
           <ButtonsGroup label="Edit and save group">
-            <EditOrSaveButton isEdited={isEdited} onSave={onSave}
+            <EditOrSaveButton isEdited={activeEditing} onSave={onSave}
                               onEdit={onEdit} isTextEnable={true}
                               style={{width: '80px'}}/>
           </ButtonsGroup>
@@ -86,7 +87,8 @@ class AttachedFile extends Component {
 AttachedFile.propTypes = {
   file: PropTypes.instanceOf(File),
   name: PropTypes.string.isRequired,
-  onRemove: PropTypes.func.isRequired
+  onRemove: PropTypes.func.isRequired,
+  activeEditing: PropTypes.bool.isRequired
 };
 
 export default connect(

@@ -22,7 +22,7 @@ class AttachedFilesForm extends Component {
     return fields.map((name, index) =>
         <AttachedFile key={index}
                       name={name}
-                      isEdited={this.state.editedFieldIndex === index}
+                      activeEditing={this.state.editedFieldIndex === index}
                       onRemove={() => {
                         this.setState({editedFieldIndex: null});
                         fields.remove(index);

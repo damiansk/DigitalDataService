@@ -13,7 +13,7 @@ class TextAreaToLabelField extends Component {
     const {
       input,
       meta: { touched, error },
-      disableArea = false,
+      activeEditing = false,
       className,
       disableHeight
     } = this.props;
@@ -21,9 +21,9 @@ class TextAreaToLabelField extends Component {
     return (
       <div className="form-group mb-0 mt-3">
         <div>
-      <textarea className={`form-control ${className} ${disableArea && 'disable-textarea p-0 active'}`}
-                style={disableArea ? ({maxHeight: disableHeight, lineHeight: disableHeight}) : ({})}
-                disabled={disableArea}
+      <textarea className={`form-control ${className} ${!activeEditing && 'disable-textarea p-0 active'}`}
+                style={!activeEditing ? ({maxHeight: disableHeight, lineHeight: disableHeight}) : ({})}
+                disabled={!activeEditing}
                 ref={textarea => this.area = textarea}
                 {...input}/>
           {touched && error && <span>{error}</span>}
@@ -35,7 +35,7 @@ class TextAreaToLabelField extends Component {
 
 TextAreaToLabelField.propTypes = {
   type: PropTypes.string,
-  disableArea: PropTypes.bool,
+  activeEditing: PropTypes.bool,
   disableHeight: PropTypes.string
 };
 
