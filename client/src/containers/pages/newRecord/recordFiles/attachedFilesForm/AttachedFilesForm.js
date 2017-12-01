@@ -45,7 +45,7 @@ class AttachedFilesForm extends Component {
                     className="form-control col-11 col-lg-10 col-xl-8"
                     activeClassName="bg-light border-success"
                     multiple={false}
-                    onDrop={(file, e) =>
+                    onDrop={file =>
                       fields.push({
                         file: file[0],
                         name: file[0].name,

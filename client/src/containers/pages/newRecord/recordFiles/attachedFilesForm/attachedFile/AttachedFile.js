@@ -2,16 +2,23 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { Field, change } from 'redux-form';
 
 import ButtonsToolbar from '../../../../../../components/pages/buttonsToolbar/ButtonsToolbar';
 import ButtonsGroup from '../../../../../../components/pages/buttonsToolbar/buttonsGroup/ButtonsGroup';
 import RemoveButton from '../../../../../../components/pages/buttonsToolbar/removeButton/RemoveButton';
 import EditOrSaveButton from '../../../../../../components/pages/buttonsToolbar/editOrSaveButton/EditOrSaveButton';
 import CustomTextArea from '../../../../../../components/pages/customTextArea/CustomTextArea';
-import { Field, change } from 'redux-form';
 import FilePreview from '../../../../../../components/pages/filePreview/FilePreview';
+import ImageInputWithPreview from '../../../../../../components/pages/imageInputWithPreview/ImageInputWithPreview';
 
 class AttachedFile extends Component {
+  
+  constructor(props) {
+    super(props);
+    
+    this.updateThumbnail = this.updateThumbnail.bind(this);
+  }
   
   generateFilePreviewComponent() {
     return (
@@ -21,24 +28,28 @@ class AttachedFile extends Component {
     );
   }
   
+  updateThumbnail(value) {
+    const { name } = this.props;
+    this.props.change('wizard', `${name}.thumbnail`, value);
+  }
+  
   render() {
     const {
       file: {name: fileName, size},
-      // onRemove,
+      onRemove,
       onEdit,
       onSave,
       isEdited,
       name
     } = this.props;
-  
+    
     return (
       <li className="list-group-item position-relative">
         <section className="row mb-2">
           <aside className="col-xs col-md-4 col-lg-3">
-            <img src="/default-thumbnail.png"
-                 style={{maxHeight: '100%'}}
-                 className="img-thumbnail"
-                 alt="File thumbnail"/>
+            <Field name={`${name}.thumbnail`}
+                   onThumbnailUpdate={this.updateThumbnail}
+                   component={ImageInputWithPreview}/>
           </aside>
           
           <article className="col col-md-8 col-lg-9 text-center pb-4 mt-2">
@@ -56,7 +67,7 @@ class AttachedFile extends Component {
         
         <ButtonsToolbar style={{bottom: '12px', right: '20px'}} className="position-absolute">
           <ButtonsGroup label="Remove group">
-            <RemoveButton onRemove={() => this.props.change('wizard', `${name}.description`, 'New value')}/>
+            <RemoveButton onRemove={onRemove}/>
           </ButtonsGroup>
           <ButtonsGroup label="Edit and save group">
             <EditOrSaveButton isEdited={isEdited} onSave={onSave}

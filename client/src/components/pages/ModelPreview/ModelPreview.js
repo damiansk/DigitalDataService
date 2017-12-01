@@ -26,8 +26,10 @@ class ModelPreview extends Component {
 			0.1,
 			1000
 		);
-		const renderer = new THREE.WebGLRenderer({ antialias: true });
-		const geometry = new THREE.BoxGeometry(1, 1, 1);
+		const renderer = new THREE.WebGLRenderer({
+      antialias: true,
+      preserveDrawingBuffer: true
+    });
 		const material = new THREE.MeshLambertMaterial({ color: 0xff00ff });
 		
 		camera.position.z = 5;

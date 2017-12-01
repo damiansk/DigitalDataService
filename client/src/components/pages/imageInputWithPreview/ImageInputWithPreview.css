@@ -1,0 +1,21 @@
+.thumbnailUploadLabel {
+    position: relative;
+}
+
+.thumbnailUploadLabel:hover {
+    filter: blur(10);
+}
+
+.thumbnailUploadLabel::before {
+    position: absolute;
+    top: 0;
+    /*top: calc(50% - 20px);*/
+    left: 0;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    display: block;
+    content: attr(data-describe);
+    font-size: 20px;
+    cursor: pointer;
+}
