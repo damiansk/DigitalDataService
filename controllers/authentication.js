@@ -1,10 +1,10 @@
 const jwt = require('jwt-simple');
-const Admin = require('../models/admin');
+const User = require('../models/user');
 const config = require('../config');
 
 
-adminToken = admin => jwt.encode({
-  sub: admin.id,
+userToken = user => jwt.encode({
+  sub: user.id,
   iat: new Date().getTime()
 }, config.secret);
 
@@ -15,17 +15,17 @@ exports.signup = (req, res, next) => {
     return res.status(400).send({error: 'You must provide email and password'});
   
   // TODO Try implement this in a promise chain
-  Admin.findOne({email}, (err, existingAdmin) => {
+  User.findOne({email}, (err, existingUser) => {
     if(err) return next(err);
   
-    if(existingAdmin)
+    if(existingUser)
       return res.status(422).send({error: 'Email is in use'});
   
-    const admin = new Admin({email, password});
-    admin.save(err => {
+    const user = new User({email, password});
+    user.save(err => {
       if(err) return next(err);
   
-      res.json({token: adminToken(admin)});
+      res.json({token: userToken(user)});
     })
   });
 };
