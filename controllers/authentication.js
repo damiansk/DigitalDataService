@@ -1,4 +1,12 @@
+const jwt = require('jwt-simple');
 const Admin = require('../models/admin');
+const config = require('../config');
+
+
+adminToken = admin => jwt.encode({
+  sub: admin.id,
+  iat: new Date().getTime()
+}, config.secret);
 
 exports.signup = (req, res, next) => {
   const { email, password } = req.body;
@@ -17,7 +25,7 @@ exports.signup = (req, res, next) => {
     admin.save(err => {
       if(err) return next(err);
   
-      res.json(admin);
+      res.json({token: adminToken(admin)});
     })
   });
 };
