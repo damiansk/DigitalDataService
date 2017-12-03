@@ -1,0 +1,9 @@
+.model-preview {
+    width: 70% !important;
+    height: 0 !important;
+    padding-bottom: 70% !important;
+}
+
+.model-preview > canvas {
+    width: 100% !important;
+}

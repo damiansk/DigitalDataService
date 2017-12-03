@@ -22,7 +22,7 @@ class AttachedFilesForm extends Component {
     return fields.map((name, index) =>
         <AttachedFile key={index}
                       name={name}
-                      isEdited={this.state.editedFieldIndex === index}
+                      activeEditing={this.state.editedFieldIndex === index}
                       onRemove={() => {
                         this.setState({editedFieldIndex: null});
                         fields.remove(index);
@@ -45,7 +45,7 @@ class AttachedFilesForm extends Component {
                     className="form-control col-11 col-lg-10 col-xl-8"
                     activeClassName="bg-light border-success"
                     multiple={false}
-                    onDrop={(file, e) =>
+                    onDrop={file =>
                       fields.push({
                         file: file[0],
                         name: file[0].name,
