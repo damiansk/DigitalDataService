@@ -1,0 +1,5 @@
+// Example of config.js file
+
+module.exports = {
+  secret: 'your_secret' // Secret for JWT
+};
