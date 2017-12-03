@@ -8,6 +8,10 @@ userToken = user => jwt.encode({
   iat: new Date().getTime()
 }, config.secret);
 
+exports.signin = (req, res, next) => {
+  res.json({token: userToken(req.user)});
+};
+
 exports.signup = (req, res, next) => {
   const { email, password } = req.body;
   
