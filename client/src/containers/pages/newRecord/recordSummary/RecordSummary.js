@@ -1,22 +1,24 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
-import SecondaryHeading from '../../../../components/pages/heading/SecondaryHeading';
+import RecordPreview from '../../../../components/pages/recordPreview/RecordPreview';
 
 class RecordSummary extends Component {
   
-  constructor(props) {
-    super(props);
-    
-    this.title = 'Record summary';
-  }
-  
   render() {
-    const { handleSubmit, pristine, previousPage, submitting } = this.props;
+    const {
+      handleSubmit,
+      pristine,
+      previousPage,
+      submitting,
+      record
+    } = this.props;
     
     return (
       <article className="container">
-        <SecondaryHeading title={this.title}/>
+        <RecordPreview date={new Date()}
+                       declarant="Damian Stolarek"
+                       {...record} />
         <form onSubmit={handleSubmit}>
           <div>
             <button type="button"
@@ -37,7 +39,7 @@ class RecordSummary extends Component {
 }
 
 RecordSummary = connect(
-  ({form}) => ({wizardData: form.wizard.values})
+  ({form}) => ({record: form.wizard.values})
 )(RecordSummary);
 
 export default reduxForm({
