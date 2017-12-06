@@ -13,6 +13,12 @@ class ModelPreview extends Component {
 		
 		this.FPS = 24;
 		
+		this.canvas = {
+      width: '720px',
+      height: '720px',
+      margin: '0 auto'
+    };
+		
 		this.loadObject = this.loadObject.bind(this);
 		this.onSaveThumbnail = this.onSaveThumbnail.bind(this);
 	}
@@ -35,7 +41,7 @@ class ModelPreview extends Component {
 		const material = new THREE.MeshLambertMaterial({ color: 0xff00ff });
 		
 		camera.position.z = 5;
-		renderer.setClearColor('#000000');
+		renderer.setClearColor('#ffffff');
 		renderer.setSize(width, height);
 		
 		const controls = new OrbitControls(camera, renderer.domElement);
@@ -61,9 +67,19 @@ class ModelPreview extends Component {
     this.loadObject();
 	}
 	
+	componentDidUpdate() {
+    this.renderer.setClearColor(this.props.backgroundColor);
+  }
+  
+  componentWillUnmount() {
+    this.stop();
+    // TODO Check if this is important or how to fit it
+    // this.mount.removeChild(this.renderer.domElement);
+  }
+	
 	loadObject() {
     const loader = new OBJLoader();
-        
+    
 		const { file } = this.props;
     loader.load(file.preview,
       model => {
@@ -86,15 +102,13 @@ class ModelPreview extends Component {
   
 	}
 	
-	componentWillUnmount() {
-		this.stop();
-		// TODO Check if this is important or how to fit it
-		// this.mount.removeChild(this.renderer.domElement);
-	}
+	start = () => {
+	  this.frameId = this.frameId || requestAnimationFrame(this.animate);
+  };
 	
-	start = () => this.frameId = this.frameId || requestAnimationFrame(this.animate);
-	
-	stop = () => cancelAnimationFrame(this.frameId);
+	stop = () => {
+	  cancelAnimationFrame(this.frameId);
+	};
 	
 	animate = () => {
         setTimeout( () => this.frameId = requestAnimationFrame( this.animate ), 1000 / this.FPS );
@@ -102,7 +116,9 @@ class ModelPreview extends Component {
 		this.renderScene();
 	};
 	
-	renderScene = () => this.renderer.render(this.scene, this.camera);
+	renderScene = () => {
+	  this.renderer.render(this.scene, this.camera);
+  };
 	
 	onSaveThumbnail() {
 	  const {renderer, props: {onSaveThumbnail}} = this;
@@ -114,11 +130,11 @@ class ModelPreview extends Component {
 	
 	render() {
 		return (
-      <div>
-        <div style={{ width: '720px', height: '720px', margin: '0 auto' }}
+      <div className="text-center">
+        <div style={{ ...this.canvas }}
              className="model-preview"
              ref={(previewContainer) => this.previewContainer = previewContainer} />
-        <button className="btn btn-primary"
+        <button className="btn btn-primary mt-2"
                 type="button"
                 onClick={this.onSaveThumbnail}>Save as thumbnail</button>
       </div>
