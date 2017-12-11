@@ -14,8 +14,8 @@ class ModelPreview extends Component {
 		this.FPS = 24;
 		
 		this.canvas = {
-      width: '720px',
-      height: '720px',
+      width: '820px',
+      height: '820px',
       margin: '0 auto'
     };
 		
@@ -38,10 +38,9 @@ class ModelPreview extends Component {
       antialias: true,
       preserveDrawingBuffer: true
     });
-		const material = new THREE.MeshLambertMaterial({ color: 0xff00ff });
 		
 		camera.position.z = 5;
-		renderer.setClearColor('#ffffff');
+		renderer.setClearColor(this.props.backgroundColor);
 		renderer.setSize(width, height);
 		
 		const controls = new OrbitControls(camera, renderer.domElement);
@@ -59,7 +58,6 @@ class ModelPreview extends Component {
 		this.camera = camera;
 		this.renderer = renderer;
 		this.controls = controls;
-		this.material = material;
 		
 		this.previewContainer.appendChild(this.renderer.domElement);
 		this.start();
@@ -67,8 +65,17 @@ class ModelPreview extends Component {
     this.loadObject();
 	}
 	
-	componentDidUpdate() {
-    this.renderer.setClearColor(this.props.backgroundColor);
+	componentDidUpdate(prevProps, prevState) {
+	  const { backgroundColor, meshColor } = this.props;
+	  
+    if(backgroundColor !== prevProps.backgroundColor) {
+      this.renderer.setClearColor(backgroundColor);
+    }
+    if(meshColor !== prevProps.meshColor) {
+      this.model
+        .children.forEach(child =>
+          child.material.color.set(meshColor));
+    }
   }
   
   componentWillUnmount() {
@@ -84,6 +91,9 @@ class ModelPreview extends Component {
     loader.load(file.preview,
       model => {
         this.model = model;
+        
+        model.children.forEach(child => child.material.color.set(this.props.meshColor));
+  
         this.scene.add(model);
    
         //TODO Resolve how do this better
