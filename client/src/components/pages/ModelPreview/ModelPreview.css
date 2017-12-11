@@ -1,0 +1,15 @@
+.model-preview {
+    width: 70% !important;
+    height: 0 !important;
+    padding-bottom: 70% !important;
+
+    box-sizing: initial;
+    background: rgb(255, 255, 255) none repeat scroll 0 0;
+    border-radius: 4px;
+    box-shadow: rgba(0, 0, 0, 0.15) 0 0 0 1px, rgba(0, 0, 0, 0.15) 0 8px 16px;
+}
+
+.model-preview > canvas {
+    padding: 4px;
+    width: 100% !important;
+}

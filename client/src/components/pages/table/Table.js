@@ -17,7 +17,7 @@ class Table extends Component {
   
   render() {
     return (
-      <table className="table table-responsive-lg table-striped table-bordered">
+      <table className="table table-responsive-md table-striped table-bordered">
         <thead className="thead-dark">
           <tr>
             {this.mapColumns()}

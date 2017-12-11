@@ -1,0 +1,5 @@
+.disable-textarea {
+    background-color: transparent !important;
+    border: none;
+    resize: none;
+}

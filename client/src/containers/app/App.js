@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router';
 
-import Header from '../containers/layout/header/Header';
-import Footer from './layout/footer/Footer';
-import Records from '../containers/pages/records/Records';
-import NoMatch from './404';
+import Header from '../layout/header/Header';
+import Footer from '../../components/layout/footer/Footer';
+import NewRecord from '../pages/newRecord/NewRecord';
+import Records from '../pages/records/Records';
+import NoMatch from '../../components/404/index';
 
 class App extends Component {
   render() {
@@ -26,7 +27,6 @@ class App extends Component {
   }
 }
 
-const NewRecord = props => <div>newRecord</div>;
 const Account = props => <div>account</div>;
 
 export default App;
