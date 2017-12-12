@@ -1,11 +1,24 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { reduxForm, Field } from 'redux-form';
+
+import { signInUser } from '../../../../actions/auth';
+
 import PrimaryHeading from '../../../../components/pages/heading/PrimaryHeading';
+
+
+
 
 class SignIn extends Component {
   
+  constructor(props) {
+    super(props);
+    
+    this.onSignIn = this.onSignIn.bind(this);
+  }
+  
   onSignIn({email, password}) {
-    console.log(`Email: ${email}, password: ${password}`);
+    this.props.signInUser(email, password);
   }
   
   render() {
@@ -19,7 +32,7 @@ class SignIn extends Component {
       <main className="container">
         <PrimaryHeading title="Sign In"/>
         <div className="col-md-6 col-lg-4 m-auto">
-          <form onSubmit={handleSubmit(this.onSignIn.bind(this))}>
+          <form onSubmit={handleSubmit(this.onSignIn)}>
             <fieldset className="form-group">
               <label htmlFor="signInEmail">Email</label>
               <Field name="email"
@@ -51,6 +64,10 @@ class SignIn extends Component {
   }
 }
 
+SignIn = connect(
+  null,
+  {signInUser}
+)(SignIn);
 
 export default reduxForm({
   form: 'signin'
