@@ -21,7 +21,8 @@ class SignIn extends Component {
     this.props.signInUser(email, password);
   }
   
-  renderErrorMessage(errorMsg) {
+  renderErrorMessage() {
+    const {errorMsg} = this.props;
     if (errorMsg) {
       return (
         <div className="alert alert-danger">
@@ -34,7 +35,6 @@ class SignIn extends Component {
   render() {
     const {
       handleSubmit,
-      errorMsg,
       pristine,
       submitting,
     } = this.props;
@@ -63,7 +63,7 @@ class SignIn extends Component {
                      type="password"
                      placeholder="Password"/>
             </fieldset>
-            {this.renderErrorMessage(errorMsg)}
+            {this.renderErrorMessage()}
             <button className="btn btn-primary"
                     type="submit"
                     disabled={pristine || submitting}>

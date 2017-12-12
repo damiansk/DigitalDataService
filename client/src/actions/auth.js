@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { push } from 'react-router-redux';
 
-import { AUTH_USER, AUTH_ERROR } from '../constants/actions';
+import { AUTH_USER, UNAUTH_USER, AUTH_ERROR } from '../constants/actions';
 import { ROOT_URL, SIGN_IN } from '../constants/api';
 
 
@@ -16,8 +16,16 @@ export function signInUser(email, password) {
         
         dispatch(push('/records'));
       })
-      .catch(err => dispatch(authError('Wrong email or password')));
+      .catch(() => dispatch(authError('Wrong email or password')));
   };
+}
+
+export function signOutUser() {
+  localStorage.removeItem('token');
+  
+  return {
+    type: UNAUTH_USER
+  }
 }
 
 export function authError(error) {
