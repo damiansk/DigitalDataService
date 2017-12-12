@@ -13,7 +13,8 @@ class Header extends Component {
     this.navigationItems = [
         {name: 'New record', iconClass: 'fa-plus', link: '/new-record'},
         {name: 'Records', iconClass: 'fa-list-alt', link: '/records', activeClass: 'active'},
-        {name: 'Account', iconClass: 'fa-user', link: '/account'}
+        {name: 'Account', iconClass: 'fa-user', link: '/account'},
+        {name: 'Sign out', iconClass: 'fa-sign-out', link: '/signout'}
       ];
   }
   
@@ -32,7 +33,7 @@ class Header extends Component {
         : {...item, activeClass: null});
   }
   
-  mapNavigationItems() {
+  renderLinks() {
     return this.navigationItems
       .map((item, index) => <NavigationItem key={index} {...item}/>);
   }
@@ -46,18 +47,28 @@ class Header extends Component {
               <i className="fa fa-folder-open" aria-hidden="true"/>
               {` ${this.title}`}
             </Link>
-            <button className="navbar-toggler" type="button"
-                    data-toggle="collapse" data-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false"
-                    aria-label="Toggle navigation">
-              <span className="navbar-toggler-icon"/>
-            </button>
-            <div className="collapse navbar-collapse justify-content-end"
-                 id="navbarNav">
-              <ul className="navbar-nav">
-                {this.mapNavigationItems()}
-              </ul>
-            </div>
+            {this.props.authenticated &&
+              <button className="navbar-toggler" type="button"
+                      data-toggle="collapse" data-target="#navbarNav"
+                      aria-controls="navbarNav" aria-expanded="false"
+                      aria-label="Toggle navigation">
+                <span className="navbar-toggler-icon"/>
+              </button>
+            }
+            {this.props.authenticated ?
+              <div className="collapse navbar-collapse justify-content-end"
+                   id="navbarNav">
+                <ul className="navbar-nav">
+                  {this.renderLinks()}
+                </ul>
+              </div>
+              :
+              <div className="justify-content-end" id="navbarNav">
+                <ul className="navbar-nav">
+                  <NavigationItem name="Sign in" iconClass="fa-sign-in" link="/signin"/>
+                </ul>
+              </div>
+            }
           </div>
         </nav>
       </header>
@@ -66,6 +77,9 @@ class Header extends Component {
 }
 
 
-const mapStateToProps = ({router: {location}}) => ({location});
+const mapStateToProps = state => ({
+  location: state.router.location,
+  authenticated: state.auth.authenticated
+});
 
 export default connect(mapStateToProps)(Header);

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { push } from 'react-router-redux';
 
-import { AUTH_USER, UNAUTH_USER } from '../constants/actions';
+import { AUTH_USER, AUTH_ERROR } from '../constants/actions';
 import { ROOT_URL, SIGN_IN } from '../constants/api';
 
 
@@ -16,8 +16,13 @@ export function signInUser(email, password) {
         
         dispatch(push('/records'));
       })
-      .catch(err => {
-        dispatch({type: UNAUTH_USER});
-      });
+      .catch(err => dispatch(authError('Wrong email or password')));
   };
+}
+
+export function authError(error) {
+  return {
+    type: AUTH_ERROR,
+    payload: error
+  }
 }

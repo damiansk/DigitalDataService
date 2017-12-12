@@ -1,9 +1,13 @@
-import { AUTH_USER, UNAUTH_USER } from '../constants/actions';
+import {
+  AUTH_USER,
+  UNAUTH_USER,
+  AUTH_ERROR
+} from '../constants/actions';
 
 
 const initialState = {
   authenticated: false,
-  message: ''
+  error: ''
 };
 
 export default (state = initialState, action) => {
@@ -12,6 +16,8 @@ export default (state = initialState, action) => {
       return {...state, authenticated: true};
     case UNAUTH_USER:
       return {...state, authenticated: false};
+    case AUTH_ERROR:
+      return {...state, error: action.payload};
     default:
       return state;
   }

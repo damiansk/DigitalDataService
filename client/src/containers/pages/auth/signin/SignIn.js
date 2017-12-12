@@ -21,9 +21,20 @@ class SignIn extends Component {
     this.props.signInUser(email, password);
   }
   
+  renderErrorMessage(errorMsg) {
+    if (errorMsg) {
+      return (
+        <div className="alert alert-danger">
+          <small>{errorMsg}</small>
+        </div>
+      );
+    }
+  }
+  
   render() {
     const {
       handleSubmit,
+      errorMsg,
       pristine,
       submitting,
     } = this.props;
@@ -52,6 +63,7 @@ class SignIn extends Component {
                      type="password"
                      placeholder="Password"/>
             </fieldset>
+            {this.renderErrorMessage(errorMsg)}
             <button className="btn btn-primary"
                     type="submit"
                     disabled={pristine || submitting}>
@@ -65,8 +77,8 @@ class SignIn extends Component {
 }
 
 SignIn = connect(
-  null,
-  {signInUser}
+  state => ({errorMsg: state.auth.error}),
+  { signInUser }
 )(SignIn);
 
 export default reduxForm({
