@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router';
 
+import PrivateRoute from '../pages/auth/privateRoute/PrivateRoute';
+
 import Header from '../layout/header/Header';
 import Footer from '../../components/layout/footer/Footer';
 import SignIn from '../pages/auth/signIn/SignIn';
@@ -18,10 +20,10 @@ class App extends Component {
           <Switch>
             <Route exact path="/" to="/records" component={() => <div>Welcome!</div>}/>
             <Route path="/signin" component={SignIn}/>
-            <Route path="/signout" component={SignOut}/>
-            <Route path="/new-record" component={NewRecord}/>
-            <Route path="/records" component={Records}/>
-            <Route path="/account" component={Account}/>
+            <PrivateRoute path="/signout" component={SignOut}/>
+            <PrivateRoute path="/new-record" component={NewRecord}/>
+            <PrivateRoute path="/records" component={Records}/>
+            <PrivateRoute path="/account" component={Account}/>
             <Route component={NoMatch}/>
           </Switch>
         </main>

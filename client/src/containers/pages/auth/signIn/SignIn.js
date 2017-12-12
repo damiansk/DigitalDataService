@@ -6,9 +6,7 @@ import { signInUser } from '../../../../actions/auth';
 
 import PrimaryHeading from '../../../../components/pages/heading/PrimaryHeading';
 
-
-
-
+//TODO After login redirect user to saved path and protect this route when the user is already logged in
 class SignIn extends Component {
   
   constructor(props) {
