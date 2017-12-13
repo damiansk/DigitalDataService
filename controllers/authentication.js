@@ -34,3 +34,7 @@ exports.signup = (req, res, next) => {
     })
   });
 };
+
+exports.verifyAuth = (req, res, next) => {
+  res.json({token: userToken(req.user)});
+};

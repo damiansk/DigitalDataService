@@ -14,4 +14,6 @@ module.exports = app => {
   app.post('/signIn', requireSignin, Authentication.signin);
   app.post('/signup', Authentication.signup);
   
+  app.post('/auth', requireAuth, Authentication.verifyAuth);
+  
 };
