@@ -5,7 +5,8 @@ const config = require('../config');
 
 userToken = user => jwt.encode({
   sub: user.id,
-  iat: new Date().getTime()
+  iat: new Date().getTime(),
+  exp: Math.floor(Date.now() / 1000) + (60 * 60)
 }, config.secret);
 
 exports.signin = (req, res, next) => {
