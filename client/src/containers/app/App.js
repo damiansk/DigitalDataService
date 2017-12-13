@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Route, Switch } from 'react-router';
 
 import PrivateRoute from '../pages/auth/privateRoute/PrivateRoute';
@@ -11,7 +12,15 @@ import NewRecord from '../pages/newRecord/NewRecord';
 import Records from '../pages/records/Records';
 import NoMatch from '../../components/404/index';
 
+import { authVerification } from '../../actions/auth';
+
+
 class App extends Component {
+  
+  componentWillMount() {
+    this.props.authVerification();
+  }
+  
   render() {
     return (
       <div>
@@ -35,4 +44,4 @@ class App extends Component {
 
 const Account = () => <div>account</div>;
 
-export default App;
+export default connect(null, {authVerification})(App);
