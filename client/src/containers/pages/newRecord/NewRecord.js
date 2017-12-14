@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
+import  { connect } from 'react-redux';
+import { destroy } from 'redux-form';
 
+import { saveRecord } from '../../../actions/records';
 import PrimaryHeading from '../../../components/pages/heading/PrimaryHeading';
 import StepsProgress from '../../../components/pages/stepsProgress/StepsProgress';
 import RecordGeneralInformation from './recordInformation/RecordGeneralInformation';
 import RecordFiles from './recordFiles/RecordFiles';
 import RecordSummary from './recordSummary/RecordSummary';
+
 
 class NewRecord extends Component {
   
@@ -23,9 +27,14 @@ class NewRecord extends Component {
       ]
     };
     
+    this.onSubmit = this.onSubmit.bind(this);
     this.prevStep = this.prevStep.bind(this);
     this.nextStep = this.nextStep.bind(this);
     this.setStep = this.setStep.bind(this);
+  }
+  
+  componentWillUnmount() {
+    this.props.destroy('wizard');
   }
   
   prevStep() {
@@ -49,7 +58,7 @@ class NewRecord extends Component {
   }
   
   onSubmit(values) {
-    console.log(values);
+    this.props.saveRecord(values);
   }
   
   generateStep(currentStep) {
@@ -78,4 +87,4 @@ class NewRecord extends Component {
   }
 }
 
-export default NewRecord;
+export default connect(null, {destroy, saveRecord})(NewRecord);
