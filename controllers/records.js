@@ -1,8 +1,12 @@
 
 
 exports.createRecord = (req, res, next) => {
-  console.log(req.body);
-  console.log(req.files);
+  const { files } = req;
+  let {files: filesData, record} = req.body;
+  
+  filesData = JSON.parse(filesData);
+  record = JSON.parse(record);
+  
   
   res.status(201);
   res.send();
