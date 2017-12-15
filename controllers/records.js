@@ -1,13 +1,40 @@
+const multiparty = require('multiparty');
+const Record = require('../models/record');
 
 
-exports.createRecord = (req, res, next) => {
-  const { files } = req;
-  let {files: filesData, record} = req.body;
+exports.createRecord = (req, res) => {
+  const { id: declarant } = req.user;
+  const form = new multiparty.Form();
   
-  filesData = JSON.parse(filesData);
-  record = JSON.parse(record);
+  form.parse(req, (err, fields, files) => {
+
+    let {files: filesData, record: recordInformation} = fields;
+
+    filesData = JSON.parse(filesData);
+    recordInformation = JSON.parse(recordInformation);
+
+    const { title, description } = recordInformation;
   
+    const filesToStore = filesData.map(({description, thumbnail, key}) => ({
+      description,
+      thumbnail,
+      name: files[key][0].path
+    }));
+    
+    const record = new Record({
+      declarant,
+      title,
+      description,
+      files: filesToStore
+    });
   
-  res.status(201);
-  res.send();
+    
+    record.save(err => {
+      if(err) return next(err);
+      
+      res.status(201).send();
+    })
+    
+  });
+  
 };

@@ -8,7 +8,6 @@ const Authentication = require('../controllers/authentication');
 
 const uploadDir = './uploaded_files';
 fs.existsSync(uploadDir) || fs.mkdirSync(uploadDir);
-const multipartMiddleware = multipart({ uploadDir });
 
 
 const requireAuth = passport.authenticate('jwt', {session: false});
@@ -23,5 +22,5 @@ module.exports = app => {
   app.post('/signup', Authentication.signup);
   app.post('/auth', requireAuth, Authentication.verifyAuth);
   
-  app.post('/records/new', multipartMiddleware, Records.createRecord);
+  app.post('/records/new', requireAuth, Records.createRecord);
 };

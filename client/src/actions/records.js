@@ -4,8 +4,15 @@ import { RECORDS_SAVE_RECORD } from '../constants/actions';
 import { ADD_RECORD } from '../constants/api';
 
 
+//TODO Add validation for receive data
 export function saveRecord(record) {
   return dispatch => {
+    const token = localStorage.getItem('token');
+  
+    if(!token || token === '') {
+      return;
+    }
+    
     const {
       files: models = [],
       ...restRecordData
@@ -25,10 +32,14 @@ export function saveRecord(record) {
     files.forEach(({file, key}) => formData.append(key, file));
     formData.append('files', JSON.stringify(filesData));
     formData.append('record', JSON.stringify(restRecordData));
-    
+  
+    console.log('Form data: ', formData);
+    console.log('Files: ', files);
+  
     axios.post(ADD_RECORD, formData, {
       headers: {
-        'Content-Type': 'multipart/form-data'
+        'Content-Type': 'multipart/form-data',
+        authorization: token
       }
     });
   };
