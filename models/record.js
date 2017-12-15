@@ -16,6 +16,11 @@ const recordSchema = new Schema({
   }]
 });
 
+recordSchema.statics.getPreviewsOfUserRecords = function(userId) {
+  return this.find({declarant: userId})
+            .select('title description files.name');
+};
+
 const ModelClass = mongoose.model('record', recordSchema);
 
 module.exports = ModelClass;

@@ -38,3 +38,12 @@ exports.createRecord = (req, res) => {
   });
   
 };
+
+exports.getRecords = (req, res) => {
+  Record.getPreviewsOfUserRecords(req.user.id)
+    .then((err, records) => {
+      console.log(records);
+      
+      res.status(200).send();
+    });
+};
