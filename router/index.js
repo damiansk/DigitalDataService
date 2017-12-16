@@ -23,4 +23,5 @@ module.exports = app => {
   app.post('/auth', requireAuth, Authentication.verifyAuth);
   
   app.post('/records/new', requireAuth, Records.createRecord);
+  app.get('/records', requireAuth, Records.getRecords);
 };

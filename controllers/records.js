@@ -41,9 +41,11 @@ exports.createRecord = (req, res) => {
 
 exports.getRecords = (req, res) => {
   Record.getPreviewsOfUserRecords(req.user.id)
-    .then((err, records) => {
-      console.log(records);
-      
-      res.status(200).send();
-    });
+    .then(
+      data => {
+        console.log(data);
+        console.log(req.user.getFullName());
+        res.status(200).send();
+      },
+      err => console.log(err));
 };
