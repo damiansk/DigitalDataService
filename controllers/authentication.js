@@ -14,7 +14,7 @@ exports.signin = (req, res, next) => {
 };
 
 exports.signup = (req, res, next) => {
-  const { email, password } = req.body;
+  const { email, password, firstName, lastName } = req.body;
   
   if(!email || !password)
     return res.status(400).send({error: 'You must provide email and password'});
@@ -26,7 +26,7 @@ exports.signup = (req, res, next) => {
     if(existingUser)
       return res.status(422).send({error: 'Email is in use'});
   
-    const user = new User({email, password});
+    const user = new User({email, password, firstName, lastName});
     user.save(err => {
       if(err) return next(err);
   
