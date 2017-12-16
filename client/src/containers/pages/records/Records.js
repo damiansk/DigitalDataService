@@ -26,7 +26,7 @@ class Records extends Component {
         
           <Switch>
             <Route exact path={currentPath} render={() => <Redirect to={`${this.props.match.path}/new`} />}/>
-            <Route path={`${currentPath}`} render={() => <div>New</div>}/>
+            <Route path={`${currentPath}/new`} render={() => <div>New</div>}/>
           </Switch>
           
         </article>
