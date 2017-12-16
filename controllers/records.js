@@ -43,10 +43,8 @@ exports.getRecords = (req, res) => {
   Record.getPreviewsOfUserRecords(req.user.id)
     .then(
       data => {
-        res.status(200).json({
-          declarant: req.user.getFullName(),
-          ...data
-        });
+        res.status(200)
+          .json({...data});
       },
       err => console.log(err));
 };
