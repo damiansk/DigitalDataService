@@ -10,7 +10,7 @@ const app = express();
 mongoose.connect('mongodb://localhost/digitaldata');
 
 app.use(morgan('combined'));
-app.use(bodyParser.json({type: '*/*'}));
+app.use(bodyParser.json());
 router(app);
 
 const PORT = process.env.PORT || 5000;

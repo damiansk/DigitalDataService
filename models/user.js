@@ -7,13 +7,14 @@ const userSchema = new Schema({
     type: String,
     unique: true
   },
+  firstName: String,
+  lastName: String,
   password: String
 });
 
 
 userSchema.pre('save', function(next) {
   const user = this;
-  console.log(user);
   
   // TODO Promise?
   bcrypt.genSalt(10, (err, salt) => {
@@ -27,6 +28,10 @@ userSchema.pre('save', function(next) {
     });
   });
 });
+
+userSchema.methods.getFullName = function() {
+  return `${this.firstName} ${this.lastName}`;
+};
 
 userSchema.methods.comparePassword = function (candidatePassword, callback) {
   bcrypt.compare(candidatePassword, this.password, (err, isMatch) => {
