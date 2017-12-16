@@ -29,7 +29,7 @@ class App extends Component {
           <Switch>
             <Route exact path="/" to="/records" component={() => <div>Welcome!</div>}/>
             <Route path="/signin" component={SignIn}/>
-            <PrivateRoute path="/signout" component={SignOut}/>
+            <Route path="/signout" component={SignOut}/>
             <PrivateRoute path="/new-record" component={NewRecord}/>
             <PrivateRoute path="/records" component={Records}/>
             <PrivateRoute path="/account" component={Account}/>
