@@ -1,16 +1,15 @@
 import axios from 'axios';
 
-import { RECORDS_SAVE_RECORD } from '../constants/actions';
-import { ADD_RECORD } from '../constants/api';
+import { RECORDS_SAVE_RECORD, UNAUTH_USER } from '../constants/actions';
+import { ADD_RECORD, USER_RECORDS } from '../constants/api';
 
 
-//TODO Add validation for receive data
 export function saveRecord(record) {
   return dispatch => {
     const token = localStorage.getItem('token');
   
     if(!token || token === '') {
-      return;
+      return dispatch({type: UNAUTH_USER});
     }
     
     const {
@@ -43,4 +42,18 @@ export function saveRecord(record) {
       }
     });
   };
+}
+
+export function fetchUserRecords() {
+  return dispatch => {
+    const token = localStorage.getItem('token');
+  
+    if(!token || token === '') {
+      return dispatch({type: UNAUTH_USER});
+    }
+    
+    axios.get(USER_RECORDS, {headers: {authorization: token}})
+    .then(response => console.log(response))
+    .catch(err => console.log(err));
+  }
 }
