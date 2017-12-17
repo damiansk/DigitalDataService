@@ -14,7 +14,7 @@ const NavTab = props => (
 );
 
 NavTab.propTypes = {
-  path: PropTypes.string.isRequire
+  path: PropTypes.string.isRequired
 };
 
 export default NavTab;
