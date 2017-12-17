@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 class Table extends Component {
   
@@ -30,6 +31,7 @@ class Table extends Component {
   
   render() {
     return (
+      <div>
       <table className="table table-responsive-md table-striped table-bordered">
         <thead className="thead-dark">
           <tr>{this.props.children}</tr>
@@ -38,6 +40,8 @@ class Table extends Component {
           {this.renderRows()}
         </tbody>
       </table>
+        <Link to="/"/>
+      </div>
     )
   }
 }
