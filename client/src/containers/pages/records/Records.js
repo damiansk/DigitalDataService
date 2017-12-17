@@ -6,6 +6,7 @@ import { fetchUserRecords } from '../../../actions/records';
 
 import PrimaryHeading from '../../../components/pages/heading/PrimaryHeading';
 import { NavTab, RoutedTabs } from '../../../components/pages/routedTabs';
+import { Table, TableColumn } from '../../../components/pages/table';
 
 class Records extends Component {
   
@@ -33,7 +34,17 @@ class Records extends Component {
         
           <Switch>
             <Route exact path={currentPath} render={() => <Redirect to={`${this.props.match.path}/new`} />}/>
-            <Route path={`${currentPath}/new`} render={() => <div>New</div>}/>
+            <Route path={`${currentPath}/new`} render={() =>
+              <Table data={this.props.userRecords}>
+                <TableColumn fieldFormatter={({firstName, lastName}) => `${firstName} ${lastName}`}
+                             fieldSelector="declarant">Declarant</TableColumn>
+                <TableColumn fieldSelector="title">Title</TableColumn>
+                <TableColumn fieldSelector="resourceType">Type</TableColumn>
+                <TableColumn fieldFormatter={keywords => keywords.join(' ')}
+                             fieldSelector="keywords">Keywords</TableColumn>
+                <TableColumn fieldSelector="actions">Actions</TableColumn>
+              </Table>
+            }/>
           </Switch>
           
         </article>
