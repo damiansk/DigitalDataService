@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { RECORDS_SAVE_RECORD, UNAUTH_USER } from '../constants/actions';
+import { RECORDS_FETCH_USER_RECORDS, RECORDS_SAVE_RECORD, UNAUTH_USER } from '../constants/actions';
 import { ADD_RECORD, USER_RECORDS } from '../constants/api';
 
 
@@ -53,7 +53,11 @@ export function fetchUserRecords() {
     }
     
     axios.get(USER_RECORDS, {headers: {authorization: token}})
-    .then(response => console.log(response))
+    .then(response =>
+      dispatch({
+        type: RECORDS_FETCH_USER_RECORDS,
+        payload: response.data
+      }))
     .catch(err => console.log(err));
   }
 }

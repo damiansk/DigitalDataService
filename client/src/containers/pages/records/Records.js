@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Switch, Route, Redirect } from 'react-router';
+
+import { fetchUserRecords } from '../../../actions/records';
 
 import PrimaryHeading from '../../../components/pages/heading/PrimaryHeading';
 import { NavTab, RoutedTabs } from '../../../components/pages/routedTabs';
@@ -11,6 +14,10 @@ class Records extends Component {
     
   }
  
+  componentWillMount() {
+    this.props.fetchUserRecords();
+  }
+  
   render() {
     const { path: currentPath} = this.props.match;
     return (
@@ -35,4 +42,7 @@ class Records extends Component {
   }
 }
 
-export default Records;
+export default connect(
+  ({records}) => ({userRecords: records.userRecords}),
+  {fetchUserRecords}
+)(Records);
