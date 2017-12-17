@@ -44,7 +44,7 @@ exports.getRecords = (req, res) => {
     .then(
       data => {
         res.status(200)
-          .json({...data});
+          .json({records: [...data]});
       },
       err => console.log(err));
 };

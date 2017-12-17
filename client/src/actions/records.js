@@ -56,7 +56,7 @@ export function fetchUserRecords() {
     .then(response =>
       dispatch({
         type: RECORDS_FETCH_USER_RECORDS,
-        payload: response.data
+        payload: response.data.records
       }))
     .catch(err => console.log(err));
   }
