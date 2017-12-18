@@ -8,15 +8,12 @@ const CustomTextArea = ({ input, label, meta: { touched, error }}) => (
       <textarea className={`form-control ${touched && error && 'border border-danger'}`}
                 placeholder={label}
                 {...input}/>
-      {/*{touched && error && <span>{error}</span>}*/}
     </div>
   </div>
 );
 
 CustomTextArea.propTypes = {
-  label: PropTypes.string,
-  type: PropTypes.string,
-  disableArea: PropTypes.bool
+  label: PropTypes.string
 };
 
 export default CustomTextArea;

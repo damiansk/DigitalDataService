@@ -11,11 +11,6 @@ import { PreviewIconLink, EditIconLink, AcceptIconLink } from '../../../componen
 
 class Records extends Component {
   
-  constructor(props) {
-    super(props);
-    
-  }
- 
   componentWillMount() {
     this.props.fetchUserRecords();
   }
@@ -49,9 +44,9 @@ class Records extends Component {
                              className="col-md-2">Keywords</TableColumn>
                 <TableColumn fieldFormatter={() =>
                                 <ul className="nav justify-content-center">
-                                  <li className="nav-item"><PreviewIconLink recordId={321}/></li>
-                                  <li className="nav-item"><EditIconLink recordId={321}/></li>
-                                  <li className="nav-item"><AcceptIconLink recordId={321}/></li>
+                                  <li className="nav-item"><PreviewIconLink recordId={'321'}/></li>
+                                  <li className="nav-item"><EditIconLink recordId={'321'}/></li>
+                                  <li className="nav-item"><AcceptIconLink recordId={'321'}/></li>
                                 </ul>}
                              fieldSelector="actions"
                              className="col-md-2">Actions</TableColumn>
