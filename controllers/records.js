@@ -6,6 +6,7 @@ exports.createRecord = (req, res) => {
   const { id: declarant } = req.user;
   const form = new multiparty.Form();
   
+  //TODO Fix directories structure
   form.parse(req, (err, fields, files) => {
 
     let {files: filesData, record: recordInformation} = fields;
