@@ -6,8 +6,11 @@ import { fetchUserRecords } from '../../../actions/records';
 
 import PrimaryHeading from '../../../components/pages/heading/PrimaryHeading';
 import { NavTab, RoutedTabs } from '../../../components/pages/routedTabs';
-import { Table, TableColumn } from '../../../components/pages/table';
-import { PreviewIconLink, EditIconLink, AcceptIconLink } from '../../../components/pages/iconLinks';
+import NewRecordsTable from '../../../components/pages/recordsTables/NewRecordsTable';
+
+
+
+
 
 class Records extends Component {
   
@@ -30,28 +33,7 @@ class Records extends Component {
         
           <Switch>
             <Route exact path={currentPath} render={() => <Redirect to={`${this.props.match.path}/new`} />}/>
-            <Route path={`${currentPath}/new`} render={() =>
-              <Table data={this.props.userRecords}>
-                <TableColumn fieldFormatter={({firstName, lastName}) => `${firstName} ${lastName}`}
-                             fieldSelector="declarant"
-                             className="col-md-2">Declarant</TableColumn>
-                <TableColumn fieldSelector="title"
-                             className="col-md-4">Title</TableColumn>
-                <TableColumn fieldSelector="resourceType"
-                             className="col-md-2">Type</TableColumn>
-                <TableColumn fieldFormatter={keywords => keywords.join(' ')}
-                             fieldSelector="keywords"
-                             className="col-md-2">Keywords</TableColumn>
-                <TableColumn fieldFormatter={() =>
-                                <ul className="nav justify-content-center">
-                                  <li className="nav-item"><PreviewIconLink recordId={'321'}/></li>
-                                  <li className="nav-item"><EditIconLink recordId={'321'}/></li>
-                                  <li className="nav-item"><AcceptIconLink recordId={'321'}/></li>
-                                </ul>}
-                             fieldSelector="actions"
-                             className="col-md-2">Actions</TableColumn>
-              </Table>
-            }/>
+            <Route path={`${currentPath}/new`} render={() => <NewRecordsTable records={this.props.userRecords}/>}/>
           </Switch>
           
         </article>
