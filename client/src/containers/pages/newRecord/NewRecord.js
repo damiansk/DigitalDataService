@@ -12,25 +12,29 @@ import RecordSummary from './recordSummary/RecordSummary';
 
 class NewRecord extends Component {
   
-  PREVIOUS = -1;
-  NEXT = 1;
-  
   constructor(props) {
     super(props);
     
-    this.state = {
-      currentStep: 'general',
-      stepsList: [
-        {id: 'general', title: 'General information'},
-        {id: 'files', title: 'Attached files'},
-        {id: 'summary', title: 'Summary'}
-      ]
-    };
+    this.state = {currentStep: 0};
     
     this.onSubmit = this.onSubmit.bind(this);
     this.prevStep = this.prevStep.bind(this);
     this.nextStep = this.nextStep.bind(this);
-    this.setStep = this.setStep.bind(this);
+  
+    this.stepsList = [
+      {
+        component: <RecordGeneralInformation onSubmit={this.nextStep}/>,
+        title: 'General information'
+      },
+      {
+        component: <RecordFiles previousPage={this.prevStep} onSubmit={this.nextStep}/>,
+        title: 'Attached files'
+      },
+      {
+        component: <RecordSummary previousPage={this.prevStep} onSubmit={this.onSubmit}/>,
+        title: 'Summary'
+      }
+    ];
   }
   
   componentWillUnmount() {
@@ -38,50 +42,25 @@ class NewRecord extends Component {
   }
   
   prevStep() {
-    this.setStep(this.PREVIOUS);
+    this.setState(({currentStep}) => ({currentStep: currentStep - 1}));
   }
   
   nextStep() {
-    this.setStep(this.NEXT);
-  }
-  
-  setStep(type) {
-    const { currentStep, stepsList } = this.state;
-    const prevIndex = stepsList.findIndex(step => step.id === currentStep) + type;
-    const step = stepsList[prevIndex].id;
-  
-    if (step) {
-      this.setState({
-        currentStep: step
-      });
-    }
+    this.setState(({currentStep}) => ({currentStep: currentStep + 1}));
   }
   
   onSubmit(values) {
     this.props.saveRecord(values);
   }
   
-  generateStep(currentStep) {
-    switch(currentStep) {
-      case 'general':
-        return <RecordGeneralInformation onSubmit={this.nextStep}/>;
-      case 'files':
-        return <RecordFiles previousPage={this.prevStep} onSubmit={this.nextStep}/>;
-      case 'summary':
-        return <RecordSummary previousPage={this.prevStep} onSubmit={this.onSubmit}/>;
-      default:
-        return <div>Error...</div>
-    }
-  }
-  
   render() {
-    const { currentStep, stepsList } = this.state;
+    const { currentStep } = this.state;
     
     return (
       <section>
         <PrimaryHeading title="New record"/>
-        <StepsProgress stepsList={stepsList} currentStep={currentStep} />
-        {this.generateStep(currentStep)}
+        <StepsProgress stepsList={this.stepsList.map(({title}) => title)} currentStep={currentStep} />
+        { this.stepsList[currentStep].component }
       </section>
     )
   }

@@ -5,7 +5,7 @@ const passport = require('passport');
 const Records = require('../controllers/records');
 const Authentication = require('../controllers/authentication');
 
-const uploadDir = './uploaded_files';
+const uploadDir = './files-storage';
 fs.existsSync(uploadDir) || fs.mkdirSync(uploadDir);
 
 
