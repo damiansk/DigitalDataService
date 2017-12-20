@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Route, Switch } from 'react-router';
+import { Route, Switch, Redirect } from 'react-router';
 
 import PrivateRoute from '../pages/auth/privateRoute/PrivateRoute';
 
@@ -26,15 +26,19 @@ class App extends Component {
       <div>
         <Header/>
         <main className="container">
-          <Switch>
-            <Route exact path="/" to="/records" component={() => <div>Welcome!</div>}/>
-            <Route path="/signin" component={SignIn}/>
-            <Route path="/signout" component={SignOut}/>
-            <PrivateRoute path="/new-record" component={NewRecord}/>
-            <PrivateRoute path="/records" component={Records}/>
-            <PrivateRoute path="/account" component={Account}/>
-            <Route component={NoMatch}/>
-          </Switch>
+          {this.props.verificationPending ?
+            <div>Loading...</div>
+            :
+            <Switch>
+              <Route exact path="/" component={() => <Redirect to={{pathname: '/records'}}/>}/>
+              <Route path="/signin" component={SignIn}/>
+              <Route path="/signout" component={SignOut}/>
+              <PrivateRoute path="/new-record" component={NewRecord}/>
+              <PrivateRoute path="/records" component={Records}/>
+              <PrivateRoute path="/account" component={Account}/>
+              <Route component={NoMatch}/>
+            </Switch>
+          }
         </main>
         <Footer/>
       </div>
@@ -44,4 +48,7 @@ class App extends Component {
 
 const Account = () => <div>account</div>;
 
-export default connect(null, {authVerification})(App);
+export default connect(
+  ({auth}) => ({verificationPending: auth.isChecking}),
+  { authVerification }
+)(App);
