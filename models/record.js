@@ -20,7 +20,7 @@ const recordSchema = new Schema({
 recordSchema.statics.getPreviewsOfUserRecords = function(userId) {
   return this.find({declarant: userId})
             .populate('declarant', '-_id firstName lastName')
-            .select('-_id title resourceType keywords');
+            .select('title resourceType keywords');
 };
 
 const ModelClass = mongoose.model('record', recordSchema);
