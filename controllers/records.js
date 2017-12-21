@@ -14,8 +14,8 @@ exports.createRecord = (req, res) => {
     filesData = JSON.parse(filesData);
     recordInformation = JSON.parse(recordInformation);
 
-    const { title, description } = recordInformation;
-  
+    const { title, description, resourceType, keywords } = recordInformation;
+    
     const filesToStore = filesData.map(({description, thumbnail, key}) => ({
       description,
       thumbnail,
@@ -26,9 +26,10 @@ exports.createRecord = (req, res) => {
       declarant,
       title,
       description,
+      resourceType,
+      keywords,
       files: filesToStore
     });
-  
     
     record.save(err => {
       if(err) return next(err);

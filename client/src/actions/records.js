@@ -7,7 +7,7 @@ import {
 } from '../constants/actions';
 import { ADD_RECORD, USER_RECORDS } from '../constants/api';
 
-
+//TODO do this better
 export function saveRecord(record) {
   return dispatch => {
     const token = localStorage.getItem('token');
@@ -16,13 +16,13 @@ export function saveRecord(record) {
       return dispatch({type: UNAUTH_USER});
     }
   
-    console.log(record);
-  
     const {
       files: models = [],
       ...restRecordData
     } = record;
     const formData = new FormData();
+    
+    restRecordData.keywords = restRecordData.keywords.split(' ');
     
     const {files, filesData} =
       models.map(({file, ...rest}, index) => ({
