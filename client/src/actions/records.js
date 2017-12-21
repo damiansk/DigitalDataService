@@ -2,7 +2,6 @@ import axios from 'axios';
 
 import {
   RECORDS_FETCH_USER_RECORDS,
-  RECORDS_SAVE_RECORD,
   RECORD_FETCH,
   UNAUTH_USER
 } from '../constants/actions';
