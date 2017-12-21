@@ -5,7 +5,12 @@ import {
   RECORD_FETCH,
   UNAUTH_USER
 } from '../constants/actions';
-import { ADD_RECORD, USER_RECORDS } from '../constants/api';
+
+import {
+  API_CREATE_RECORD,
+  API_USER_RECORDS
+} from '../constants/api';
+
 
 //TODO do this better
 export function saveRecord(record) {
@@ -41,7 +46,7 @@ export function saveRecord(record) {
     console.log('Form data: ', formData);
     console.log('Files: ', files);
   
-    axios.post(ADD_RECORD, formData, {
+    axios.post(API_CREATE_RECORD, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
         authorization: token
@@ -69,7 +74,7 @@ export function fetchUserRecords() {
       return dispatch({type: UNAUTH_USER});
     }
     
-    axios.get(USER_RECORDS, {headers: {authorization: token}})
+    axios.get(API_USER_RECORDS, {headers: {authorization: token}})
     .then(response =>
       dispatch({
         type: RECORDS_FETCH_USER_RECORDS,

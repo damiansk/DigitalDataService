@@ -1,6 +1,5 @@
-export const ROOT_URL = '';
-export const SIGN_IN = '/signin';
-export const AUTH_VERIFY = '/auth';
-
-export const ADD_RECORD = ROOT_URL + '/records/new';
-export const USER_RECORDS = ROOT_URL + '/records';
+export const API_SIGN_IN = '/signIn';
+export const API_SIGN_UP = '/signup';
+export const API_AUTH_USER = '/auth';
+export const API_CREATE_RECORD = '/records/new';
+export const API_USER_RECORDS = '/records';

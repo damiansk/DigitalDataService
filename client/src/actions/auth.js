@@ -7,12 +7,16 @@ import {
   UNAUTH_USER,
   AUTH_USER_ERROR
 } from '../constants/actions';
-import { AUTH_VERIFY, ROOT_URL, SIGN_IN } from '../constants/api';
+
+import {
+  API_AUTH_USER,
+  API_SIGN_IN
+} from '../constants/api';
 
 
 export function signInUser(email, password, redirect) {
   return dispatch => {
-    axios.post(ROOT_URL + SIGN_IN, { email, password })
+    axios.post(API_SIGN_IN, { email, password })
       .then(response => {
         dispatch({type: AUTH_USER_SUCCESS});
         
@@ -50,7 +54,7 @@ export function authVerification() {
     }
   
     dispatch({type: AUTH_USER_PENDING});
-    axios.post(AUTH_VERIFY, null, {
+    axios.post(API_AUTH_USER, null, {
         headers: {authorization: token}
       })
       .then(({data}) => {
