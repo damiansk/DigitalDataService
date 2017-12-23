@@ -6,7 +6,6 @@
 .wizard-step {
     list-style-type: none;
     float: left;
-    width: 33.33%;
     position: relative;
     text-align: center;
 }

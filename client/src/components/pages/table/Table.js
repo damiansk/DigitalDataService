@@ -1,38 +1,53 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 class Table extends Component {
   
-  constructor(props) {
-    super(props);
-    
-    this.mapColumns = this.mapColumns.bind(this);
+  componentWillMount() {
+    this.fieldsConfig = React.Children
+      .map(this.props.children, ({props}) => props && {
+        selector: props.fieldSelector,
+        formatData: props.fieldFormatter,
+        className: props.className
+      });
   }
   
-  mapColumns() {
-    return this.props
-      .columns
-      .map((column, index) => <th key={index} scope="col">{column.name}</th>);
+  renderRowCells(row, rowIndex) {
+    return this.fieldsConfig.map(({selector, formatData, className}, index) =>
+      <th key={`row${rowIndex}-${index}`}
+          className={`font-weight-light ${className}`}
+          scope="row">
+        {formatData(row[selector]) || '-'}
+      </th>
+    )
+  }
+  
+  renderRows() {
+    return this.props.data.map((row, index) =>
+        <tr key={index}>{this.renderRowCells(row, index)}</tr>
+    );
   }
   
   render() {
     return (
+      <div>
       <table className="table table-responsive-md table-striped table-bordered">
         <thead className="thead-dark">
-          <tr>
-            {this.mapColumns()}
-          </tr>
+          <tr>{this.props.children}</tr>
         </thead>
         <tbody>
-          {this.props.children}
+          {this.renderRows()}
         </tbody>
       </table>
-    );
+        <Link to="/"/>
+      </div>
+    )
   }
 }
 
 Table.propTypes = {
-  columns: PropTypes.array.isRequired
+  data: PropTypes.array
 };
 
 export default Table;

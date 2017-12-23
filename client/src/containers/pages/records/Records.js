@@ -1,94 +1,48 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Switch, Route, Redirect } from 'react-router';
+
+import { fetchUserRecords } from '../../../actions/records';
 
 import PrimaryHeading from '../../../components/pages/heading/PrimaryHeading';
-import ContentTabsNavigation from '../../../components/pages/contentTabsNavigation/ContentTabsNavigation';
-import ContentTabs from '../../../components/pages/contentTabs/ContentTabs';
-import ContentTab from '../../../components/pages/contentTabs/ContentTab';
-import Table from '../../../components/pages/table/Table';
-import TableRow from '../../../components/pages/table/TableRow';
+import { NavTab, RoutedTabs } from '../../../components/pages/routedTabs';
+import NewRecordsTable from '../../../components/pages/recordsTables/NewRecordsTable';
+
+
+
+
 
 class Records extends Component {
   
-  constructor(props) {
-    super(props);
-    
-    this.state = {
-      activeTabId: 'new',
-      columns: ['new','reported','accepted','rejected'],
-      tabsItems: {
-        'new': {name: 'New', id: 'new', isActive: true },
-        'reported': {name: 'Reported', id: 'reported', isActive: false },
-        'accepted': {name: 'Accepted', id: 'accepted', isActive: false },
-        'rejected': {name: 'Rejected', id: 'rejected', isActive: false }
-      }
-    };
-    
-    this.tableContent = {
-      columns: [
-        {name: 'Declarant', size: '2'},
-        {name: 'Title', size: '4'},
-        {name: 'Type', size: '2'},
-        {name: 'Keywords', size: '2'},
-        {name: 'Actions', size: '2'}
-      ],
-      tableRows: [
-        ['Mark', 'Otto', '@mdo', '', null],
-        ['Jacob', 'Thornton', '@fat', '', null],
-        ['Larry', 'the Bird', '@twitter', '', null],
-      ]
-    };
-    
-    this.updateTabsItems = this.updateTabsItems.bind(this);
-    this.mapTableRows = this.mapTableRows.bind(this);
-  }
-  
-  updateTabsItems(item) {
-    const { activeTabId, tabsItems } = this.state;
-    const activeTab = tabsItems[activeTabId];
-    
-    this.setState({
-      activeTabId: item.id,
-      tabsItems: {
-        ...tabsItems,
-        [activeTabId]: {...activeTab, isActive: false},
-        [item.id]: {...item, isActive: true}
-      }
-    });
-  }
-  
-  mapTableRows() {
-    const { columns, tableRows } = this.tableContent;
-    return tableRows
-      .map((row, index) => <TableRow key={index} columns={columns} row={row}/>);
+  componentWillMount() {
+    this.props.fetchUserRecords();
   }
   
   render() {
-    const tabsItems = this.state.tabsItems;
+    const { path: currentPath} = this.props.match;
     return (
       <section>
         <PrimaryHeading title="Records"/>
         <article>
-          <ContentTabsNavigation tabsItems={tabsItems} onClick={this.updateTabsItems}/>
-          <ContentTabs>
-            <ContentTab id={tabsItems['new'].id} isActive={tabsItems['new'].isActive}>
-              <Table columns={this.tableContent.columns}>
-                {this.mapTableRows()}
-              </Table>
-            </ContentTab>
-            <ContentTab id={tabsItems['reported'].id} isActive={tabsItems['reported'].isActive}>
-              Reported
-            </ContentTab>
-            <ContentTab id={tabsItems['accepted'].id} isActive={tabsItems['accepted'].isActive}>
-              Accepted
-            </ContentTab>
-            <ContentTab id={tabsItems['rejected'].id} isActive={tabsItems['rejected'].isActive}>
-              Rejected
-            </ContentTab>
-          </ContentTabs>
+          <RoutedTabs parentPath={currentPath}>
+            <NavTab path="/new">New</NavTab>
+            <NavTab path="/reported">Reported</NavTab>
+            <NavTab path="/accepted">Accepted</NavTab>
+            <NavTab path="/rejected">Rejected</NavTab>
+          </RoutedTabs>
+        
+          <Switch>
+            <Route exact path={currentPath} render={() => <Redirect to={`${this.props.match.path}/new`} />}/>
+            <Route path={`${currentPath}/new`} render={() => <NewRecordsTable records={this.props.userRecords}/>}/>
+          </Switch>
+          
         </article>
       </section>
     )
   }
 }
 
-export default Records;
+export default connect(
+  ({records}) => ({userRecords: records.userRecords}),
+  {fetchUserRecords}
+)(Records);

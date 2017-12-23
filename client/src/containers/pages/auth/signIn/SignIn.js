@@ -16,7 +16,9 @@ class SignIn extends Component {
   }
   
   onSignIn({email, password}) {
-    this.props.signInUser(email, password);
+    const locationState = this.props.location.state;
+    const redirect = (locationState && locationState.from) || '/records';
+    this.props.signInUser(email, password, redirect);
   }
   
   renderErrorMessage() {

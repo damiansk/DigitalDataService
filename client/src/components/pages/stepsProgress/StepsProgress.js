@@ -7,18 +7,21 @@ class StepsProgress extends Component {
   
   render() {
     const { stepsList, currentStep } = this.props;
-    const currentStepId = stepsList.findIndex(step => step.id === currentStep);
     
-    const activeList = stepsList.slice(0, currentStepId + 1);
-    const inactiveList = stepsList.slice(currentStepId + 1);
-    
+    const activeList = stepsList.slice(0, currentStep + 1);
+    const inactiveList = stepsList.slice(currentStep + 1);
+  
     return (
       <nav className="wizard-bar">
-        {activeList.map(({id, title}, index) =>
-          <a key={index} className='wizard-step active'>{title}</a>
+        {activeList.map((title, index) =>
+          <a style={{width: `${100 / stepsList.length}%`}}
+             className='wizard-step active'
+             key={index}>{title}</a>
         )}
-        {inactiveList.map(({id, title}, index) =>
-          <a key={index} className='wizard-step'>{title}</a>
+        {inactiveList.map((title, index) =>
+          <a style={{width: `${100 / stepsList.length}%`}}
+             className='wizard-step'
+             key={index}>{title}</a>
         )}
       </nav>
     )
@@ -27,7 +30,7 @@ class StepsProgress extends Component {
 
 StepsProgress.propTypes = {
   stepsList: PropTypes.array.isRequired,
-  currentStep: PropTypes.string.isRequired
+  currentStep: PropTypes.number.isRequired
 };
 
 export default StepsProgress;

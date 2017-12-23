@@ -6,6 +6,7 @@ exports.createRecord = (req, res) => {
   const { id: declarant } = req.user;
   const form = new multiparty.Form();
   
+  //TODO Fix directories structure
   form.parse(req, (err, fields, files) => {
 
     let {files: filesData, record: recordInformation} = fields;
@@ -13,8 +14,8 @@ exports.createRecord = (req, res) => {
     filesData = JSON.parse(filesData);
     recordInformation = JSON.parse(recordInformation);
 
-    const { title, description } = recordInformation;
-  
+    const { title, description, resourceType, keywords } = recordInformation;
+    
     const filesToStore = filesData.map(({description, thumbnail, key}) => ({
       description,
       thumbnail,
@@ -25,9 +26,10 @@ exports.createRecord = (req, res) => {
       declarant,
       title,
       description,
+      resourceType,
+      keywords,
       files: filesToStore
     });
-  
     
     record.save(err => {
       if(err) return next(err);
@@ -41,9 +43,10 @@ exports.createRecord = (req, res) => {
 
 exports.getRecords = (req, res) => {
   Record.getPreviewsOfUserRecords(req.user.id)
-    .then((err, records) => {
-      console.log(records);
-      
-      res.status(200).send();
-    });
+    .then(
+      data => {
+        res.status(200)
+          .json({records: [...data]});
+      },
+      err => console.log(err));
 };

@@ -1,23 +1,33 @@
 import axios from 'axios';
 
-import { RECORDS_SAVE_RECORD } from '../constants/actions';
-import { ADD_RECORD } from '../constants/api';
+import {
+  RECORDS_FETCH_USER_RECORDS,
+  RECORD_FETCH,
+  UNAUTH_USER
+} from '../constants/actions';
+
+import {
+  API_CREATE_RECORD,
+  API_USER_RECORDS
+} from '../constants/api';
 
 
-//TODO Add validation for receive data
+//TODO do this better
 export function saveRecord(record) {
   return dispatch => {
     const token = localStorage.getItem('token');
   
     if(!token || token === '') {
-      return;
+      return dispatch({type: UNAUTH_USER});
     }
-    
+  
     const {
       files: models = [],
       ...restRecordData
     } = record;
     const formData = new FormData();
+    
+    restRecordData.keywords = restRecordData.keywords.split(' ');
     
     const {files, filesData} =
       models.map(({file, ...rest}, index) => ({
@@ -36,11 +46,40 @@ export function saveRecord(record) {
     console.log('Form data: ', formData);
     console.log('Files: ', files);
   
-    axios.post(ADD_RECORD, formData, {
+    axios.post(API_CREATE_RECORD, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
         authorization: token
       }
     });
   };
+}
+
+export function fetchRecord(recordId) {
+  return dispatch => {
+    const mock = "{\"title\":\"Super Title 11121212\",\"resourceType\":\"Type of resource \",\"keywords\":\"Manga itp itd\",\"destination\":\"Students\",\"description\":\"Super simple description about this record\",\"files\":[{\"file\":{\"preview\":\"blob:http://localhost:3000/1d26ee20-c865-4a53-bc6d-a78b19c9fdfe\"},\"name\":\"Heart.obj\",\"description\":\"Auto generated description for Heart.obj...\",\"thumbnail\":\"\"},{\"file\":{\"preview\":\"blob:http://localhost:3000/47f0014f-1d0f-411d-868e-6fcd614506b8\"},\"name\":\"deer.obj\",\"description\":\"Auto generated description for deer.obj...\",\"thumbnail\":\"\"}]}";
+    
+    dispatch({
+      type: RECORD_FETCH,
+      payload: JSON.parse(mock)
+    })
+  }
+}
+
+export function fetchUserRecords() {
+  return dispatch => {
+    const token = localStorage.getItem('token');
+  
+    if(!token || token === '') {
+      return dispatch({type: UNAUTH_USER});
+    }
+    
+    axios.get(API_USER_RECORDS, {headers: {authorization: token}})
+    .then(response =>
+      dispatch({
+        type: RECORDS_FETCH_USER_RECORDS,
+        payload: response.data.records
+      }))
+    .catch(err => console.log(err));
+  }
 }

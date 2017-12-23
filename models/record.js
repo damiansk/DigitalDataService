@@ -9,6 +9,7 @@ const recordSchema = new Schema({
   title: String,
   description: String,
   resourceType: String,
+  keywords: [String],
   files: [{
     name: String,
     description: String,
@@ -18,7 +19,8 @@ const recordSchema = new Schema({
 
 recordSchema.statics.getPreviewsOfUserRecords = function(userId) {
   return this.find({declarant: userId})
-            .select('title description files.name');
+            .populate('declarant', '-_id firstName lastName')
+            .select('title resourceType keywords');
 };
 
 const ModelClass = mongoose.model('record', recordSchema);
