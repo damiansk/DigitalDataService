@@ -18,11 +18,9 @@ export function signInUser(email, password, redirect) {
   return dispatch => {
     axios.post(API_SIGN_IN, { email, password })
       .then(response => {
+        localStorage.setItem('token', response.data.token);
+        
         dispatch({type: AUTH_USER_SUCCESS});
-        
-        const { token } = response.data;
-        localStorage.setItem('token', token);
-        
         dispatch(push(redirect));
       })
       .catch(() => dispatch(authError('Wrong email or password')));
