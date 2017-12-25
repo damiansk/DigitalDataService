@@ -17,7 +17,7 @@ exports.signup = (req, res, next) => {
   const { email, password, firstName, lastName } = req.body;
   
   if(!email || !password)
-    return res.status(400).send({error: 'You must provide email and password'});
+    return res.status(422).send({error: 'You must provide email and password'});
   
   // TODO Try implement this in a promise chain
   User.findOne({email}, (err, existingUser) => {

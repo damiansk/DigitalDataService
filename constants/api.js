@@ -3,6 +3,7 @@ module.exports = {
   API_SIGN_UP: '/signup',
   API_AUTH_USER: '/auth',
   API_CREATE_RECORD: '/records/new',
-  API_USER_RECORDS: '/records'
+  API_USER_RECORDS: '/records',
+  API_RECORD: '/record/:id'
 };
 

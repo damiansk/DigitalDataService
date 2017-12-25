@@ -10,7 +10,7 @@ exports.createRecord = (req, res) => {
   form.parse(req, (err, fields, files) => {
 
     if(!fields) {
-      return res.status()
+      return res.status(422);
     }
     let {files: filesData, record: recordInformation} = fields;
 
@@ -31,7 +31,8 @@ exports.createRecord = (req, res) => {
       description,
       resourceType,
       keywords,
-      files: filesToStore
+      files: filesToStore,
+      status: 'new'
     });
     
     record.save(err => {
@@ -51,5 +52,24 @@ exports.getRecords = (req, res) => {
                 .json({records: [...data]}),
       err => res.status(500)
               .json({error: 'There was an error when fetching data'})
+    );
+};
+
+exports.getRecord = (req, res) => {
+  // Record.findById(req.params.id, (err, record) => {
+  //   if(err) {
+  //     res.status(500)
+  //       .json({error: 'There was an error when fetching data'});
+  //   }
+  //
+  //   res.status(200)
+  //     .json({record: record});
+  // });
+  Record.getRecord(req.params.id)
+    .then(
+      data => res.status(200)
+        .json({record: data}),
+      err => res.status(500)
+        .json({error: 'There was an error when fetching data'})
     );
 };

@@ -14,13 +14,19 @@ const recordSchema = new Schema({
     name: String,
     description: String,
     thumbnail: String
-  }]
+  }],
+  status: String
 });
 
 recordSchema.statics.getPreviewsOfUserRecords = function(userId) {
   return this.find({declarant: userId})
             .populate('declarant', '-_id firstName lastName')
             .select('title resourceType keywords');
+};
+
+recordSchema.statics.getRecord = function(recordId) {
+  return this.findOne({_id: recordId})
+    .select('-__v -status -files.name');
 };
 
 const ModelClass = mongoose.model('record', recordSchema);
