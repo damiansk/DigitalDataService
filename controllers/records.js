@@ -9,6 +9,9 @@ exports.createRecord = (req, res) => {
   //TODO Fix directories structure
   form.parse(req, (err, fields, files) => {
 
+    if(!fields) {
+      return res.status()
+    }
     let {files: filesData, record: recordInformation} = fields;
 
     filesData = JSON.parse(filesData);
@@ -44,9 +47,9 @@ exports.createRecord = (req, res) => {
 exports.getRecords = (req, res) => {
   Record.getPreviewsOfUserRecords(req.user.id)
     .then(
-      data => {
-        res.status(200)
-          .json({records: [...data]});
-      },
-      err => console.log(err));
+      data => res.status(200)
+                .json({records: [...data]}),
+      err => res.status(500)
+              .json({error: 'There was an error when fetching data'})
+    );
 };

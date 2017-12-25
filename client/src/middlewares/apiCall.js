@@ -20,9 +20,10 @@ export default ({dispatch}) => next => action => {
     params,
     responseType,
     headers,
-    data
+    data,
+    callback
   } = action[API_CALL];
-
+  
   dispatch({type: types.pending});
   axios({
     method: method || 'get',
@@ -35,10 +36,13 @@ export default ({dispatch}) => next => action => {
     params,
     data: data || undefined
   })
-  .then(response => dispatch({
-    type: types.success,
-    payload: response.data
-  }))
+  .then(response => {
+    dispatch({
+      type: types.success,
+      payload: response.data
+    });
+    if(typeof callback === 'function') callback();
+  })
   .catch(() => dispatch({
     type: types.error,
     //TODO Fetch error message from response

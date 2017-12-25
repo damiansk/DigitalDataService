@@ -9,9 +9,6 @@ import { NavTab, RoutedTabs } from '../../../components/pages/routedTabs';
 import NewRecordsTable from '../../../components/pages/recordsTables/NewRecordsTable';
 
 
-
-
-
 class Records extends Component {
   
   componentWillMount() {
@@ -20,6 +17,7 @@ class Records extends Component {
   
   render() {
     const { path: currentPath} = this.props.match;
+    const { userRecords } = this.props;
     return (
       <section>
         <PrimaryHeading title="Records"/>
@@ -33,7 +31,7 @@ class Records extends Component {
         
           <Switch>
             <Route exact path={currentPath} render={() => <Redirect to={`${this.props.match.path}/new`} />}/>
-            <Route path={`${currentPath}/new`} render={() => <NewRecordsTable records={this.props.userRecords}/>}/>
+            <Route path={`${currentPath}/new`} render={() => <NewRecordsTable records={userRecords.list}/>}/>
           </Switch>
           
         </article>
