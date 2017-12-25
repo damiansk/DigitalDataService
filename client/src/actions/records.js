@@ -1,58 +1,35 @@
-import axios from 'axios';
+import { push } from 'react-router-redux';
 
+import { mapRecordToFormData } from '../utils/formMapping';
+import { API_CREATE_RECORD, API_USER_RECORDS } from '../constants/api';
 import {
-  RECORDS_FETCH_USER_RECORDS,
   RECORD_FETCH,
-  UNAUTH_USER
+  RECORD_CREATE_RECORD_PENDING,
+  RECORD_CREATE_RECORD_SUCCESS,
+  RECORD_CREATE_RECORD_ERROR,
+  RECORDS_USER_RECORDS_PENDING,
+  RECORDS_USER_RECORDS_SUCCESS,
+  RECORDS_USER_RECORDS_ERROR,
+  API_CALL
 } from '../constants/actions';
 
-import {
-  API_CREATE_RECORD,
-  API_USER_RECORDS
-} from '../constants/api';
 
-
-//TODO do this better
-export function saveRecord(record) {
-  return dispatch => {
-    const token = localStorage.getItem('token');
-  
-    if(!token || token === '') {
-      return dispatch({type: UNAUTH_USER});
+export function saveRecord(formRecord) {
+  return dispatch => dispatch({
+    type: '',
+    [API_CALL]: {
+      endpoint: API_CREATE_RECORD,
+      headers: {'Content-Type': 'multipart/form-data'},
+      method: 'post',
+      data: mapRecordToFormData(formRecord),
+      types: {
+        pending: RECORD_CREATE_RECORD_PENDING,
+        success: RECORD_CREATE_RECORD_SUCCESS,
+        error: RECORD_CREATE_RECORD_ERROR
+      },
+      callback: () => dispatch(push('/records'))
     }
-  
-    const {
-      files: models = [],
-      ...restRecordData
-    } = record;
-    const formData = new FormData();
-    
-    restRecordData.keywords = restRecordData.keywords.split(' ');
-    
-    const {files, filesData} =
-      models.map(({file, ...rest}, index) => ({
-          file: {file, key: `${index}-${file.name}`},
-          data: {...rest, key: `${index}-${file.name}`}
-      }))
-      .reduce((preVal, {file, data}) => ({
-          files: [...preVal.files, file],
-          filesData: [...preVal.filesData, data]
-        }), {files: [], filesData: []});
-    
-    files.forEach(({file, key}) => formData.append(key, file));
-    formData.append('files', JSON.stringify(filesData));
-    formData.append('record', JSON.stringify(restRecordData));
-  
-    console.log('Form data: ', formData);
-    console.log('Files: ', files);
-  
-    axios.post(API_CREATE_RECORD, formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-        authorization: token
-      }
-    });
-  };
+  });
 }
 
 export function fetchRecord(recordId) {
@@ -67,19 +44,15 @@ export function fetchRecord(recordId) {
 }
 
 export function fetchUserRecords() {
-  return dispatch => {
-    const token = localStorage.getItem('token');
-  
-    if(!token || token === '') {
-      return dispatch({type: UNAUTH_USER});
+  return {
+    type: '',
+    [API_CALL]: {
+      endpoint: API_USER_RECORDS,
+      types: {
+        pending: RECORDS_USER_RECORDS_PENDING,
+        success: RECORDS_USER_RECORDS_SUCCESS,
+        error: RECORDS_USER_RECORDS_ERROR
+      }
     }
-    
-    axios.get(API_USER_RECORDS, {headers: {authorization: token}})
-    .then(response =>
-      dispatch({
-        type: RECORDS_FETCH_USER_RECORDS,
-        payload: response.data.records
-      }))
-    .catch(err => console.log(err));
-  }
+  };
 }

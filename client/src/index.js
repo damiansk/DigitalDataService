@@ -8,6 +8,7 @@ import createHistory from 'history/createBrowserHistory';
 import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
 import reduxThunk from 'redux-thunk';
 
+import callApiMiddleware from './middlewares/apiCall';
 import reducers from './reducers';
 import App from './containers/app/App';
 
@@ -16,7 +17,7 @@ import './index.css';
 
 const history = createHistory();
 const store = createStore(reducers, composeWithDevTools(
-  applyMiddleware(routerMiddleware(history), reduxThunk)
+  applyMiddleware(routerMiddleware(history), reduxThunk, callApiMiddleware)
 ));
 
 ReactDOM.render(
