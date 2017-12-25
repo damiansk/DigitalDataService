@@ -56,16 +56,7 @@ exports.getRecords = (req, res) => {
 };
 
 exports.getRecord = (req, res) => {
-  // Record.findById(req.params.id, (err, record) => {
-  //   if(err) {
-  //     res.status(500)
-  //       .json({error: 'There was an error when fetching data'});
-  //   }
-  //
-  //   res.status(200)
-  //     .json({record: record});
-  // });
-  Record.getRecord(req.params.id)
+  Record.getRecord(req.query.id)
     .then(
       data => res.status(200)
         .json({record: data}),
