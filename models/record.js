@@ -15,7 +15,8 @@ const recordSchema = new Schema({
     description: String,
     thumbnail: String
   }],
-  status: String
+  status: String,
+  data: {type: Date, default: Date.now}
 });
 
 recordSchema.statics.getPreviewsOfUserRecords = function(userId) {
