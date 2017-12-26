@@ -4,10 +4,12 @@ import { reducer as form } from 'redux-form';
 
 import auth from './auth';
 import records from './records';
+import record from './record';
 
 export default combineReducers({
   router,
   form,
   auth,
-  records
+  records,
+  record
 });

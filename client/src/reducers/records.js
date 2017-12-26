@@ -52,6 +52,7 @@ export default (state = initialState, action) => {
         }
       };
   
+    //TODO move this states to RECORD reducer (and fix dependencies)
     case RECORD_CREATE_RECORD_PENDING:
       return {...state, createRecord: {created: false, isPending: true}};
         
