@@ -13,6 +13,7 @@ import Records from '../pages/records/Records';
 import NoMatch from '../../components/404/index';
 
 import { authVerification } from '../../actions/auth';
+import RecordPreview from '../pages/recordPreview/RecordPreview';
 
 
 class App extends Component {
@@ -36,6 +37,7 @@ class App extends Component {
               <PrivateRoute path="/new-record" component={NewRecord}/>
               <PrivateRoute path="/records" component={Records}/>
               <PrivateRoute path="/account" component={Account}/>
+              <PrivateRoute path="/record/preview/:id" component={RecordPreview}/>
               <Route component={NoMatch}/>
             </Switch>
           }
