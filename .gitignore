@@ -10,4 +10,5 @@ yarn-error.log*
 
 config.js
 
-/uploaded_files
+/files-storage
+/temp-files
