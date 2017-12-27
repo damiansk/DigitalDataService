@@ -8,7 +8,7 @@ const initialState = {
   activeRecord: {
     isFetching: false,
     fetched: false,
-    record: {},
+    record: undefined,
     error: ''
   }
 };
@@ -16,20 +16,27 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case RECORD_GET_RECORD_PENDING:
-      return {...state, activeRecord: {fetched: false, isFetching: true}};
+      return {...state, activeRecord: {...state.activeRecord, isFetching: true}};
   
     case RECORD_GET_RECORD_SUCCESS:
       return {
         ...state,
         activeRecord: {
-          fetched: true,
+          ...state.activeRecord,
           isFetching: false,
           record: action.payload.record
         }
       };
   
     case RECORD_GET_RECORD_ERROR:
-      return {...state, activeRecord: {isFetching: false}};
+      return {
+        ...state,
+        activeRecord: {
+          ...state.activeRecord,
+          isFetching: false,
+          record: undefined
+        }
+      };
       
     default:
       return state;
