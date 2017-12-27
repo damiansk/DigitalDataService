@@ -10,7 +10,12 @@ userToken = user => jwt.encode({
 }, config.secret);
 
 exports.signin = (req, res, next) => {
-  res.json({token: userToken(req.user)});
+  const { firstName, lastName } = req.user;
+  
+  res.json({
+    token: userToken(req.user),
+    user: { firstName, lastName }
+  });
 };
 
 exports.signup = (req, res, next) => {
@@ -30,11 +35,21 @@ exports.signup = (req, res, next) => {
     user.save(err => {
       if(err) return next(err);
   
-      res.json({token: userToken(user)});
+      const { firstName, lastName } = user;
+      
+      res.json({
+        token: userToken(user),
+        user: { firstName, lastName }
+      });
     })
   });
 };
 
 exports.verifyAuth = (req, res) => {
-  res.json({token: userToken(req.user)});
+  const { firstName, lastName } = req.user;
+  
+  res.json({
+    token: userToken(req.user),
+    user: { firstName, lastName }
+  });
 };
