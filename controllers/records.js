@@ -17,7 +17,7 @@ exports.createRecord = (req, res) => {
     filesData = JSON.parse(filesData);
     recordInformation = JSON.parse(recordInformation);
 
-    const { title, description, resourceType, keywords } = recordInformation;
+    const { title, description, destination, resourceType, keywords } = recordInformation;
     
     const filesToStore = filesData.map(({description, thumbnail, key}) => ({
       description,
@@ -29,6 +29,7 @@ exports.createRecord = (req, res) => {
       declarant,
       title,
       description,
+      destination,
       resourceType,
       keywords,
       files: filesToStore,
@@ -60,7 +61,7 @@ exports.getRecord = (req, res) => {
     .then(
       data => res.status(200)
         .json({record: data}),
-      err => res.status(500)
-        .json({error: 'There was an error when fetching data'})
+      err => res.status(422)
+        .json({error: 'Record not found'})
     );
 };

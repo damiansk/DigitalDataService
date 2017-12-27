@@ -8,6 +8,7 @@ const recordSchema = new Schema({
   },
   title: String,
   description: String,
+  destination: String,
   resourceType: String,
   keywords: [String],
   files: [{
@@ -16,7 +17,7 @@ const recordSchema = new Schema({
     thumbnail: String
   }],
   status: String,
-  data: {type: Date, default: Date.now}
+  date: {type: Date, default: Date.now}
 });
 
 recordSchema.statics.getPreviewsOfUserRecords = function(userId) {
@@ -27,6 +28,7 @@ recordSchema.statics.getPreviewsOfUserRecords = function(userId) {
 
 recordSchema.statics.getRecord = function(recordId) {
   return this.findOne({_id: recordId})
+    .populate('declarant', '-_id firstName lastName')
     .select('-__v -status -files.name');
 };
 
