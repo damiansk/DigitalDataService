@@ -10,7 +10,8 @@ const {
   API_CREATE_RECORD,
   API_SIGN_IN,
   API_SIGN_UP,
-  API_USER_RECORDS
+  API_USER_RECORDS,
+  API_RECORD
 } = require('../constants/api');
 
 const uploadDir = './files-storage';
@@ -31,4 +32,5 @@ module.exports = app => {
   
   app.post(API_CREATE_RECORD, requireAuth, Records.createRecord);
   app.get(API_USER_RECORDS, requireAuth, Records.getRecords);
+  app.get(API_RECORD, requireAuth, Records.getRecord);
 };

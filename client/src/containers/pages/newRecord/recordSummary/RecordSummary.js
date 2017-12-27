@@ -17,7 +17,7 @@ class RecordSummary extends Component {
     return (
       <article className="container">
         <RecordPreview date={new Date()}
-                       declarant="Damian Stolarek"
+                       declarant={this.props.user}
                        {...record} />
         <form onSubmit={handleSubmit}>
           <div>
@@ -39,7 +39,10 @@ class RecordSummary extends Component {
 }
 
 RecordSummary = connect(
-  ({form}) => ({record: form.wizard.values})
+  ({form, auth}) => ({
+    record: form.wizard.values,
+    user: auth.user
+  })
 )(RecordSummary);
 
 export default reduxForm({

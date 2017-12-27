@@ -37,7 +37,7 @@ class RecordPreview extends Component {
           <div className="col-6">
             <div className="row">
               <h5 className="col col-md-5">Declarant</h5>
-              <p className="col-md-7">{declarant}</p>
+              <p className="col-md-7">{`${declarant.firstName} ${declarant.lastName}`}</p>
             </div>
             <div className="row">
               <h5 className="col col-md-5">Date</h5>
@@ -81,12 +81,12 @@ class RecordPreview extends Component {
 }
 
 RecordPreview.propTypes = {
-  declarant: PropTypes.string.isRequired,
-  date: PropTypes.instanceOf(Date).isRequired,
+  declarant: PropTypes.object.isRequired,
+  date: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   resourceType: PropTypes.string.isRequired,
-  keywords: PropTypes.string,
-  destination: PropTypes.string,
+  keywords: PropTypes.string.isRequired,
+  destination: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   files: PropTypes.array
 };

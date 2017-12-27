@@ -10,6 +10,7 @@ import SignIn from '../pages/auth/signIn/SignIn';
 import SignOut from '../pages/auth/singOut/SignOut';
 import NewRecord from '../pages/newRecord/NewRecord';
 import Records from '../pages/records/Records';
+import Preview from '../pages/preview/Preview';
 import NoMatch from '../../components/404/index';
 
 import { authVerification } from '../../actions/auth';
@@ -36,6 +37,7 @@ class App extends Component {
               <PrivateRoute path="/new-record" component={NewRecord}/>
               <PrivateRoute path="/records" component={Records}/>
               <PrivateRoute path="/account" component={Account}/>
+              <PrivateRoute path="/record/preview/:id" component={Preview}/>
               <Route component={NoMatch}/>
             </Switch>
           }

@@ -10,14 +10,19 @@ userToken = user => jwt.encode({
 }, config.secret);
 
 exports.signin = (req, res, next) => {
-  res.json({token: userToken(req.user)});
+  const { firstName, lastName } = req.user;
+  
+  res.json({
+    token: userToken(req.user),
+    user: { firstName, lastName }
+  });
 };
 
 exports.signup = (req, res, next) => {
   const { email, password, firstName, lastName } = req.body;
   
   if(!email || !password)
-    return res.status(400).send({error: 'You must provide email and password'});
+    return res.status(422).send({error: 'You must provide email and password'});
   
   // TODO Try implement this in a promise chain
   User.findOne({email}, (err, existingUser) => {
@@ -30,11 +35,21 @@ exports.signup = (req, res, next) => {
     user.save(err => {
       if(err) return next(err);
   
-      res.json({token: userToken(user)});
+      const { firstName, lastName } = user;
+      
+      res.json({
+        token: userToken(user),
+        user: { firstName, lastName }
+      });
     })
   });
 };
 
 exports.verifyAuth = (req, res) => {
-  res.json({token: userToken(req.user)});
+  const { firstName, lastName } = req.user;
+  
+  res.json({
+    token: userToken(req.user),
+    user: { firstName, lastName }
+  });
 };

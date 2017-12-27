@@ -20,7 +20,10 @@ export function signInUser(email, password, redirect) {
       .then(response => {
         localStorage.setItem('token', response.data.token);
         
-        dispatch({type: AUTH_USER_SUCCESS});
+        dispatch({
+          type: AUTH_USER_SUCCESS,
+          payload: response.data.user
+        });
         dispatch(push(redirect));
       })
       .catch(() => dispatch(authError('Wrong email or password')));
@@ -57,7 +60,10 @@ export function authVerification() {
       })
       .then(({data}) => {
         localStorage.setItem('token', data.token);
-        dispatch({type: AUTH_USER_SUCCESS});
+        dispatch({
+          type: AUTH_USER_SUCCESS,
+          payload: data.user
+        });
       })
       .catch(() => signOutUser());
   }
