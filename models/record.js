@@ -30,7 +30,12 @@ recordSchema.statics.getPreviewsOfUserRecords = function(userId) {
 recordSchema.statics.getRecord = function(recordId) {
   return this.findOne({_id: recordId})
     .populate('declarant', '-_id firstName lastName')
-    .select('-__v -status -files.name');
+    .select('-__v -status -files.path');
+};
+
+recordSchema.statics.getRecordFiles = function(recordID) {
+  return this.findOne({_id: recordID})
+    .select('-_id files');
 };
 
 const ModelClass = mongoose.model('record', recordSchema);

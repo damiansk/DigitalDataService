@@ -11,7 +11,8 @@ const {
   API_SIGN_IN,
   API_SIGN_UP,
   API_USER_RECORDS,
-  API_RECORD
+  API_RECORD,
+  API_RECORD_FILE
 } = require('../constants/api');
 
 
@@ -30,4 +31,5 @@ module.exports = app => {
   app.post(API_CREATE_RECORD, requireAuth, Records.createRecord);
   app.get(API_USER_RECORDS, requireAuth, Records.getRecords);
   app.get(API_RECORD, requireAuth, Records.getRecord);
+  app.get(API_RECORD_FILE, requireAuth, Records.getRecordFile);
 };

@@ -5,9 +5,12 @@ const multiparty = require('multiparty');
 const Record = require('../models/record');
 
 
-const temporaryFilesUploadDir = './temp-files',
-      uploadDir = './files-storage';
+const rootDir = './storage',
+      temporaryFilesUploadDir = rootDir + '/temp-files',
+      uploadDir = rootDir + '/files-storage';
+fs.existsSync(rootDir) || fs.mkdirSync(rootDir);
 fs.existsSync(temporaryFilesUploadDir) || fs.mkdirSync(temporaryFilesUploadDir);
+fs.existsSync(uploadDir) || fs.mkdirSync(uploadDir);
 
 exports.createRecord = (req, res) => {
   const { id: declarant } = req.user;
@@ -80,5 +83,24 @@ exports.getRecord = (req, res) => {
         .json({record: data}),
       err => res.status(422)
         .json({error: 'Record not found'})
+    );
+};
+
+exports.getRecordFile = (req, res) => {
+  const { recordID } = req.params;
+  const fileID = req.query.id;
+  Record.getRecordFiles(recordID)
+    .then(
+      ({files}) => {
+        const file = files.find(file => file['_id'].equals(fileID));
+        
+        if(file) {
+          res.status(200)
+            .download(path.join(__dirname, '../', file.path), file.name);
+        } else {
+          res.send(404);
+        }
+      },
+      err => console.log(err)
     );
 };
