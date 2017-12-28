@@ -4,3 +4,4 @@ export const API_AUTH_USER = '/auth';
 export const API_CREATE_RECORD = '/records/new';
 export const API_USER_RECORDS = '/records';
 export const API_GET_RECORD = '/record';
+export const API_GET_RECORD_FILE = '/record/:recordId/file';
