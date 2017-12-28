@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import dateFormat from 'dateformat';
 import PropTypes from 'prop-types';
 
+import { fetchFile } from '../../../actions/file';
 import SecondaryHeading from '../heading/SecondaryHeading';
+import FileDetails from '../fileDetails/FileDetails';
 
 class RecordPreview extends Component {
   
@@ -15,7 +18,12 @@ class RecordPreview extends Component {
   
   mapFilesToList() {
     return this.props
-      .files.map((file, index) => <li key={index}>File</li>);
+      .files.map((file, index) =>
+        <li key={index}>
+          <FileDetails fetchFile={() => this.props.fetchFile(this.props['_id'], file['_id'])}
+                       file={file}/>
+        </li>
+      );
   }
   
   render() {
@@ -91,4 +99,4 @@ RecordPreview.propTypes = {
   files: PropTypes.array
 };
 
-export default RecordPreview;
+export default connect(null, {fetchFile})(RecordPreview);
