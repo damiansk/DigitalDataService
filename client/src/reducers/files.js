@@ -1,7 +1,8 @@
 import {
   RECORD_GET_RECORD_FILE_ERROR,
   RECORD_GET_RECORD_FILE_PENDING,
-  RECORD_GET_RECORD_FILE_SUCCESS
+  RECORD_GET_RECORD_FILE_SUCCESS,
+  RECORD_RESET_RECORD_FILES
 } from '../constants/actions';
 
 const initialState = {
@@ -35,6 +36,9 @@ export default (state = initialState, action) => {
     
     case RECORD_GET_RECORD_FILE_ERROR:
       return {...state, isFetching: false, error: action.payload.error};
+      
+    case RECORD_RESET_RECORD_FILES:
+      return initialState;
       
     default:
       return state;

@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 class FileDetails extends Component {
   
   render() {
-    const { name } = this.props.file;
+    const { name } = this.props.fileDetails;
     
     return (
       <div className="container mb-4">
@@ -23,8 +23,9 @@ class FileDetails extends Component {
 
 
 FileDetails.propTypes = {
-  file: PropTypes.object.isRequired,
-  fetchFile: PropTypes.func.isRequired
+  file: PropTypes.instanceOf(File),
+  fetchFile: PropTypes.func.isRequired,
+  fileDetails: PropTypes.object.isRequired
 };
 
 export default FileDetails;

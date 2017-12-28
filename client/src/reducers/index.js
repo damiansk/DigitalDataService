@@ -5,7 +5,7 @@ import { reducer as form } from 'redux-form';
 import auth from './auth';
 import records from './records';
 import record from './record';
-import file from './file';
+import files from './files';
 
 export default combineReducers({
   router,
@@ -13,5 +13,5 @@ export default combineReducers({
   auth,
   records,
   record,
-  file
+  files
 });

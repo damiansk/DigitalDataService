@@ -2,7 +2,8 @@ import {
   API_CALL,
   RECORD_GET_RECORD_FILE_ERROR,
   RECORD_GET_RECORD_FILE_PENDING,
-  RECORD_GET_RECORD_FILE_SUCCESS
+  RECORD_GET_RECORD_FILE_SUCCESS,
+  RECORD_RESET_RECORD_FILES
 } from '../constants/actions';
 import { API_GET_RECORD_FILE } from '../constants/api';
 
@@ -20,5 +21,10 @@ export function fetchFile(recordId, fileId) {
       }
     }
   };
-  
+}
+
+export function removeFiles() {
+  return {
+    type: RECORD_RESET_RECORD_FILES
+  }
 }
