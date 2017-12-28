@@ -93,10 +93,16 @@ exports.getRecordFile = (req, res) => {
     .then(
       ({files}) => {
         const file = files.find(file => file['_id'].equals(fileID));
-        
         if(file) {
           res.status(200)
-            .download(path.join(__dirname, '../', file.path), file.name);
+            .download(
+              path.join(__dirname, '../', file.path),
+              file.name,
+              {headers: {
+                'content-type': 'multipart/form-data',
+                'content-id': fileID
+              }}
+            );
         } else {
           res.send(404);
         }
