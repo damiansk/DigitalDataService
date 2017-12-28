@@ -10,5 +10,4 @@ yarn-error.log*
 
 config.js
 
-/files-storage
-/temp-files
+/storage
