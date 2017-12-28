@@ -14,7 +14,8 @@ const recordSchema = new Schema({
   files: [{
     name: String,
     description: String,
-    thumbnail: String
+    thumbnail: String,
+    path: String
   }],
   status: String,
   date: {type: Date, default: Date.now}

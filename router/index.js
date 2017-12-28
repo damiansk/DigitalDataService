@@ -14,9 +14,6 @@ const {
   API_RECORD
 } = require('../constants/api');
 
-const uploadDir = './files-storage';
-fs.existsSync(uploadDir) || fs.mkdirSync(uploadDir);
-
 
 const requireAuth = passport.authenticate('jwt', {session: false});
 const requireSignin = passport.authenticate('local', {session: false});

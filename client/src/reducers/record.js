@@ -7,7 +7,6 @@ import {
 const initialState = {
   activeRecord: {
     isFetching: false,
-    fetched: false,
     record: undefined,
     error: ''
   }
