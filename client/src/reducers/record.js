@@ -23,7 +23,7 @@ export default (state = initialState, action) => {
         activeRecord: {
           ...state.activeRecord,
           isFetching: false,
-          record: action.payload.record
+          record: action.payload.data.record
         }
       };
   

@@ -1,5 +1,4 @@
 import {
-  RECORD_GET_RECORD_PENDING,
   RECORDS_USER_RECORDS_ERROR,
   RECORDS_USER_RECORDS_PENDING,
   RECORDS_USER_RECORDS_SUCCESS,
@@ -38,7 +37,7 @@ export default (state = initialState, action) => {
         ...state,
         userRecords: {
           ...state.userRecords,
-          list: action.payload.records,
+          list: action.payload.data.records,
           isPending: false
         }
       };
@@ -61,9 +60,6 @@ export default (state = initialState, action) => {
         
     case RECORD_CREATE_RECORD_ERROR:
       return {...state, createRecord: {isPending: false}};
-      
-    case RECORD_GET_RECORD_PENDING:
-      return {...state, fetchedRecord: action.payload};
       
     default:
       return state;
