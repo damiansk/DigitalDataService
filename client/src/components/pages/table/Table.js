@@ -32,15 +32,18 @@ class Table extends Component {
   render() {
     return (
       <div>
-      <table className="table table-responsive-md table-striped table-bordered">
-        <thead className="thead-dark">
-          <tr>{this.props.children}</tr>
-        </thead>
-        <tbody>
-          {this.renderRows()}
-        </tbody>
-      </table>
-        <Link to="/"/>
+        <table className="table table-responsive-sm table-striped table-bordered">
+          <thead className="thead-dark">
+            <tr>{this.props.children}</tr>
+          </thead>
+          <tbody>
+            {this.renderRows()}
+          </tbody>
+        </table>
+        {
+          (!this.props.data || !this.props.data.length)
+          && <p className="text-center font-weight-light mt-4">No data to show</p>
+        }
       </div>
     )
   }

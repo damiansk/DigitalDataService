@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import dateFormat from 'dateformat';
 import PropTypes from 'prop-types';
 
+import { fetchFile, removeFiles } from '../../../actions/file';
 import SecondaryHeading from '../heading/SecondaryHeading';
+import FileDetails from '../fileDetails/FileDetails';
 
 class RecordPreview extends Component {
   
@@ -13,9 +16,19 @@ class RecordPreview extends Component {
     this.secondTitle = 'Attached files';
   }
   
+  componentWillUnmount() {
+    this.props.removeFiles();
+  }
+  
   mapFilesToList() {
     return this.props
-      .files.map((file, index) => <li key={index}>File</li>);
+      .files.map((file, index) =>
+        <li key={index}>
+          <FileDetails fetchFile={() => this.props.fetchFile(this.props['_id'], file['_id'])}
+                       file={this.props.fetchedFiles[file['_id']]}
+                       fileDetails={file}/>
+        </li>
+      );
   }
   
   render() {
@@ -91,4 +104,7 @@ RecordPreview.propTypes = {
   files: PropTypes.array
 };
 
-export default RecordPreview;
+export default connect(
+  ({files}) => ({fetchedFiles: files.fetchedFiles}),
+  {fetchFile, removeFiles}
+)(RecordPreview);

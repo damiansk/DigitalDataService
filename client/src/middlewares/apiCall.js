@@ -39,7 +39,7 @@ export default ({dispatch}) => next => action => {
   .then(response => {
     dispatch({
       type: types.success,
-      payload: response.data
+      payload: response,
     });
     if(typeof callback === 'function') callback();
   })
