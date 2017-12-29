@@ -66,13 +66,23 @@ exports.createRecord = (req, res) => {
   
 };
 
-exports.getRecords = (req, res) => {
+exports.getUserRecords = (req, res) => {
   Record.getPreviewsOfUserRecords(req.user.id)
     .then(
       data => res.status(200)
                 .json({records: [...data]}),
       err => res.status(500)
               .json({error: 'There was an error when fetching data'})
+    );
+};
+
+exports.getReportedRecords = (req, res) => {
+  Record.getPreviewsOfReportedRecords(req.user.id)
+    .then(
+      data => res.status(200)
+        .json({records: [...data]}),
+      err => res.status(500)
+        .json({error: 'There was an error when fetching data'})
     );
 };
 

@@ -27,6 +27,13 @@ recordSchema.statics.getPreviewsOfUserRecords = function(userId) {
             .select('title resourceType keywords');
 };
 
+recordSchema.statics.getPreviewsOfReportedRecords = function(userId) {
+  // return this.find({status: 'reported', declarant: {$not: userId}})
+  return this.find({status: 'reported'})
+    .populate('declarant', '-_id firstName lastName')
+    .select('title resourceType keywords');
+};
+
 recordSchema.statics.getRecord = function(recordId) {
   return this.findOne({_id: recordId})
     .populate('declarant', '-_id firstName lastName')
