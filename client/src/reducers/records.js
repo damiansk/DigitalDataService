@@ -4,7 +4,8 @@ import {
   RECORDS_USER_RECORDS_SUCCESS,
   RECORD_CREATE_RECORD_PENDING,
   RECORD_CREATE_RECORD_SUCCESS,
-  RECORD_CREATE_RECORD_ERROR
+  RECORD_CREATE_RECORD_ERROR, RECORDS_REPORTED_RECORDS_PENDING, RECORDS_REPORTED_RECORDS_SUCCESS,
+  RECORDS_REPORTED_RECORDS_ERROR
 } from '../constants/actions';
 
 const initialState = {
@@ -13,11 +14,15 @@ const initialState = {
     isPending: false,
     error: ''
   },
+  reportedRecords: {
+    list: [],
+    isPending: false,
+    error: ''
+  },
   createRecord: {
     created: false,
     isPending: false
-  },
-  fetchedRecord: {}
+  }
 };
 
 export default (state = initialState, action) => {
@@ -51,6 +56,34 @@ export default (state = initialState, action) => {
         }
       };
   
+    case RECORDS_REPORTED_RECORDS_PENDING:
+      return {
+        ...state,
+        reportedRecords: {
+          ...state.reportedRecords,
+          isPending: true
+        }
+      };
+  
+    case RECORDS_REPORTED_RECORDS_SUCCESS:
+      return {
+        ...state,
+        reportedRecords: {
+          ...state.reportedRecords,
+          list: action.payload.data.records,
+          isPending: false
+        }
+      };
+  
+    case RECORDS_REPORTED_RECORDS_ERROR:
+      return {
+        ...state,
+        reportedRecords: {
+          isPending: false,
+          error: action.payload.error
+        }
+      };
+      
     //TODO move this states to RECORD reducer (and fix dependencies)
     case RECORD_CREATE_RECORD_PENDING:
       return {...state, createRecord: {created: false, isPending: true}};
