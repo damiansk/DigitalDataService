@@ -5,4 +5,5 @@ export const API_CREATE_RECORD = '/records/new';
 export const API_USER_RECORDS = '/records';
 export const API_REPORTED_RECORDS = '/records/reported';
 export const API_GET_RECORD = '/record';
+export const API_REPORT_RECORD = '/record/report';
 export const API_GET_RECORD_FILE = '/record/:recordId/file';

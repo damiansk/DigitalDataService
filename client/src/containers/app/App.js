@@ -39,7 +39,7 @@ class App extends Component {
               <PrivateRoute path="/records" component={Records}/>
               <PrivateRoute path="/account" component={Account}/>
               <PrivateRoute path="/record/preview/:id" component={Preview}/>
-              <PrivateRoute path="/record/update_status/:id/:status" component={UpdateStatus}/>
+              <PrivateRoute path="/record/update_status/:recordId/:newStatus" component={UpdateStatus}/>
               <Route component={NoMatch}/>
             </Switch>
           }
