@@ -6,6 +6,7 @@ module.exports = {
   API_USER_RECORDS: '/records',
   API_REPORTED_RECORDS: '/records/reported',
   API_RECORD: '/record',
+  API_REPORT_RECORD: '/record/report',
   API_RECORD_FILE: '/record/:recordID/file'
 };
 

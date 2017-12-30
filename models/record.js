@@ -22,7 +22,7 @@ const recordSchema = new Schema({
 });
 
 recordSchema.statics.getPreviewsOfUserRecords = function(userId) {
-  return this.find({declarant: userId})
+  return this.find({declarant: userId, status: 'new'})
             .populate('declarant', '-_id firstName lastName')
             .select('title resourceType keywords');
 };

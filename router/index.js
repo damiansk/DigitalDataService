@@ -3,6 +3,7 @@ const passportService = require('../services/passport');
 const passport = require('passport');
 
 const Records = require('../controllers/records');
+const Record = require('../controllers/record');
 const Authentication = require('../controllers/authentication');
 
 const {
@@ -13,6 +14,7 @@ const {
   API_USER_RECORDS,
   API_REPORTED_RECORDS,
   API_RECORD,
+  API_REPORT_RECORD,
   API_RECORD_FILE
 } = require('../constants/api');
 
@@ -33,5 +35,6 @@ module.exports = app => {
   app.get(API_USER_RECORDS, requireAuth, Records.getUserRecords);
   app.get(API_REPORTED_RECORDS, requireAuth, Records.getReportedRecords);
   app.get(API_RECORD, requireAuth, Records.getRecord);
+  app.put(API_REPORT_RECORD, requireAuth, Record.reportRecord);
   app.get(API_RECORD_FILE, requireAuth, Records.getRecordFile);
 };

@@ -49,7 +49,7 @@ export default (state = initialState, action) => {
       return {...state, recordStatus: {isPending: true, updated: false}};
       
     case RECORD_REPORT_RECORD_SUCCESS:
-      return {...state, recordStatus: {isPending: true, updated: true}};
+      return {...state, recordStatus: {isPending: false, updated: true}};
       
     case RECORD_REPORT_RECORD_ERROR:
       return {
