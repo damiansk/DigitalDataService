@@ -43,10 +43,13 @@ export default ({dispatch}) => next => action => {
     });
     if(typeof callback === 'function') callback();
   })
-  .catch(() => dispatch({
-    type: types.error,
-    //TODO Fetch error message from response
-    // payload: response.data
-  }));
+  .catch(({response}) => {
+    dispatch({
+      type: types.error,
+      //TODO Fetch error message from response
+      // payload: response
+      payload: {data:{error: 'err'}}
+    })
+  });
   
 };

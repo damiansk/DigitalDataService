@@ -10,6 +10,7 @@ export function reportRecord(recordId) {
   return {
     type: '',
     [API_CALL]: {
+      method: 'put',
       endpoint: API_REPORT_RECORD,
       params: {id: recordId},
       types: {
