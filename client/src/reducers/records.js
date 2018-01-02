@@ -5,7 +5,8 @@ import {
   RECORD_CREATE_RECORD_PENDING,
   RECORD_CREATE_RECORD_SUCCESS,
   RECORD_CREATE_RECORD_ERROR, RECORDS_REPORTED_RECORDS_PENDING, RECORDS_REPORTED_RECORDS_SUCCESS,
-  RECORDS_REPORTED_RECORDS_ERROR
+  RECORDS_REPORTED_RECORDS_ERROR, API_GET_ACCEPTED_RECORDS_PENDING, API_GET_ACCEPTED_RECORDS_SUCCESS,
+  API_GET_ACCEPTED_RECORDS_ERROR
 } from '../constants/actions';
 
 const initialState = {
@@ -15,6 +16,11 @@ const initialState = {
     error: ''
   },
   reportedRecords: {
+    list: [],
+    isPending: false,
+    error: ''
+  },
+  acceptedRecords: {
     list: [],
     isPending: false,
     error: ''
@@ -79,6 +85,34 @@ export default (state = initialState, action) => {
       return {
         ...state,
         reportedRecords: {
+          isPending: false,
+          error: action.payload.error
+        }
+      };
+  
+    case API_GET_ACCEPTED_RECORDS_PENDING:
+      return {
+        ...state,
+        acceptedRecords: {
+          ...state.acceptedRecords,
+          isPending: true
+        }
+      };
+  
+    case API_GET_ACCEPTED_RECORDS_SUCCESS:
+      return {
+        ...state,
+        acceptedRecords: {
+          ...state.acceptedRecords,
+          list: action.payload.data.records,
+          isPending: false
+        }
+      };
+  
+    case API_GET_ACCEPTED_RECORDS_ERROR:
+      return {
+        ...state,
+        acceptedRecords: {
           isPending: false,
           error: action.payload.error
         }
