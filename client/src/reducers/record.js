@@ -4,7 +4,7 @@ import {
   RECORD_GET_RECORD_ERROR,
   RECORD_REPORT_RECORD_PENDING,
   RECORD_REPORT_RECORD_SUCCESS,
-  RECORD_REPORT_RECORD_ERROR
+  RECORD_REPORT_RECORD_ERROR, RECORD_ACCEPT_RECORD_PENDING, RECORD_ACCEPT_RECORD_SUCCESS, RECORD_ACCEPT_RECORD_ERROR
 } from '../constants/actions';
 
 const initialState = {
@@ -52,6 +52,22 @@ export default (state = initialState, action) => {
       return {...state, recordStatus: {isPending: false, updated: true}};
       
     case RECORD_REPORT_RECORD_ERROR:
+      return {
+        ...state,
+        recordStatus: {
+          error: action.payload.data.error,
+          isPending: false,
+          updated: false
+        }
+      };
+      
+    case RECORD_ACCEPT_RECORD_PENDING:
+      return {...state, recordStatus: {isPending: true, updated: false}};
+  
+    case RECORD_ACCEPT_RECORD_SUCCESS:
+      return {...state, recordStatus: {isPending: false, updated: true}};
+  
+    case RECORD_ACCEPT_RECORD_ERROR:
       return {
         ...state,
         recordStatus: {

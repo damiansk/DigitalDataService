@@ -1,7 +1,7 @@
 import { push } from 'react-router-redux';
 
 import { mapRecordToFormData } from '../utils/formMapping';
-import { API_CREATE_RECORD, API_GET_RECORD, API_REPORTED_RECORDS, API_USER_RECORDS } from '../constants/api';
+import { API_CREATE_RECORD, API_GET_RECORD, API_GET_REPORTED_RECORDS, API_GET_USER_RECORDS } from '../constants/api';
 import {
   RECORD_CREATE_RECORD_PENDING,
   RECORD_CREATE_RECORD_SUCCESS,
@@ -53,7 +53,7 @@ export function fetchUserRecords() {
   return {
     type: '',
     [API_CALL]: {
-      endpoint: API_USER_RECORDS,
+      endpoint: API_GET_USER_RECORDS,
       types: {
         pending: RECORDS_USER_RECORDS_PENDING,
         success: RECORDS_USER_RECORDS_SUCCESS,
@@ -67,7 +67,7 @@ export function fetchReportedRecords() {
   return {
     type: '',
     [API_CALL]: {
-      endpoint: API_REPORTED_RECORDS,
+      endpoint: API_GET_REPORTED_RECORDS,
       types: {
         pending: RECORDS_REPORTED_RECORDS_PENDING,
         success: RECORDS_REPORTED_RECORDS_SUCCESS,
