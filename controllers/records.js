@@ -87,7 +87,7 @@ exports.getReportedRecords = (req, res) => {
 };
 
 exports.getAcceptedRecords = (req, res) => {
-  Record.getPreviewsOfReportedRecords(req.user.id)
+  Record.getPreviewsOfAcceptedRecords(req.user.id)
     .then(
       data => res.status(200)
         .json({records: [...data]}),

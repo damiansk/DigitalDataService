@@ -13,8 +13,10 @@ const {
   API_SIGN_UP,
   API_USER_RECORDS,
   API_REPORTED_RECORDS,
+  API_ACCEPTED_RECORDS,
   API_RECORD,
   API_REPORT_RECORD,
+  API_ACCEPT_RECORD,
   API_RECORD_FILE
 } = require('../constants/api');
 
@@ -40,4 +42,5 @@ module.exports = app => {
   app.get(API_RECORD_FILE, requireAuth, Records.getRecordFile);
   
   app.put(API_REPORT_RECORD, requireAuth, Record.reportRecord);
+  app.put(API_ACCEPT_RECORD, requireAuth, Record.acceptRecord);
 };

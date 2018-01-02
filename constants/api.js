@@ -8,6 +8,7 @@ module.exports = {
   API_ACCEPTED_RECORDS: '/records/accepted',
   API_RECORD: '/record',
   API_REPORT_RECORD: '/record/report',
+  API_ACCEPT_RECORD: '/record/accept',
   API_RECORD_FILE: '/record/:recordID/file'
 };
 
