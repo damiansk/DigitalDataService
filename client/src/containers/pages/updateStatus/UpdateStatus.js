@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { goBack } from 'react-router-redux';
 
-import { reportRecord } from '../../../actions/record';
+import { reportRecord, acceptRecord } from '../../../actions/record';
+
 
 class UpdateStatus extends Component {
   
@@ -10,7 +11,8 @@ class UpdateStatus extends Component {
     super(props);
     
     this.updateRecordStatus = {
-      'report': this.props.reportRecord
+      'report': this.props.reportRecord,
+      'accept': this.props.acceptRecord
     }
   }
   
@@ -47,5 +49,5 @@ class UpdateStatus extends Component {
 
 export default connect(
   ({record}) => ({recordStatus: record.recordStatus}),
-  {reportRecord, goBack}
+  {reportRecord, acceptRecord, goBack}
 )(UpdateStatus);
