@@ -65,6 +65,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         userRecords: {
+          ...state.userRecords,
           isPending: false,
           error: action.payload.error
         }
@@ -93,6 +94,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         reportedRecords: {
+          ...state.reportedRecords,
           isPending: false,
           error: action.payload.error
         }
@@ -121,6 +123,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         acceptedRecords: {
+          ...state.acceptedRecords,
           isPending: false,
           error: action.payload.error
         }
@@ -149,6 +152,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         rejectedRecords: {
+          ...state.rejectedRecords,
           isPending: false,
           error: action.payload.error
         }
@@ -177,6 +181,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         publicRecords: {
+          ...state.publicRecords,
           isPending: false,
           error: action.payload.error
         }

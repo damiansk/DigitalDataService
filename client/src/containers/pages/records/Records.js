@@ -5,17 +5,24 @@ import { Switch, Route, Redirect } from 'react-router';
 import {
   fetchUserRecords,
   fetchReportedRecords,
-  fetchAcceptedRecords
+  fetchAcceptedRecords,
+  fetchRejectedRecords
 } from '../../../actions/records';
-
+import {
+  RECORDS,
+  RECORDS_NEW,
+  RECORDS_REPORTED,
+  RECORDS_ACCEPTED,
+  RECORDS_REJECTED
+} from '../../../constants/routes';
 import PrimaryHeading from '../../../components/pages/heading/PrimaryHeading';
 import { NavTab, RoutedTabs } from '../../../components/pages/routedTabs';
 import {
+  RejectedRecordsTable,
   AcceptedRecordsTable,
   ReportedRecordsTable,
   NewRecordsTable
 } from '../../../components/pages/recordsTables';
-import { RECORDS, RECORDS_ACCEPTED, RECORDS_NEW, RECORDS_REPORTED } from '../../../constants/routes';
 
 
 class Records extends Component {
@@ -24,11 +31,12 @@ class Records extends Component {
     this.props.fetchUserRecords();
     this.props.fetchReportedRecords();
     this.props.fetchAcceptedRecords();
+    this.props.fetchRejectedRecords();
   }
   
   render() {
     const { path: currentPath} = this.props.match;
-    const { userRecords, reportedRecords, acceptedRecords } = this.props;
+    const { userRecords, reportedRecords, acceptedRecords, rejectedRecords } = this.props;
     return (
       <section>
         <PrimaryHeading title="Records"/>
@@ -45,6 +53,7 @@ class Records extends Component {
             <Route path={RECORDS_NEW} render={() => <NewRecordsTable records={userRecords.list}/>}/>
             <Route path={RECORDS_REPORTED} render={() => <ReportedRecordsTable records={reportedRecords.list}/>}/>
             <Route path={RECORDS_ACCEPTED} render={() => <AcceptedRecordsTable records={acceptedRecords.list}/>}/>
+            <Route path={RECORDS_REJECTED} render={() => <RejectedRecordsTable records={rejectedRecords.list}/>}/>
           </Switch>
           
         </article>
@@ -53,13 +62,21 @@ class Records extends Component {
   }
 }
 
+const mapStateToProps = ({records}) => ({
+  userRecords: records.userRecords,
+  reportedRecords: records.reportedRecords,
+  acceptedRecords: records.acceptedRecords,
+  rejectedRecords: records.rejectedRecords
+});
+
+const mapDispatchToProps =  {
+  fetchUserRecords,
+  fetchReportedRecords,
+  fetchAcceptedRecords,
+  fetchRejectedRecords
+};
+
 export default connect(
-  ({records}) => ({
-    userRecords: records.userRecords,
-    reportedRecords: records.reportedRecords,
-    acceptedRecords: records.acceptedRecords
-  }),
-  {fetchUserRecords,
-    fetchReportedRecords,
-    fetchAcceptedRecords}
+ mapStateToProps,
+ mapDispatchToProps
 )(Records);
