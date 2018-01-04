@@ -41,6 +41,13 @@ recordSchema.statics.getPreviewsOfAcceptedRecords = function(userId) {
     .select('title resourceType keywords');
 };
 
+recordSchema.statics.getPreviewsOfRejectedRecords = function(userId) {
+  // return this.find({status: 'reported', declarant: {$not: userId}})
+  return this.find({status: 'rejected'})
+    .populate('declarant', '-_id firstName lastName')
+    .select('title resourceType keywords');
+};
+
 recordSchema.statics.getPreviewsOfPublicRecords = function() {
   return this.find({status: 'accepted'})
     .select('title description date');

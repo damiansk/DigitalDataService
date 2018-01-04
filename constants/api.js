@@ -6,6 +6,7 @@ module.exports = {
   API_USER_RECORDS: '/records',
   API_REPORTED_RECORDS: '/records/reported',
   API_ACCEPTED_RECORDS: '/records/accepted',
+  API_REJECTED_RECORDS: '/records/rejected',
   API_PUBLIC_RECORDS: '/records/public',
   API_RECORD: '/record',
   API_PUBLIC_RECORD: '/record/public',
