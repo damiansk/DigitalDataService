@@ -1,7 +1,14 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+
+import { fetchPublicRecords } from '../../../actions/records';
 
 
 class PublicRecords extends Component {
+  
+  componentWillMount() {
+    this.props.fetchPublicRecords();
+  }
   
   render() {
     return(
@@ -10,4 +17,7 @@ class PublicRecords extends Component {
   }
 }
 
-export default PublicRecords;
+export default connect(
+  ({records}) => ({records: records.publicRecords}),
+  {fetchPublicRecords}
+)(PublicRecords);

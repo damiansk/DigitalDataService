@@ -96,6 +96,16 @@ exports.getAcceptedRecords = (req, res) => {
     );
 };
 
+exports.getPublicRecords = (req, res) => {
+  Record.getPreviewsOfPublicRecords()
+    .then(
+      data => res.status(200)
+        .json({records: [...data]}),
+      err => res.status(500)
+        .json({error: 'There was an error when fetching data'})
+    );
+};
+
 exports.getRecord = (req, res) => {
   Record.getRecord(req.query.id)
     .then(
