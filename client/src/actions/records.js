@@ -2,11 +2,11 @@ import { push } from 'react-router-redux';
 
 import { mapRecordToFormData } from '../utils/formMapping';
 import {
-  API_CREATE_RECORD,
+  API_POST_RECORD,
   API_GET_ACCEPTED_RECORDS,
   API_GET_REPORTED_RECORDS,
   API_GET_USER_RECORDS,
-  API_GET_PUBLIC_RECORDS,
+  API_GET_RECORDS_PUBLIC,
   API_GET_REJECTED_RECORDS
 } from '../constants/api';
 import { RECORDS } from '../constants/routes';
@@ -37,7 +37,7 @@ export function saveRecord(formRecord) {
   return dispatch => dispatch({
     type: '',
     [API_CALL]: {
-      endpoint: API_CREATE_RECORD,
+      endpoint: API_POST_RECORD,
       headers: {'Content-Type': 'multipart/form-data'},
       method: 'post',
       data: mapRecordToFormData(formRecord),
@@ -112,7 +112,7 @@ export function fetchPublicRecords() {
     type: '',
     [API_CALL]: {
       unsecured: true,
-      endpoint: API_GET_PUBLIC_RECORDS,
+      endpoint: API_GET_RECORDS_PUBLIC,
       types: {
         pending: API_GET_PUBLIC_RECORDS_PENDING,
         success: API_GET_PUBLIC_RECORDS_SUCCESS,

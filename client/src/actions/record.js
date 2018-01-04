@@ -1,10 +1,10 @@
 import {
-  API_PUT_REPORT_RECORD,
-  API_PUT_ACCEPT_RECORD,
-  API_PUT_REJECT_RECORD,
-  API_PUT_RESTORE_RECORD,
+  API_PUT_RECORD_REPORT,
+  API_PUT_RECORD_ACCEPT,
+  API_PUT_RECORD_REJECT,
+  API_PUT_RECORD_RESTORE,
   API_GET_RECORD,
-  API_GET_PUBLIC_RECORD
+  API_GET_RECORD_PUBLIC
 } from '../constants/api';
 import {
   API_CALL,
@@ -18,7 +18,7 @@ export function fetchPublicRecord(recordId) {
     type: '',
     [API_CALL]: {
       unsecured: true,
-      endpoint: API_GET_PUBLIC_RECORD,
+      endpoint: API_GET_RECORD_PUBLIC,
       params: {id: recordId},
       types: {
         pending: RECORD_GET_RECORD_PENDING,
@@ -49,7 +49,7 @@ export function reportRecord(recordId) {
     type: '',
     [API_CALL]: {
       method: 'put',
-      endpoint: API_PUT_REPORT_RECORD,
+      endpoint: API_PUT_RECORD_REPORT,
       params: {id: recordId},
       types: {
         pending: API_PUT_RECORD_UPDATE_STATE_PENDING,
@@ -65,7 +65,7 @@ export function acceptRecord(recordId) {
     type: '',
     [API_CALL]: {
       method: 'put',
-      endpoint: API_PUT_ACCEPT_RECORD,
+      endpoint: API_PUT_RECORD_ACCEPT,
       params: {id: recordId},
       types: {
         pending: API_PUT_RECORD_UPDATE_STATE_PENDING,
@@ -81,7 +81,7 @@ export function rejectRecord(recordId) {
     type: '',
     [API_CALL]: {
       method: 'put',
-      endpoint: API_PUT_REJECT_RECORD,
+      endpoint: API_PUT_RECORD_REJECT,
       params: {id: recordId},
       types: {
         pending: API_PUT_RECORD_UPDATE_STATE_PENDING,
@@ -97,7 +97,7 @@ export function restoreRecord(recordId) {
     type: '',
     [API_CALL]: {
       method: 'put',
-      endpoint: API_PUT_RESTORE_RECORD,
+      endpoint: API_PUT_RECORD_RESTORE,
       params: {id: recordId},
       types: {
         pending: API_PUT_RECORD_UPDATE_STATE_PENDING,
