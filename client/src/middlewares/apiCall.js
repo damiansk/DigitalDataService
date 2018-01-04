@@ -9,7 +9,7 @@ export default ({dispatch}) => next => action => {
   
   let token;
   if(action[API_CALL].unsecured) {
-    token = 'none';
+    token = 'public';
   } else {
     token = localStorage.getItem('token');
   }

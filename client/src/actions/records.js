@@ -4,7 +4,6 @@ import { mapRecordToFormData } from '../utils/formMapping';
 import {
   API_CREATE_RECORD,
   API_GET_ACCEPTED_RECORDS,
-  API_GET_RECORD,
   API_GET_REPORTED_RECORDS,
   API_GET_USER_RECORDS,
   API_GET_PUBLIC_RECORDS
@@ -17,9 +16,6 @@ import {
   RECORDS_USER_RECORDS_PENDING,
   RECORDS_USER_RECORDS_SUCCESS,
   RECORDS_USER_RECORDS_ERROR,
-  RECORD_GET_RECORD_PENDING,
-  RECORD_GET_RECORD_SUCCESS,
-  RECORD_GET_RECORD_ERROR,
   RECORDS_REPORTED_RECORDS_PENDING,
   RECORDS_REPORTED_RECORDS_SUCCESS,
   RECORDS_REPORTED_RECORDS_ERROR,
@@ -49,21 +45,6 @@ export function saveRecord(formRecord) {
       callback: () => dispatch(push(RECORDS))
     }
   });
-}
-
-export function fetchRecord(recordId) {
-  return {
-    type: '',
-    [API_CALL]: {
-      endpoint: API_GET_RECORD,
-      params: {id: recordId},
-      types: {
-        pending: RECORD_GET_RECORD_PENDING,
-        success: RECORD_GET_RECORD_SUCCESS,
-        error: RECORD_GET_RECORD_ERROR,
-      }
-    }
-  };
 }
 
 export function fetchUserRecords() {
