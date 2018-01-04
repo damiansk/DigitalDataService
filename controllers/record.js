@@ -82,3 +82,37 @@ exports.acceptRecord = (req, res) => {
     })
   });
 };
+
+exports.rejectRecord = (req, res) => {
+  Record.findById(req.query.id, (err, record) => {
+    if(err) return res.status(404)
+      .json({error: 'Record not found'});
+    
+    //TODO Add validation of current status
+    record.status = 'rejected';
+    
+    record.save(err => {
+      if(err) return res.status(404)
+        .json({error: 'Record not found'});
+      
+      res.status(200).send();
+    })
+  });
+};
+
+exports.restoreRecord = (req, res) => {
+  Record.findById(req.query.id, (err, record) => {
+    if(err) return res.status(404)
+      .json({error: 'Record not found'});
+    
+    //TODO Add validation of current status
+    record.status = 'new';
+    
+    record.save(err => {
+      if(err) return res.status(404)
+        .json({error: 'Record not found'});
+      
+      res.status(200).send();
+    })
+  });
+};

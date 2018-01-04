@@ -20,6 +20,8 @@ const {
   API_PUBLIC_RECORD,
   API_REPORT_RECORD,
   API_ACCEPT_RECORD,
+  API_REJECT_RECORD,
+  API_RESTORE_RECORD,
   API_RECORD_FILE
 } = require('../constants/api');
 
@@ -49,4 +51,6 @@ module.exports = app => {
   
   app.put(API_REPORT_RECORD, requireAuth, Record.reportRecord);
   app.put(API_ACCEPT_RECORD, requireAuth, Record.acceptRecord);
+  app.put(API_REJECT_RECORD, requireAuth, Record.rejectRecord);
+  app.put(API_RESTORE_RECORD, requireAuth, Record.restoreRecord);
 };

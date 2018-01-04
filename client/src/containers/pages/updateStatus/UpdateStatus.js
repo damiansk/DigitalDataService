@@ -2,7 +2,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { goBack } from 'react-router-redux';
 
-import { reportRecord, acceptRecord } from '../../../actions/record';
+import {
+  reportRecord,
+  acceptRecord,
+  rejectRecord,
+  restoreRecord
+} from '../../../actions/record';
 
 
 class UpdateStatus extends Component {
@@ -12,7 +17,9 @@ class UpdateStatus extends Component {
     
     this.updateRecordStatus = {
       'report': this.props.reportRecord,
-      'accept': this.props.acceptRecord
+      'accept': this.props.acceptRecord,
+      'reject': this.props.rejectRecord,
+      'restore': this.props.restoreRecord
     }
   }
   
@@ -34,7 +41,7 @@ class UpdateStatus extends Component {
     const { isPending, updated, error } = this.props.recordStatus;
     return (
       <main className="container">
-          {isPending ?
+          {isPending || !updated ?
             <p className="mt-4">Please wait...</p>
             :
             updated ?
@@ -47,7 +54,15 @@ class UpdateStatus extends Component {
   }
 }
 
+const mapDispatchToProps = {
+  reportRecord,
+  acceptRecord,
+  rejectRecord,
+  restoreRecord,
+  goBack
+};
+
 export default connect(
   ({record}) => ({recordStatus: record.recordStatus}),
-  {reportRecord, acceptRecord, goBack}
+  mapDispatchToProps
 )(UpdateStatus);

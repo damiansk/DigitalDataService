@@ -1,10 +1,6 @@
 import {
-  RECORD_GET_RECORD_PENDING,
-  RECORD_GET_RECORD_SUCCESS,
-  RECORD_GET_RECORD_ERROR,
-  RECORD_REPORT_RECORD_PENDING,
-  RECORD_REPORT_RECORD_SUCCESS,
-  RECORD_REPORT_RECORD_ERROR, RECORD_ACCEPT_RECORD_PENDING, RECORD_ACCEPT_RECORD_SUCCESS, RECORD_ACCEPT_RECORD_ERROR
+  RECORD_GET_RECORD_PENDING, RECORD_GET_RECORD_SUCCESS, RECORD_GET_RECORD_ERROR,
+  API_PUT_RECORD_UPDATE_STATE_PENDING, API_PUT_RECORD_UPDATE_STATE_SUCCESS, API_PUT_RECORD_UPDATE_STATE_ERROR
 } from '../constants/actions';
 
 const initialState = {
@@ -44,30 +40,14 @@ export default (state = initialState, action) => {
           record: undefined
         }
       };
-      
-    case RECORD_REPORT_RECORD_PENDING:
-      return {...state, recordStatus: {isPending: true, updated: false}};
-      
-    case RECORD_REPORT_RECORD_SUCCESS:
-      return {...state, recordStatus: {isPending: false, updated: true}};
-      
-    case RECORD_REPORT_RECORD_ERROR:
-      return {
-        ...state,
-        recordStatus: {
-          error: action.payload.data.error,
-          isPending: false,
-          updated: false
-        }
-      };
-      
-    case RECORD_ACCEPT_RECORD_PENDING:
-      return {...state, recordStatus: {isPending: true, updated: false}};
   
-    case RECORD_ACCEPT_RECORD_SUCCESS:
+    case API_PUT_RECORD_UPDATE_STATE_PENDING:
+      return {...state, recordStatus: {isPending: true, updated: false}};
+    
+    case API_PUT_RECORD_UPDATE_STATE_SUCCESS:
       return {...state, recordStatus: {isPending: false, updated: true}};
-  
-    case RECORD_ACCEPT_RECORD_ERROR:
+    
+    case API_PUT_RECORD_UPDATE_STATE_ERROR:
       return {
         ...state,
         recordStatus: {

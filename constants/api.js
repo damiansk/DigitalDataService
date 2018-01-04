@@ -12,6 +12,8 @@ module.exports = {
   API_PUBLIC_RECORD: '/record/public',
   API_REPORT_RECORD: '/record/report',
   API_ACCEPT_RECORD: '/record/accept',
+  API_REJECT_RECORD: '/record/reject',
+  API_RESTORE_RECORD: '/record/restore',
   API_RECORD_FILE: '/record/:recordID/file'
 };
 
