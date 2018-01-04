@@ -112,6 +112,7 @@ export function fetchPublicRecords() {
   return {
     type: '',
     [API_CALL]: {
+      unsecured: true,
       endpoint: API_GET_PUBLIC_RECORDS,
       types: {
         pending: API_GET_PUBLIC_RECORDS_PENDING,

@@ -7,8 +7,13 @@ export default ({dispatch}) => next => action => {
     return next(action);
   }
   
-  const token = localStorage.getItem('token');
-
+  let token;
+  if(action[API_CALL].unsecured) {
+    token = 'none';
+  } else {
+    token = localStorage.getItem('token');
+  }
+  
   if(!token || token === '') {
     return dispatch({type: UNAUTH_USER});
   }
