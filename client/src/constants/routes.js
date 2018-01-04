@@ -16,6 +16,8 @@ export const RECORDS_REJECTED = _ADMIN + '/records/rejected';
 
 export const ACCOUNT = _ADMIN + '/account';
 
+export const PUBLIC_RECORD_PREVIEW = '/record/preview/:id';
+
 export const mapPathVariables = (path, pathVars) => {
   let mappedPath = path;
   for(let key in pathVars) {

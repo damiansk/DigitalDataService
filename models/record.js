@@ -43,8 +43,7 @@ recordSchema.statics.getPreviewsOfAcceptedRecords = function(userId) {
 
 recordSchema.statics.getPreviewsOfPublicRecords = function() {
   return this.find({status: 'accepted'})
-    .populate('declarant', '-_id firstName lastName')
-    .select('title resourceType keywords');
+    .select('title description date');
 };
 
 recordSchema.statics.getRecord = function(recordId) {
