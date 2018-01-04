@@ -9,9 +9,12 @@ export const API_GET_REJECTED_RECORDS = '/records/rejected';
 
 export const API_CREATE_RECORD = '/records/new';
 export const API_GET_RECORD = '/record';
+export const API_GET_RECORD_FILE = '/record/:recordId/file';
+
 export const API_PUT_REPORT_RECORD = '/record/report';
 export const API_PUT_ACCEPT_RECORD = '/record/accept';
-export const API_GET_RECORD_FILE = '/record/:recordId/file';
+export const API_PUT_REJECT_RECORD = '/record/reject';
+export const API_PUT_RESTORE_RECORD = '/record/restore';
 
 export const API_GET_PUBLIC_RECORDS = '/records/public';
 export const API_GET_PUBLIC_RECORD = '/record/public';
