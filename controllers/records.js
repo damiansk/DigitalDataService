@@ -66,7 +66,7 @@ exports.createRecord = (req, res) => {
   
 };
 
-exports.getRecords = (req, res) => {
+exports.getUserRecords = (req, res) => {
   Record.getPreviewsOfUserRecords(req.user.id)
     .then(
       data => res.status(200)
@@ -76,37 +76,42 @@ exports.getRecords = (req, res) => {
     );
 };
 
-exports.getRecord = (req, res) => {
-  Record.getRecord(req.query.id)
+exports.getReportedRecords = (req, res) => {
+  Record.getPreviewsOfReportedRecords(req.user.id)
     .then(
       data => res.status(200)
-        .json({record: data}),
-      err => res.status(422)
-        .json({error: 'Record not found'})
+        .json({records: [...data]}),
+      err => res.status(500)
+        .json({error: 'There was an error when fetching data'})
     );
 };
 
-exports.getRecordFile = (req, res) => {
-  const { recordID } = req.params;
-  const fileID = req.query.id;
-  Record.getRecordFiles(recordID)
+exports.getAcceptedRecords = (req, res) => {
+  Record.getPreviewsOfAcceptedRecords(req.user.id)
     .then(
-      ({files}) => {
-        const file = files.find(file => file['_id'].equals(fileID));
-        if(file) {
-          res.status(200)
-            .download(
-              path.join(__dirname, '../', file.path),
-              file.name,
-              {headers: {
-                'content-type': 'multipart/form-data',
-                'content-id': fileID
-              }}
-            );
-        } else {
-          res.send(404);
-        }
-      },
-      err => console.log(err)
+      data => res.status(200)
+        .json({records: [...data]}),
+      err => res.status(500)
+        .json({error: 'There was an error when fetching data'})
+    );
+};
+
+exports.getRejectedRecords = (req, res) => {
+  Record.getPreviewsOfRejectedRecords(req.user.id)
+    .then(
+      data => res.status(200)
+        .json({records: [...data]}),
+      err => res.status(500)
+        .json({error: 'There was an error when fetching data'})
+    );
+};
+
+exports.getPublicRecords = (req, res) => {
+  Record.getPreviewsOfPublicRecords()
+    .then(
+      data => res.status(200)
+        .json({records: [...data]}),
+      err => res.status(500)
+        .json({error: 'There was an error when fetching data'})
     );
 };

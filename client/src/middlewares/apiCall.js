@@ -7,8 +7,13 @@ export default ({dispatch}) => next => action => {
     return next(action);
   }
   
-  const token = localStorage.getItem('token');
-
+  let token;
+  if(action[API_CALL].unsecured) {
+    token = 'public';
+  } else {
+    token = localStorage.getItem('token');
+  }
+  
   if(!token || token === '') {
     return dispatch({type: UNAUTH_USER});
   }
@@ -43,10 +48,13 @@ export default ({dispatch}) => next => action => {
     });
     if(typeof callback === 'function') callback();
   })
-  .catch(() => dispatch({
-    type: types.error,
-    //TODO Fetch error message from response
-    // payload: response.data
-  }));
+  .catch(({response}) => {
+    dispatch({
+      type: types.error,
+      //TODO Fetch error message from response
+      // payload: response
+      payload: {data:{error: 'err'}}
+    })
+  });
   
 };

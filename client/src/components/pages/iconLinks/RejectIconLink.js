@@ -5,15 +5,15 @@ import { Link } from 'react-router-dom';
 import { mapPathVariables, RECORD_UPDATE_STATUS } from '../../../constants/routes';
 
 
-const AcceptIconLink = ({recordId}) => (
+const RejectIconLink = ({recordId}) => (
   <Link className="nav-link text-secondary"
-        to={mapPathVariables(RECORD_UPDATE_STATUS, {recordId, newStatus: 'accept'})}>
-    <i className={`fa fa-check-square-o fa-1x`} aria-hidden="true"/>
+        to={mapPathVariables(RECORD_UPDATE_STATUS, {recordId, newStatus: 'reject'})}>
+    <i className={`fa fa-ban fa-1x`} aria-hidden="true"/>
   </Link>
 );
 
-AcceptIconLink.propTypes = {
+RejectIconLink.propTypes = {
   recordId: PropTypes.string.isRequired
 };
 
-export default AcceptIconLink;
+export default RejectIconLink;

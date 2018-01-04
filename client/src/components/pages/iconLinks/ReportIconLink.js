@@ -5,15 +5,15 @@ import { Link } from 'react-router-dom';
 import { mapPathVariables, RECORD_UPDATE_STATUS } from '../../../constants/routes';
 
 
-const AcceptIconLink = ({recordId}) => (
+const ReportIconLink = ({recordId}) => (
   <Link className="nav-link text-secondary"
-        to={mapPathVariables(RECORD_UPDATE_STATUS, {recordId, newStatus: 'accept'})}>
-    <i className={`fa fa-check-square-o fa-1x`} aria-hidden="true"/>
+        to={mapPathVariables(RECORD_UPDATE_STATUS, {recordId, newStatus: 'report'})}>
+    <i className={`fa fa-paper-plane-o fa-1x`} aria-hidden="true"/>
   </Link>
 );
 
-AcceptIconLink.propTypes = {
+ReportIconLink.propTypes = {
   recordId: PropTypes.string.isRequired
 };
 
-export default AcceptIconLink;
+export default ReportIconLink;

@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
-import { fetchRecord } from '../../../actions/records';
+import { fetchRecord, fetchPublicRecord } from '../../../actions/record';
 
 import PrimaryHeading from '../../../components/pages/heading/PrimaryHeading';
 import RecordPreview from '../../../components/pages/recordPreview/RecordPreview';
@@ -10,15 +11,20 @@ import RecordPreview from '../../../components/pages/recordPreview/RecordPreview
 class Preview extends Component {
   
   componentWillMount() {
-    this.props.fetchRecord(this.props.match.params.id);
+    if(this.props.isPublic) {
+      this.props.fetchPublicRecord(this.props.match.params.id);
+    } else {
+      this.props.fetchRecord(this.props.match.params.id);
+    }
+    
   }
   
   render() {
     const { isFetching, record } = this.props.record;
-    
+  
     return (
       <section>
-        <PrimaryHeading title="Record preview"/>
+        <PrimaryHeading title={(record && record.title) || 'Record preview'}/>
         <article>
           {
             isFetching ?
@@ -34,7 +40,11 @@ class Preview extends Component {
   }
 }
 
+Preview.propTypes = {
+  isPublic: PropTypes.bool
+};
+
 export default connect(
   ({record}) => ({record: record.activeRecord}),
-  {fetchRecord}
+  {fetchRecord, fetchPublicRecord}
 )(Preview);

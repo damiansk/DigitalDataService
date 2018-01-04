@@ -95,7 +95,10 @@ class RecordPreview extends Component {
 
 RecordPreview.propTypes = {
   declarant: PropTypes.object.isRequired,
-  date: PropTypes.string.isRequired,
+  date: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.objectOf(Date)
+  ]),
   title: PropTypes.string.isRequired,
   resourceType: PropTypes.string.isRequired,
   keywords: PropTypes.string.isRequired,

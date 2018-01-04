@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
+import { ACCOUNT, RECORD_NEW, RECORDS, SIGN_IN, SIGN_OUT } from '../../../constants/routes';
 import NavigationItem from '../../../components/layout/header/navigation/NavigationItem';
 
 class Header extends Component {
@@ -11,10 +12,10 @@ class Header extends Component {
   
     this.title = 'DigitalDataUpload';
     this.navigationItems = [
-        {name: 'New record', iconClass: 'fa-plus', link: '/new-record'},
-        {name: 'Records', iconClass: 'fa-list-alt', link: '/records', activeClass: 'active'},
-        {name: 'Account', iconClass: 'fa-user', link: '/account'},
-        {name: 'Sign out', iconClass: 'fa-sign-out', link: '/signout'}
+        {name: 'New record', iconClass: 'fa-plus', link: RECORD_NEW},
+        {name: 'Records', iconClass: 'fa-list-alt', link: RECORDS, activeClass: 'active'},
+        {name: 'Account', iconClass: 'fa-user', link: ACCOUNT},
+        {name: 'Sign out', iconClass: 'fa-sign-out', link: SIGN_OUT}
       ];
   }
   
@@ -43,7 +44,7 @@ class Header extends Component {
       <header>
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
           <div className="container">
-            <Link className="navbar-brand align-middle" to="/">
+            <Link className="navbar-brand align-middle" to={RECORDS}>
               <i className="fa fa-folder-open" aria-hidden="true"/>
               {` ${this.title}`}
             </Link>
@@ -65,7 +66,7 @@ class Header extends Component {
               :
               <div className="justify-content-end" id="navbarNav">
                 <ul className="navbar-nav">
-                  <NavigationItem name="Sign in" iconClass="fa-sign-in" link="/signin"/>
+                  <NavigationItem name="Sign in" iconClass="fa-sign-in" link={SIGN_IN}/>
                 </ul>
               </div>
             }

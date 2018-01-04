@@ -1,13 +1,17 @@
 import {
-  RECORD_GET_RECORD_PENDING,
-  RECORD_GET_RECORD_SUCCESS,
-  RECORD_GET_RECORD_ERROR
+  RECORD_GET_RECORD_PENDING, RECORD_GET_RECORD_SUCCESS, RECORD_GET_RECORD_ERROR,
+  API_PUT_RECORD_UPDATE_STATE_PENDING, API_PUT_RECORD_UPDATE_STATE_SUCCESS, API_PUT_RECORD_UPDATE_STATE_ERROR
 } from '../constants/actions';
 
 const initialState = {
   activeRecord: {
     isFetching: false,
     record: undefined,
+    error: ''
+  },
+  recordStatus: {
+    isPending: false,
+    updated: false,
     error: ''
   }
 };
@@ -34,6 +38,22 @@ export default (state = initialState, action) => {
           ...state.activeRecord,
           isFetching: false,
           record: undefined
+        }
+      };
+  
+    case API_PUT_RECORD_UPDATE_STATE_PENDING:
+      return {...state, recordStatus: {isPending: true, updated: false}};
+    
+    case API_PUT_RECORD_UPDATE_STATE_SUCCESS:
+      return {...state, recordStatus: {isPending: false, updated: true}};
+    
+    case API_PUT_RECORD_UPDATE_STATE_ERROR:
+      return {
+        ...state,
+        recordStatus: {
+          error: action.payload.data.error,
+          isPending: false,
+          updated: false
         }
       };
       
