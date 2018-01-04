@@ -52,6 +52,12 @@ recordSchema.statics.getRecord = function(recordId) {
     .select('-__v -status -files.path');
 };
 
+recordSchema.statics.getPublicRecord = function(recordId) {
+  return this.findOne({_id: recordId, status: 'accepted'})
+    .populate('declarant', '-_id firstName lastName')
+    .select('-__v -status -files.path');
+};
+
 recordSchema.statics.getRecordFiles = function(recordID) {
   return this.findOne({_id: recordID})
     .select('-_id files');
