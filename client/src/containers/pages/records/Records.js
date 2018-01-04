@@ -15,6 +15,7 @@ import {
   ReportedRecordsTable,
   NewRecordsTable
 } from '../../../components/pages/recordsTables';
+import { RECORDS, RECORDS_ACCEPTED, RECORDS_NEW, RECORDS_REPORTED } from '../../../constants/routes';
 
 
 class Records extends Component {
@@ -40,10 +41,10 @@ class Records extends Component {
           </RoutedTabs>
         
           <Switch>
-            <Route exact path={currentPath} render={() => <Redirect to={`${this.props.match.path}/new`} />}/>
-            <Route path={`${currentPath}/new`} render={() => <NewRecordsTable records={userRecords.list}/>}/>
-            <Route path={`${currentPath}/reported`} render={() => <ReportedRecordsTable records={reportedRecords.list}/>}/>
-            <Route path={`${currentPath}/accepted`} render={() => <AcceptedRecordsTable records={acceptedRecords.list}/>}/>
+            <Route exact path={RECORDS} render={() => <Redirect to={RECORDS_NEW} />}/>
+            <Route path={RECORDS_NEW} render={() => <NewRecordsTable records={userRecords.list}/>}/>
+            <Route path={RECORDS_REPORTED} render={() => <ReportedRecordsTable records={reportedRecords.list}/>}/>
+            <Route path={RECORDS_ACCEPTED} render={() => <AcceptedRecordsTable records={acceptedRecords.list}/>}/>
           </Switch>
           
         </article>

@@ -8,6 +8,7 @@ import {
   API_GET_REPORTED_RECORDS,
   API_GET_USER_RECORDS
 } from '../constants/api';
+import { RECORDS } from '../constants/routes';
 import {
   RECORD_CREATE_RECORD_PENDING,
   RECORD_CREATE_RECORD_SUCCESS,
@@ -41,7 +42,7 @@ export function saveRecord(formRecord) {
         success: RECORD_CREATE_RECORD_SUCCESS,
         error: RECORD_CREATE_RECORD_ERROR
       },
-      callback: () => dispatch(push('/records'))
+      callback: () => dispatch(push(RECORDS))
     }
   });
 }
