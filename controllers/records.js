@@ -96,37 +96,12 @@ exports.getAcceptedRecords = (req, res) => {
     );
 };
 
-exports.getRecord = (req, res) => {
-  Record.getRecord(req.query.id)
+exports.getPublicRecords = (req, res) => {
+  Record.getPreviewsOfPublicRecords()
     .then(
       data => res.status(200)
-        .json({record: data}),
-      err => res.status(422)
-        .json({error: 'Record not found'})
-    );
-};
-
-exports.getRecordFile = (req, res) => {
-  const { recordID } = req.params;
-  const fileID = req.query.id;
-  Record.getRecordFiles(recordID)
-    .then(
-      ({files}) => {
-        const file = files.find(file => file['_id'].equals(fileID));
-        if(file) {
-          res.status(200)
-            .download(
-              path.join(__dirname, '../', file.path),
-              file.name,
-              {headers: {
-                'content-type': 'multipart/form-data',
-                'content-id': fileID
-              }}
-            );
-        } else {
-          res.send(404);
-        }
-      },
-      err => console.log(err)
+        .json({records: [...data]}),
+      err => res.status(500)
+        .json({error: 'There was an error when fetching data'})
     );
 };

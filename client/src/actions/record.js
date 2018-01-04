@@ -1,6 +1,8 @@
 import {
   API_PUT_REPORT_RECORD,
-  API_PUT_ACCEPT_RECORD
+  API_PUT_ACCEPT_RECORD,
+  API_GET_RECORD,
+  API_GET_PUBLIC_RECORD
 } from '../constants/api';
 import {
   API_CALL,
@@ -9,9 +11,43 @@ import {
   RECORD_REPORT_RECORD_SUCCESS,
   RECORD_ACCEPT_RECORD_PENDING,
   RECORD_ACCEPT_RECORD_SUCCESS,
-  RECORD_ACCEPT_RECORD_ERROR
+  RECORD_ACCEPT_RECORD_ERROR,
+  RECORD_GET_RECORD_ERROR,
+  RECORD_GET_RECORD_PENDING,
+  RECORD_GET_RECORD_SUCCESS
 } from '../constants/actions';
 
+
+export function fetchPublicRecord(recordId) {
+  return {
+    type: '',
+    [API_CALL]: {
+      unsecured: true,
+      endpoint: API_GET_PUBLIC_RECORD,
+      params: {id: recordId},
+      types: {
+        pending: RECORD_GET_RECORD_PENDING,
+        success: RECORD_GET_RECORD_SUCCESS,
+        error: RECORD_GET_RECORD_ERROR,
+      }
+    }
+  };
+}
+
+export function fetchRecord(recordId) {
+  return {
+    type: '',
+    [API_CALL]: {
+      endpoint: API_GET_RECORD,
+      params: {id: recordId},
+      types: {
+        pending: RECORD_GET_RECORD_PENDING,
+        success: RECORD_GET_RECORD_SUCCESS,
+        error: RECORD_GET_RECORD_ERROR,
+      }
+    }
+  };
+}
 
 export function reportRecord(recordId) {
   return {

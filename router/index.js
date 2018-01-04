@@ -14,7 +14,9 @@ const {
   API_USER_RECORDS,
   API_REPORTED_RECORDS,
   API_ACCEPTED_RECORDS,
+  API_PUBLIC_RECORDS,
   API_RECORD,
+  API_PUBLIC_RECORD,
   API_REPORT_RECORD,
   API_ACCEPT_RECORD,
   API_RECORD_FILE
@@ -38,8 +40,10 @@ module.exports = app => {
   app.get(API_USER_RECORDS, requireAuth, Records.getUserRecords);
   app.get(API_REPORTED_RECORDS, requireAuth, Records.getReportedRecords);
   app.get(API_ACCEPTED_RECORDS, requireAuth, Records.getAcceptedRecords);
-  app.get(API_RECORD, requireAuth, Records.getRecord);
-  app.get(API_RECORD_FILE, requireAuth, Records.getRecordFile);
+  app.get(API_PUBLIC_RECORDS, Records.getPublicRecords);
+  app.get(API_RECORD, requireAuth, Record.getRecord);
+  app.get(API_PUBLIC_RECORD, Record.getPublicRecord);
+  app.get(API_RECORD_FILE, requireAuth, Record.getRecordFile);
   
   app.put(API_REPORT_RECORD, requireAuth, Record.reportRecord);
   app.put(API_ACCEPT_RECORD, requireAuth, Record.acceptRecord);

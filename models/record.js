@@ -41,8 +41,19 @@ recordSchema.statics.getPreviewsOfAcceptedRecords = function(userId) {
     .select('title resourceType keywords');
 };
 
+recordSchema.statics.getPreviewsOfPublicRecords = function() {
+  return this.find({status: 'accepted'})
+    .select('title description date');
+};
+
 recordSchema.statics.getRecord = function(recordId) {
   return this.findOne({_id: recordId})
+    .populate('declarant', '-_id firstName lastName')
+    .select('-__v -status -files.path');
+};
+
+recordSchema.statics.getPublicRecord = function(recordId) {
+  return this.findOne({_id: recordId, status: 'accepted'})
     .populate('declarant', '-_id firstName lastName')
     .select('-__v -status -files.path');
 };
