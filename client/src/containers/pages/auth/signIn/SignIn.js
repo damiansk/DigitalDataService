@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { reduxForm, Field } from 'redux-form';
 
-import { signInUser } from '../../../../actions/auth';
-
 import PrimaryHeading from '../../../../components/pages/heading/PrimaryHeading';
+import { RECORDS } from '../../../../constants/routes';
+import { signInUser } from '../../../../actions/auth';
 
 //TODO After login redirect user to saved path and protect this route when the user is already logged in
 class SignIn extends Component {
@@ -17,7 +17,7 @@ class SignIn extends Component {
   
   onSignIn({email, password}) {
     const locationState = this.props.location.state;
-    const redirect = (locationState && locationState.from) || '/records';
+    const redirect = (locationState && locationState.from) || RECORDS;
     this.props.signInUser(email, password, redirect);
   }
   
