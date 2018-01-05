@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import './ImageInputWithPreview.css';
 
@@ -21,13 +22,13 @@ class ImageInputWithPreview extends Component {
   }
   
   render() {
-    const { input, activeEditing} = this.props;
+    const { input, activeEditing, image } = this.props;
     
     return (
       <div>
         <label data-describe="Upload own thumbnail"
                className={`mb-0 ${activeEditing ? 'thumbnailUploadLabel' : ''}`}>
-          <img src={input.value || '/default-thumbnail.png'}
+          <img src={image || (input && input.value) || '/default-thumbnail.png'}
                style={{maxHeight: '100%'}}
                className="img-thumbnail"
                alt="File thumbnail"/>
@@ -41,5 +42,12 @@ class ImageInputWithPreview extends Component {
     );
   }
 }
+
+ImageInputWithPreview.propTypes = {
+  activeEditing: PropTypes.bool,
+  input: PropTypes.object,
+  onThumbnailUpdate: PropTypes.func,
+  image: PropTypes.string
+};
 
 export default ImageInputWithPreview;

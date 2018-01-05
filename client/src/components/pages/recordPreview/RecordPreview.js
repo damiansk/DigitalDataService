@@ -23,7 +23,7 @@ class RecordPreview extends Component {
   mapFilesToList() {
     return this.props
       .files.map((file, index) =>
-        <li key={index}>
+        <li className="list-group-item position-relative mb-3" key={index}>
           <FileDetails fetchFile={() => this.props.fetchFile(this.props['_id'], file['_id'])}
                        file={this.props.fetchedFiles[file['_id']]}
                        fileDetails={file}/>
@@ -81,7 +81,7 @@ class RecordPreview extends Component {
         <SecondaryHeading title={this.secondTitle} />
         <section>
           { files ?
-            <ul>{this.mapFilesToList()}</ul>
+            <ul className="list-group">{this.mapFilesToList()}</ul>
             :
             <div className="row justify-content-center">
               <p className="font-weight-light">No attached files</p>
