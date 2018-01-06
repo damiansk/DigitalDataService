@@ -24,7 +24,7 @@ class ImageInputWithPreview extends Component {
     const { input, activeEditing, image } = this.props;
     
     return (
-      <div>
+      <div className="text-center">
         <label data-describe="Upload own thumbnail"
                className={`mb-0 ${activeEditing ? 'thumbnailUploadLabel' : ''}`}>
           <img src={image || (input && input.value) || '/default-thumbnail.png'}

@@ -1,8 +1,20 @@
 import React, { Component } from 'react';
-import { SketchPicker } from 'react-color';
+import { ChromePicker, SketchPicker } from 'react-color';
 import PropTypes from 'prop-types';
 
 import ModelPreview from '../ModelPreview/ModelPreview';
+
+const popover = {
+  position: 'absolute',
+  zIndex: '2',
+};
+const cover = {
+  position: 'fixed',
+  top: '0px',
+  right: '0px',
+  bottom: '0px',
+  left: '0px',
+};
 
 class FilePreview extends Component {
   
@@ -15,6 +27,8 @@ class FilePreview extends Component {
     super(props);
     
     this.state = {
+      backgroundColorPicker: false,
+      meshColorPicker: false,
       backgroundColor: '#000000',
       meshColor: '#eaeaea'
     };
@@ -36,15 +50,38 @@ class FilePreview extends Component {
     return (
       <div className="container mb-4">
         <article className="row">
-          <div className="col-md-3 text-center">
-            <h4>Background color</h4>
-            <SketchPicker className="m-auto" color={this.state.backgroundColor}
-                          disableAlpha={false} onChange={this.changeBackgroundColor}/>
-          </div>
-          <div className="col-md-3 text-center">
-            <h4>Mesh color</h4>
-            <SketchPicker className="m-auto" color={this.state.meshColor}
-                          disableAlpha={false} onChange={this.changeMeshColor}/>
+          <div className="col-md-3 offset-md-1 text-center">
+            <h4>Colors</h4>
+            <div className="row">
+              <button className="btn btn-outline-warning btn-block"
+                      type="button"
+                      onClick={() => this.setState({backgroundColorPicker: !this.state.backgroundColorPicker})}>
+                Change background
+              </button>
+              { this.state.backgroundColorPicker ?
+                <div style={popover}>
+                  <div style={cover} onClick={() => this.setState({ backgroundColorPicker: false })}/>
+                  <ChromePicker disableAlpha={true}
+                                color={this.state.backgroundColor}
+                                onChange={this.changeBackgroundColor}/>
+                </div>
+                : null }
+            </div>
+            <div className="row mt-2">
+              <button className="btn btn-outline-warning btn-block"
+                      type="button"
+                      onClick={() => this.setState({meshColorPicker: !this.state.meshColorPicker})}>
+                Change mesh
+              </button>
+              { this.state.meshColorPicker ?
+                <div style={popover}>
+                  <div style={cover} onClick={() => this.setState({ meshColorPicker: false })}/>
+                  <ChromePicker disableAlpha={true}
+                                color={this.state.meshColor}
+                                onChange={this.changeMeshColor}/>
+                </div>
+                : null }
+            </div>
           </div>
           <main className="col">
             <ModelPreview backgroundColor={this.state.backgroundColor}

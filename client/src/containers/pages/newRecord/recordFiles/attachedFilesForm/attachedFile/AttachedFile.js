@@ -102,7 +102,7 @@ class AttachedFile extends Component {
           <ButtonsGroup label="Generate thumbnail">
             <button className="btn btn-success btn-sm" type="button"
                     onClick={() => this.props.generateThumbnail(file, this.updateThumbnail)}>
-              Generate thumbnail
+              Thumbnail
             </button>
           </ButtonsGroup>
         </ButtonsToolbar>
