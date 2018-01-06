@@ -20,6 +20,7 @@ exports.generateThumbnail = (req, res) => {
       generateThumbnail(files.File[file], (imgPath) => {
           res.sendFile(imgPath, err => {
             fs.unlinkSync(files.File[file].path);
+            fs.unlinkSync(imgPath);
           });
         },
         err => {
