@@ -17,7 +17,6 @@ class ImageInputWithPreview extends Component {
     const { onThumbnailUpdate } = this.props;
     const reader = new FileReader();
     reader.onload = ({target}) => onThumbnailUpdate(target.result);
-    
     reader.readAsDataURL(files[0]);
   }
   

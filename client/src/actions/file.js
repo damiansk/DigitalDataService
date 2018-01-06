@@ -30,7 +30,7 @@ export function removeFiles() {
   }
 }
 
-export function generateThumbnail(file) {
+export function generateThumbnail(file, callback) {
   return dispatch => {
     const formData = new FormData();
     formData.append('File', file);
@@ -43,7 +43,7 @@ export function generateThumbnail(file) {
     })
       .then(response => {
         const img = Buffer.from(response.data, 'binary').toString('base64');
-        console.log(img);
+        callback('data:image/png;base64,' + img);
       })
       .catch(err => console.log(err));
   };

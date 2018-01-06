@@ -32,6 +32,7 @@ class AttachedFile extends Component {
   }
   
   updateThumbnail(value) {
+    console.log(value);
     const { name } = this.props;
     this.props.change('wizard', `${name}.thumbnail`, value);
   }
@@ -81,8 +82,10 @@ class AttachedFile extends Component {
                               style={{width: '80px'}}/>
           </ButtonsGroup>
           <ButtonsGroup label="Generate thumbnail">
-            <button type="button"
-                    onClick={() => this.props.generateThumbnail(file)}>Generate thumbnail</button>
+            <button className="btn btn-success btn-sm" type="button"
+                    onClick={() => this.props.generateThumbnail(file, this.updateThumbnail)}>
+              Generate thumbnail
+            </button>
           </ButtonsGroup>
         </ButtonsToolbar>
       </li>
