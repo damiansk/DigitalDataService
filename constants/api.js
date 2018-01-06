@@ -16,6 +16,7 @@ module.exports = {
   API_ACCEPT_RECORD: _ROOT + '/record/accept',
   API_REJECT_RECORD: _ROOT + '/record/reject',
   API_RESTORE_RECORD: _ROOT + '/record/restore',
-  API_RECORD_FILE: _ROOT + '/record/:recordID/file'
+  API_RECORD_FILE: _ROOT + '/record/:recordID/file',
+  API_FILE_THUMBNAIL: _ROOT + '/file/thumbnail'
 };
 

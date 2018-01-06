@@ -11,6 +11,7 @@ import EditOrSaveButton from '../../../../../../components/pages/buttonsToolbar/
 import FilePreview from '../../../../../../components/pages/filePreview/FilePreview';
 import ImageInputWithPreview from '../../../../../../components/pages/imageInputWithPreview/ImageInputWithPreview';
 import TextAreaToLabelField from '../../../../../../components/pages/textareaToLabelField/TextAreaToLabelField';
+import { generateThumbnail } from '../../../../../../actions/file';
 
 class AttachedFile extends Component {
   
@@ -37,6 +38,7 @@ class AttachedFile extends Component {
   
   render() {
     const {
+      file,
       file: {name: fileName, size},
       onRemove,
       onEdit,
@@ -78,6 +80,10 @@ class AttachedFile extends Component {
                               onEdit={onEdit} isTextEnable={true}
                               style={{width: '80px'}}/>
           </ButtonsGroup>
+          <ButtonsGroup label="Generate thumbnail">
+            <button type="button"
+                    onClick={() => this.props.generateThumbnail(file)}>Generate thumbnail</button>
+          </ButtonsGroup>
         </ButtonsToolbar>
       </li>
     )
@@ -93,5 +99,5 @@ AttachedFile.propTypes = {
 
 export default connect(
   null,
-  dispatch => bindActionCreators({change}, dispatch)
+  dispatch => bindActionCreators({change, generateThumbnail}, dispatch)
 )(AttachedFile);

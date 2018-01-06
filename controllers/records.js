@@ -16,7 +16,6 @@ exports.createRecord = (req, res) => {
   const { id: declarant } = req.user;
   const form = new multiparty.Form({uploadDir: temporaryFilesUploadDir});
   
-  //TODO Fix directories structure
   form.parse(req, (err, fields, files) => {
 
     if(!fields) {
