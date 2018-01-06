@@ -99,12 +99,14 @@ class AttachedFile extends Component {
                               onEdit={onEdit} isTextEnable={true}
                               style={{width: '80px'}}/>
           </ButtonsGroup>
-          <ButtonsGroup label="Generate thumbnail">
-            <button className="btn btn-success btn-sm" type="button"
-                    onClick={() => this.props.generateThumbnail(file, this.updateThumbnail)}>
-              Thumbnail
-            </button>
-          </ButtonsGroup>
+          {!this.state.generatePreview ?
+            <ButtonsGroup label="Generate thumbnail">
+              <button className="btn btn-success btn-sm" type="button"
+                      onClick={() => this.props.generateThumbnail(file, this.updateThumbnail)}>
+                Thumbnail
+              </button>
+            </ButtonsGroup>
+          : null}
         </ButtonsToolbar>
       </li>
     )

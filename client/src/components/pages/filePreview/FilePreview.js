@@ -50,7 +50,7 @@ class FilePreview extends Component {
     return (
       <div className="container mb-4">
         <article className="row">
-          <div className="col-md-3 offset-md-1 text-center">
+          <div className="col-md-3 offset-md-1 offset-lg-2 text-center">
             <h4>Colors</h4>
             <div className="row">
               <button className="btn btn-outline-warning btn-block"

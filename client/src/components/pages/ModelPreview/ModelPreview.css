@@ -13,3 +13,13 @@
     padding: 4px;
     width: 100% !important;
 }
+
+.placeholder {
+    width: 98%;
+    left: 1%;
+    height: 98%;
+    top: 1%;
+    background-color: white;
+    padding: 45% 0;
+}
+

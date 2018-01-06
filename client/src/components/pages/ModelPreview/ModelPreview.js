@@ -14,9 +14,13 @@ class ModelPreview extends Component {
 		this.FPS = 24;
 		
 		this.canvas = {
-      width: '820px',
-      height: '820px',
+      width: '720px',
+      height: '720px',
       margin: '0 auto'
+    };
+		
+		this.state = {
+		  ready: false
     };
 		
 		this.loadObject = this.loadObject.bind(this);
@@ -60,7 +64,6 @@ class ModelPreview extends Component {
 		this.controls = controls;
 		
 		this.previewContainer.appendChild(this.renderer.domElement);
-		this.start();
     
     this.loadObject();
 	}
@@ -100,6 +103,10 @@ class ModelPreview extends Component {
         const bb = new THREE.Box3();
         bb.setFromObject(this.model);
         bb.getCenter(this.controls.target);
+  
+  
+        this.start();
+        this.setState({ready: true});
       },
       xhr => {
         if (xhr.lengthComputable) {
@@ -139,17 +146,24 @@ class ModelPreview extends Component {
   }
 	
 	render() {
-		return (
+    return (
       <div className="text-center">
-        <div style={{ ...this.canvas }}
-             className="model-preview"
-             ref={(previewContainer) => this.previewContainer = previewContainer} />
+        <div style={{...this.canvas}}
+             className="model-preview position-relative"
+             ref={(previewContainer) => this.previewContainer = previewContainer}>
+          {!this.state.ready ?
+            <div className="placeholder position-absolute text-center">
+              <span>Please wait...</span>
+            </div>
+          : null}
+        </div>
         <button className="btn btn-primary mt-2"
                 type="button"
-                onClick={this.onSaveThumbnail}>Save as thumbnail</button>
+                onClick={this.onSaveThumbnail}>Save as thumbnail
+        </button>
       </div>
-		)
-	}
+    );
+  }
 
 }
 
