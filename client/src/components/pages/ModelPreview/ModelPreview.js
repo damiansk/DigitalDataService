@@ -3,8 +3,55 @@ import * as THREE from 'three';
 import OrbitControls from 'three-orbitcontrols';
 
 import OBJLoader from '../../../utils/OBJLoader';
+import STLLoader from '../../../utils/STLLoader';
 
 import './ModelPreview.css';
+
+
+const fitCameraToObject = function ( camera, object, offset, controls ) {
+  
+  offset = offset || 1.25;
+  
+  const boundingBox = new THREE.Box3();
+  
+  // get bounding box of object - this will be used to setup controls and camera
+  boundingBox.setFromObject(object);
+  
+  const center = boundingBox.getCenter();
+  
+  const size = boundingBox.getSize();
+  
+  // get the max side of the bounding box (fits to width OR height as needed )
+  const maxDim = Math.max(size.x, size.y, size.z);
+  const fov = camera.fov * (Math.PI / 180);
+  let cameraZ = Math.abs(maxDim / 4 * Math.tan(fov * 2));
+  
+  cameraZ *= offset; // zoom out a little so that objects don't fill the screen
+  
+  camera.position.z = cameraZ;
+  
+  const minZ = boundingBox.min.z;
+  const cameraToFarEdge = (minZ < 0) ? -minZ + cameraZ : cameraZ - minZ;
+  
+  camera.far = cameraToFarEdge * 3;
+  camera.updateProjectionMatrix();
+  
+  if (controls) {
+    
+    // set camera to rotate around center of loaded object
+    controls.target = center;
+    
+    // prevent camera from zooming out far enough to create far plane cutoff
+    controls.maxDistance = cameraToFarEdge * 2;
+    
+    controls.saveState();
+    
+  } else {
+    
+    camera.lookAt(center)
+    
+  }
+};
 
 class ModelPreview extends Component {
 	
@@ -20,7 +67,8 @@ class ModelPreview extends Component {
     };
 		
 		this.state = {
-		  ready: false
+		  ready: false,
+      error: false
     };
 		
 		this.loadObject = this.loadObject.bind(this);
@@ -56,6 +104,7 @@ class ModelPreview extends Component {
     camera.add( directionalLight );
     scene.add(camera);
     
+    this.material = new THREE.MeshLambertMaterial({color: this.props.meshColor});
     this.renderer = renderer;
     this.light = directionalLight;
 		this.scene = scene;
@@ -75,9 +124,14 @@ class ModelPreview extends Component {
       this.renderer.setClearColor(backgroundColor);
     }
     if(meshColor !== prevProps.meshColor) {
-      this.model
-        .children.forEach(child =>
+      if(this.model.type === 'Group') {
+        this.model
+          .children.forEach(child =>
           child.material.color.set(meshColor));
+      } else {
+        this.model.material.color.set(meshColor);
+      }
+      
     }
   }
   
@@ -88,34 +142,59 @@ class ModelPreview extends Component {
   }
 	
 	loadObject() {
-    const loader = new OBJLoader();
+    const { file } = this.props;
+    const fileExt = file.name.split('.').pop().toUpperCase();
     
-		const { file } = this.props;
-    loader.load(file.preview,
-      model => {
+    if(fileExt === 'OBJ') {
+      const loader = new OBJLoader();
+  
+      loader.load(file.preview,
+        model => {
+          this.model = model;
+      
+          // FOR OBJ
+          // model.children.forEach(child =>
+          //   child.material.color && child.material.color.set(this.props.meshColor));
+      
+          this.scene.add(model);
+  
+          console.log(model);
+  
+          fitCameraToObject(this.camera, model, 7, this.controls);
+          
+          this.start();
+          this.setState({ready: true});
+        },
+        xhr => {
+          if (xhr.lengthComputable) {
+            //TODO Show progress on preview canvas
+            const percentComplete = xhr.loaded / xhr.total * 100;
+            console.log(Math.round(percentComplete, 2) + '% downloaded');
+          }
+        }
+      );
+    } else if(fileExt === 'STL'){
+      const loader = new STLLoader();
+      
+      loader.load(file.preview, geometry => {
+        geometry.center();
+        const material = this.material;
+        const model = new THREE.Mesh(geometry, material);
+  
         this.model = model;
-        
-        model.children.forEach(child => child.material.color.set(this.props.meshColor));
   
         this.scene.add(model);
-   
-        //TODO Resolve how do this better
-        const bb = new THREE.Box3();
-        bb.setFromObject(this.model);
-        bb.getCenter(this.controls.target);
   
+        console.log(model);
   
+        fitCameraToObject(this.camera, model, 7, this.controls);
+        
         this.start();
         this.setState({ready: true});
-      },
-      xhr => {
-        if (xhr.lengthComputable) {
-          //TODO Show progress on preview canvas
-          const percentComplete = xhr.loaded / xhr.total * 100;
-          console.log(Math.round(percentComplete, 2) + '% downloaded');
-        }
-      }
-    );
+      });
+    } else {
+      this.setState({error: 'Unsupported file type'});
+    }
   
 	}
 	
@@ -153,7 +232,7 @@ class ModelPreview extends Component {
              ref={(previewContainer) => this.previewContainer = previewContainer}>
           {!this.state.ready ?
             <div className="placeholder position-absolute text-center">
-              <span>Please wait...</span>
+              <span>{this.state.error || 'Please wait...'}</span>
             </div>
           : null}
         </div>

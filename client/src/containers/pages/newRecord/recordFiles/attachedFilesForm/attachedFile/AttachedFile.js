@@ -36,7 +36,6 @@ class AttachedFile extends Component {
   }
   
   updateThumbnail(value) {
-    console.log(value);
     const { name } = this.props;
     this.props.change('wizard', `${name}.thumbnail`, value);
   }

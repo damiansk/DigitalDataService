@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ChromePicker, SketchPicker } from 'react-color';
+import { ChromePicker } from 'react-color';
 import PropTypes from 'prop-types';
 
 import ModelPreview from '../ModelPreview/ModelPreview';
