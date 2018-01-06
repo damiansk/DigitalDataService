@@ -34,7 +34,7 @@ function generateThumbnail(file, callback, error) {
   const width = 720;
   const height = 720;
   const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
-  camera.position.z = 130;
+  camera.position.z = 5;
   
   const scene = new THREE.Scene();
   const material = new THREE.MeshNormalMaterial();
@@ -45,9 +45,12 @@ function generateThumbnail(file, callback, error) {
     const loader = new STLLoader();
   
     loader.load(file.path, function (geometry) {
-      const mesh = new THREE.Mesh(geometry, material);
+      const mesh = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial());
+      
       scene.add(mesh);
-  
+      
+      fitCameraToObject(camera, mesh, 7);
+      
       const renderer = new SoftwareRenderer();
       renderer.setSize(width, height);
       const imagedata = renderer.render(scene, camera);
@@ -86,7 +89,9 @@ function generateThumbnail(file, callback, error) {
       });
     
       scene.add(model);
-    
+  
+      fitCameraToObject(camera, model, 7);
+      
       const renderer = new SoftwareRenderer();
       renderer.setSize(width, height);
       const imagedata = renderer.render(scene, camera);
@@ -114,3 +119,37 @@ function generateThumbnail(file, callback, error) {
     error();
   }
 }
+
+const fitCameraToObject = function ( camera, object, offset, controls ) {
+  
+  offset = offset || 1.25;
+  
+  const boundingBox = new THREE.Box3();
+  boundingBox.setFromObject(object);
+  
+  const center = boundingBox.getCenter();
+  const size = boundingBox.getSize();
+  const maxDim = Math.max(size.x, size.y, size.z);
+  const fov = camera.fov * (Math.PI / 180);
+  let cameraZ = Math.abs(maxDim / 4 * Math.tan(fov * 2));
+  
+  cameraZ *= offset;
+  
+  camera.position.z = cameraZ;
+  
+  const minZ = boundingBox.min.z;
+  const cameraToFarEdge = (minZ < 0) ? -minZ + cameraZ : cameraZ - minZ;
+  
+  camera.far = cameraToFarEdge * 3;
+  camera.updateProjectionMatrix();
+  
+  if (controls) {
+    controls.target = center;
+    controls.maxDistance = cameraToFarEdge * 2;
+    controls.saveState();
+  } else {
+    
+    camera.lookAt(center)
+    
+  }
+};

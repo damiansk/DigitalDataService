@@ -44,20 +44,14 @@
    	load: function ( url, onLoad, onProgress, onError ) {
 
    		var scope = this;
-
-   		// var loader = new THREE.FileLoader( scope.manager );
-   		// loader.setResponseType( 'arraybuffer' );
-   		// loader.load( url, function ( text ) {
-       //
-   		// 	onLoad( scope.parse( text ) );
-       //
-   		// }, onProgress, onError );
+   		
       var fs = require('fs');
-      fs.readFile(url, function (err, data) {
+      fs.readFile(url, 'binary', function (err, data) {
         if (err) {
           throw err;
         }
-        onLoad( scope.parse( data.toString() ) );
+        
+        onLoad( scope.parse( data ) );
         delete data;
         // console.log(data.toString());
       });
