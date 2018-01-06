@@ -24,6 +24,7 @@ const {
   API_REJECT_RECORD,
   API_RESTORE_RECORD,
   API_RECORD_FILE,
+  API_DELETE_RECORD,
   API_FILE_THUMBNAIL
 } = require('../constants/api');
 
@@ -56,6 +57,7 @@ module.exports = app => {
   app.put(API_REJECT_RECORD, requireAuth, Record.rejectRecord);
   app.put(API_RESTORE_RECORD, requireAuth, Record.restoreRecord);
   
+  app.delete(API_DELETE_RECORD, requireAuth, Record.deleteRecord);
   
   app.post(API_FILE_THUMBNAIL, FileThumbnail.generateThumbnail);
 };
