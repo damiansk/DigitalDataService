@@ -4,6 +4,7 @@ const passport = require('passport');
 
 const Records = require('../controllers/records');
 const Record = require('../controllers/record');
+const FileThumbnail = require('../controllers/fileThumbnail');
 const Authentication = require('../controllers/authentication');
 
 const {
@@ -22,7 +23,8 @@ const {
   API_ACCEPT_RECORD,
   API_REJECT_RECORD,
   API_RESTORE_RECORD,
-  API_RECORD_FILE
+  API_RECORD_FILE,
+  API_FILE_THUMBNAIL
 } = require('../constants/api');
 
 
@@ -53,4 +55,7 @@ module.exports = app => {
   app.put(API_ACCEPT_RECORD, requireAuth, Record.acceptRecord);
   app.put(API_REJECT_RECORD, requireAuth, Record.rejectRecord);
   app.put(API_RESTORE_RECORD, requireAuth, Record.restoreRecord);
+  
+  
+  app.post(API_FILE_THUMBNAIL, FileThumbnail.generateThumbnail);
 };

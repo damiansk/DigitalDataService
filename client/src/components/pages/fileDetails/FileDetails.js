@@ -8,14 +8,15 @@ import ButtonsToolbar from '../buttonsToolbar/ButtonsToolbar';
 class FileDetails extends Component {
   
   render() {
-    const { name, thumbnail, description, fetchFile } = this.props.fileDetails;
+    const {
+      name,
+      thumbnail,
+      description,
+      // fetchFile
+    } = this.props.fileDetails;
     
     return (
       <div className="container mb-4">
-        {/*<article className="row">*/}
-          {/*<h5>{name}</h5>*/}
-         
-        {/*</article>*/}
   
         <section className="row">
           <aside className="col-xs col-md-3 col-xl-2">
@@ -43,7 +44,7 @@ class FileDetails extends Component {
           </ButtonsGroup>
         </ButtonsToolbar>
       </div>
-    )
+    );
   }
 }
 

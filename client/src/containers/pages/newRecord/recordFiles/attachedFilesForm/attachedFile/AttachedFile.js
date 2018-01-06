@@ -11,11 +11,16 @@ import EditOrSaveButton from '../../../../../../components/pages/buttonsToolbar/
 import FilePreview from '../../../../../../components/pages/filePreview/FilePreview';
 import ImageInputWithPreview from '../../../../../../components/pages/imageInputWithPreview/ImageInputWithPreview';
 import TextAreaToLabelField from '../../../../../../components/pages/textareaToLabelField/TextAreaToLabelField';
+import { generateThumbnail } from '../../../../../../actions/file';
 
 class AttachedFile extends Component {
   
   constructor(props) {
     super(props);
+    
+    this.state = {
+      generatePreview: false
+    };
     
     this.updateThumbnail = this.updateThumbnail.bind(this);
   }
@@ -37,13 +42,18 @@ class AttachedFile extends Component {
   
   render() {
     const {
+      file,
       file: {name: fileName, size},
       onRemove,
       onEdit,
-      onSave,
       activeEditing,
       name
     } = this.props;
+    
+    const onSave = (...args) => {
+      this.props.onSave(...args);
+      this.setState({generatePreview: false});
+    };
     
     return (
       <li className="list-group-item position-relative mb-3">
@@ -67,7 +77,17 @@ class AttachedFile extends Component {
           </article>
         </section>
   
-        {activeEditing && this.generateFilePreviewComponent()}
+        {activeEditing && !this.state.generatePreview &&
+          <section className="row mb-4">
+            <button type="button"
+                    onClick={() => this.setState({generatePreview: true})}
+                    style={{margin: '0 auto 60px'}}
+                    className="btn btn-primary">
+              Generate file preview
+            </button>
+          </section>
+        }
+        {activeEditing && this.state.generatePreview && this.generateFilePreviewComponent()}
         
         <ButtonsToolbar style={{bottom: '12px', right: '20px'}} className="position-absolute">
           <ButtonsGroup label="Remove group">
@@ -78,6 +98,14 @@ class AttachedFile extends Component {
                               onEdit={onEdit} isTextEnable={true}
                               style={{width: '80px'}}/>
           </ButtonsGroup>
+          {!this.state.generatePreview ?
+            <ButtonsGroup label="Generate thumbnail">
+              <button className="btn btn-success btn-sm" type="button"
+                      onClick={() => this.props.generateThumbnail(file, this.updateThumbnail)}>
+                Thumbnail
+              </button>
+            </ButtonsGroup>
+          : null}
         </ButtonsToolbar>
       </li>
     )
@@ -93,5 +121,5 @@ AttachedFile.propTypes = {
 
 export default connect(
   null,
-  dispatch => bindActionCreators({change}, dispatch)
+  dispatch => bindActionCreators({change, generateThumbnail}, dispatch)
 )(AttachedFile);
