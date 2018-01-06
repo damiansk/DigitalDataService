@@ -50,7 +50,7 @@ module.exports = app => {
   app.get(API_PUBLIC_RECORDS, Records.getPublicRecords);
   app.get(API_RECORD, requireAuth, Record.getRecord);
   app.get(API_PUBLIC_RECORD, Record.getPublicRecord);
-  app.get(API_RECORD_FILE, requireAuth, Record.getRecordFile);
+  app.get(API_RECORD_FILE, Record.getRecordFile);
   
   app.put(API_REPORT_RECORD, requireAuth, Record.reportRecord);
   app.put(API_ACCEPT_RECORD, requireAuth, Record.acceptRecord);
