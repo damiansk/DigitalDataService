@@ -29,12 +29,14 @@ exports.getPublicRecord = (req, res) => {
 };
 
 exports.getRecordFile = (req, res) => {
+  console.log('doszedlem');
   const { recordID } = req.params;
   const fileID = req.query.id;
   Record.getRecordFiles(recordID)
     .then(
       ({files}) => {
         const file = files.find(file => file['_id'].equals(fileID));
+  
         if(file) {
           res.status(200)
             .download(

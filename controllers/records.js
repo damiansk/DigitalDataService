@@ -46,7 +46,8 @@ exports.createRecord = (req, res) => {
           description,
           thumbnail,
           name: files[key][0].originalFilename,
-          path: `${uploadDir}/${record.id}/${path.basename(files[key][0].path)}`,
+          // path: `${uploadDir}/${record.id}/${path.basename(files[key][0].path)}`,
+          path: path.join(uploadDir, record.id, path.basename(files[key][0].path)),
           currentPath: files[key][0].path
         }))
         .map(file => {

@@ -44,7 +44,7 @@ class Header extends Component {
       <header>
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
           <div className="container">
-            <Link className="navbar-brand align-middle" to={RECORDS}>
+            <Link className="navbar-brand align-middle" to={'/'}>
               <i className="fa fa-folder-open" aria-hidden="true"/>
               {` ${this.title}`}
             </Link>
