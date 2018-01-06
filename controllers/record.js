@@ -123,7 +123,7 @@ exports.restoreRecord = (req, res) => {
 
 exports.deleteRecord = (req, res) => {
   Record.findById(req.query.id, (err, record) => {
-    if(err) return res.status(404)
+    if(err || !record) return res.status(404)
       .json({error: 'Record not found'});
     
       record.files.forEach(file => {
