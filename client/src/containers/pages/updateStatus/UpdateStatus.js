@@ -6,7 +6,8 @@ import {
   reportRecord,
   acceptRecord,
   rejectRecord,
-  restoreRecord
+  restoreRecord,
+  removeRecord
 } from '../../../actions/record';
 
 
@@ -19,7 +20,8 @@ class UpdateStatus extends Component {
       'report': this.props.reportRecord,
       'accept': this.props.acceptRecord,
       'reject': this.props.rejectRecord,
-      'restore': this.props.restoreRecord
+      'restore': this.props.restoreRecord,
+      'delete': this.props.removeRecord
     }
   }
   
@@ -59,6 +61,7 @@ const mapDispatchToProps = {
   acceptRecord,
   rejectRecord,
   restoreRecord,
+  removeRecord,
   goBack
 };
 

@@ -4,6 +4,7 @@ import {
   API_PUT_RECORD_REJECT,
   API_PUT_RECORD_RESTORE,
   API_GET_RECORD,
+  API_DELETE_RECORD,
   API_GET_RECORD_PUBLIC
 } from '../constants/api';
 import {
@@ -82,6 +83,22 @@ export function rejectRecord(recordId) {
     [API_CALL]: {
       method: 'put',
       endpoint: API_PUT_RECORD_REJECT,
+      params: {id: recordId},
+      types: {
+        pending: API_PUT_RECORD_UPDATE_STATE_PENDING,
+        success: API_PUT_RECORD_UPDATE_STATE_SUCCESS,
+        error: API_PUT_RECORD_UPDATE_STATE_ERROR,
+      }
+    }
+  }
+}
+
+export function removeRecord(recordId) {
+  return {
+    type: '',
+    [API_CALL]: {
+      method: 'delete',
+      endpoint: API_DELETE_RECORD,
       params: {id: recordId},
       types: {
         pending: API_PUT_RECORD_UPDATE_STATE_PENDING,

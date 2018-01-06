@@ -21,4 +21,6 @@ export const API_PUT_RECORD_RESTORE = _ROOT + '/record/restore';
 export const API_GET_RECORDS_PUBLIC = _ROOT + '/records/public';
 export const API_GET_RECORD_PUBLIC = _ROOT + '/record/public';
 
+export const API_DELETE_RECORD = _ROOT + '/record/remove';
+
 export const API_FILE_THUMBNAIL = _ROOT + '/file/thumbnail';
