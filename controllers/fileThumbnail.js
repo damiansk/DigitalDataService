@@ -17,14 +17,15 @@ exports.generateThumbnail = (req, res) => {
   
     for(let file in files.File) {
       
-      generateThumbnail(files.File[file], (imgPath, fileName) => {
-          // console.log(Buffer.from(imgPath, 'img/png').toString('base64'));
-          // res.status(200);
-            // .download(imgPath, fileName);
-          res.sendFile(imgPath);
-          
+      generateThumbnail(files.File[file], (imgPath) => {
+          res.sendFile(imgPath, err => {
+            fs.unlinkSync(files.File[file].path);
+          });
         },
-        err => res.status(400).send({error: 'Wrong file'}));
+        err => {
+          res.status(415).send({error: 'Unsupported file format'});
+          fs.unlinkSync(files.File[file].path);
+        });
     }
   });
 };
@@ -34,21 +35,12 @@ function generateThumbnail(file, callback, error) {
   const height = 720;
   const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
   camera.position.z = 130;
-  const directionalLight = new THREE.PointLight( 0xffffff, 0.8 );
-  camera.add( directionalLight );
-  
-  const light = new THREE.PointLight( 0xff0000, 0.5, 300 );
-  light.position.set( 200, 200, 200 );
-  
   
   const scene = new THREE.Scene();
-  scene.add( light );
-  
-  
-  const material = new THREE.MeshNormalMaterial({color: 0x2194ce});
+  const material = new THREE.MeshNormalMaterial();
   
   const fileExt = path.extname(file.path);
-  console.log(fileExt);
+  
   if(fileExt.toUpperCase() === '.STL') {
     const loader = new STLLoader();
   
@@ -56,19 +48,17 @@ function generateThumbnail(file, callback, error) {
       const mesh = new THREE.Mesh(geometry, material);
       scene.add(mesh);
   
-      // Render into pixels-array (RGBA)
       const renderer = new SoftwareRenderer();
       renderer.setSize(width, height);
-      var imagedata = renderer.render(scene, camera);
+      const imagedata = renderer.render(scene, camera);
   
-      // Create a PNG from the pixels array (RGBA)
       const png = new PNG({
         width: width,
         height: height,
         filterType: -1
       });
   
-      for(var i=0;i<imagedata.data.length;i++) {
+      for(let i=0;i<imagedata.data.length;i++) {
         png.data[i] = imagedata.data[i];
       }
   
@@ -77,7 +67,7 @@ function generateThumbnail(file, callback, error) {
       const save = png.pack().pipe(fs.createWriteStream(imgPath));
   
       save.on('finish', () => {
-        callback(imgPath, imgName);
+        callback(imgPath);
       });
     });
   } else if(fileExt.toUpperCase() === '.OBJ') {
@@ -87,42 +77,36 @@ function generateThumbnail(file, callback, error) {
     
       console.log('Loaded...');
     
-      // //Go through all children of the loaded object and search for a Mesh
       model.traverse(function(child) {
-        //This allow us to check if the children is an instance of the Mesh constructor
         if (child instanceof THREE.Mesh) {
           child.rotation.y = Math.PI / 12;
           child.material = material;
-          //Sometimes there are some vertex normals missing in the .obj files, ThreeJs will compute them
           child.geometry.computeVertexNormals();
         }
       });
     
       scene.add(model);
     
-      // Render into pixels-array (RGBA)
       const renderer = new SoftwareRenderer();
       renderer.setSize(width, height);
-      var imagedata = renderer.render(scene, camera);
+      const imagedata = renderer.render(scene, camera);
     
-      // Create a PNG from the pixels array (RGBA)
       const png = new PNG({
         width: width,
         height: height,
         filterType: -1
       });
     
-      for(var i=0;i<imagedata.data.length;i++) {
+      for(let i=0;i<imagedata.data.length;i++) {
         png.data[i] = imagedata.data[i];
       }
-    
     
       const imgName = file.originalFilename + '.png';
       const imgPath = path.join(uploadDir, imgName);
       const save = png.pack().pipe(fs.createWriteStream(imgPath));
     
       save.on('finish', () => {
-        callback(imgPath, imgName);
+        callback(imgPath);
       });
     });
     
