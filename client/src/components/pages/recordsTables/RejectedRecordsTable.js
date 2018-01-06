@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { Table, TableColumn } from '../../pages/table';
+import RejectedRecordsActions from '../iconLinks/iconLinksGroup/RejectedRecordsActions';
 
 
 const RejectedRecordsTable = ({records}) => (
@@ -16,7 +17,7 @@ const RejectedRecordsTable = ({records}) => (
     <TableColumn fieldFormatter={keywords => keywords.join(' ')}
                  fieldSelector="keywords"
                  className="col-md-2">Keywords</TableColumn>
-    <TableColumn fieldFormatter={id => <div>TODO</div>}
+    <TableColumn fieldFormatter={id => <RejectedRecordsActions id={id}/>}
                  fieldSelector="_id"
                  className="col-md-2">Actions</TableColumn>
   </Table>

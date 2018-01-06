@@ -1,10 +1,14 @@
 const Record = require('../models/record');
+const fs = require('fs');
+const path = require('path');
 
 exports.getRecord = (req, res) => {
   Record.getRecord(req.query.id)
     .then(
-      data => res.status(200)
-        .json({record: data}),
+      data => data ?
+        res.status(200).json({record: data})
+        :
+        res.status(404).json({error: 'Record not found'}),
       err => res.status(422)
         .json({error: 'Record not found'})
     );
@@ -114,5 +118,23 @@ exports.restoreRecord = (req, res) => {
       
       res.status(200).send();
     })
+  });
+};
+
+exports.deleteRecord = (req, res) => {
+  Record.findById(req.query.id, (err, record) => {
+    if(err || !record) return res.status(404)
+      .json({error: 'Record not found'});
+    
+      record.files.forEach(file => {
+        if(file.path) {
+          fs.unlinkSync(path.join(__dirname, '../', file.path));
+        }
+      });
+      
+      record.remove(err => {
+        if(err) return next(err);
+        res.status(200).send();
+      });
   });
 };

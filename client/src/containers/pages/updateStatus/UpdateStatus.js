@@ -6,7 +6,8 @@ import {
   reportRecord,
   acceptRecord,
   rejectRecord,
-  restoreRecord
+  restoreRecord,
+  removeRecord
 } from '../../../actions/record';
 
 
@@ -19,7 +20,8 @@ class UpdateStatus extends Component {
       'report': this.props.reportRecord,
       'accept': this.props.acceptRecord,
       'reject': this.props.rejectRecord,
-      'restore': this.props.restoreRecord
+      'restore': this.props.restoreRecord,
+      'delete': this.props.removeRecord
     }
   }
   
@@ -30,24 +32,24 @@ class UpdateStatus extends Component {
   }
   
   componentDidUpdate() {
-    const { isPending, updated } = this.props.recordStatus;
+    const { isPending, updated, error } = this.props.recordStatus;
     
-    if(!isPending && updated) {
-      setTimeout(() => this.props.goBack(), 3000);
+    if(!isPending && (updated || error)) {
+      setTimeout(() => this.props.goBack(), 2000);
     }
   }
   
   render() {
-    const { isPending, updated, error } = this.props.recordStatus;
+    const { isPending, updated } = this.props.recordStatus;
     return (
       <main className="container">
-          {isPending || !updated ?
+          {isPending ?
             <p className="mt-4">Please wait...</p>
             :
             updated ?
-              <p className="mt-4">Record successfully updated, you will back to previous page in 3 seconds...</p>
+              <p className="mt-4">Record successfully updated, you will back to previous page in 2 seconds...</p>
               :
-              <p className="mt-4">{error}</p>
+              <p className="mt-4">Cannot update record, you will back to previous page in 2 seconds...</p>
           }
       </main>
     );
@@ -59,6 +61,7 @@ const mapDispatchToProps = {
   acceptRecord,
   rejectRecord,
   restoreRecord,
+  removeRecord,
   goBack
 };
 
