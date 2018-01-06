@@ -131,13 +131,14 @@ class ModelPreview extends Component {
   }
 	
 	loadObject() {
-    const { file } = this.props;
-    const fileExt = file.name.split('.').pop().toUpperCase();
+    const { file, fileExt: ext } = this.props;
+    const fileExt = (ext || file.name.split('.').pop()).toUpperCase();
+    const path = file.preview || URL.createObjectURL(file);
     
     if(fileExt === 'OBJ') {
       const loader = new OBJLoader();
-  
-      loader.load(file.preview,
+      
+      loader.load(path,
         model => {
           this.model = model;
       
@@ -146,9 +147,7 @@ class ModelPreview extends Component {
           //   child.material.color && child.material.color.set(this.props.meshColor));
       
           this.scene.add(model);
-  
-          console.log(model);
-  
+          
           fitCameraToObject(this.camera, model, 7, this.controls);
           
           this.start();
@@ -165,7 +164,7 @@ class ModelPreview extends Component {
     } else if(fileExt === 'STL'){
       const loader = new STLLoader();
       
-      loader.load(file.preview, geometry => {
+      loader.load(path, geometry => {
         geometry.center();
         const material = this.material;
         const model = new THREE.Mesh(geometry, material);
@@ -173,9 +172,7 @@ class ModelPreview extends Component {
         this.model = model;
   
         this.scene.add(model);
-  
-        console.log(model);
-  
+        
         fitCameraToObject(this.camera, model, 7, this.controls);
         
         this.start();
@@ -225,10 +222,12 @@ class ModelPreview extends Component {
             </div>
           : null}
         </div>
-        <button className="btn btn-primary mt-2"
-                type="button"
-                onClick={this.onSaveThumbnail}>Save as thumbnail
-        </button>
+        {this.props.onSaveThumbnail ?
+          <button className="btn btn-primary mt-2"
+                  type="button"
+                  onClick={this.onSaveThumbnail}>Save as thumbnail
+          </button>
+        : null}
       </div>
     );
   }
