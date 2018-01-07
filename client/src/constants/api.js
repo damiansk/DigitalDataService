@@ -8,6 +8,7 @@ export const API_GET_USER_RECORDS = _ROOT + '/records';
 export const API_GET_REPORTED_RECORDS = _ROOT + '/records/reported';
 export const API_GET_ACCEPTED_RECORDS = _ROOT + '/records/accepted';
 export const API_GET_REJECTED_RECORDS = _ROOT + '/records/rejected';
+export const API_SEARCH_RECORDS = _ROOT + '/records/search';
 
 export const API_POST_RECORD = _ROOT + '/records/new';
 export const API_GET_RECORD = _ROOT + '/record';
