@@ -36,7 +36,7 @@ RecordFiles = reduxForm({
 })(RecordFiles);
 
 export default connect(
-  state => ({
-    initialValues: state.record.activeRecord.record
+  ({form}) => ({
+    files: form.wizard.values.files
   })
 )(RecordFiles);

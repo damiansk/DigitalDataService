@@ -5,7 +5,7 @@ import { destroy } from 'redux-form';
 import { fetchRecord, updateRecord, removeActiveRecord } from '../../../actions/record';
 import PrimaryHeading from '../../../components/pages/heading/PrimaryHeading';
 import StepsProgress from '../../../components/pages/stepsProgress/StepsProgress';
-import RecordGeneralInformation from '../newRecord/recordInformation/RecordGeneralInformation';
+import RecordGeneralInformation from './recordInformation/RecordGeneralInformation';
 import RecordFiles from '../newRecord/recordFiles/RecordFiles';
 import RecordSummary from '../newRecord/recordSummary/RecordSummary';
 

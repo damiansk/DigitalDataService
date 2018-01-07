@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { fetchRecord, fetchPublicRecord } from '../../../actions/record';
+import { fetchRecord, fetchPublicRecord, removeActiveRecord } from '../../../actions/record';
 
 import PrimaryHeading from '../../../components/pages/heading/PrimaryHeading';
 import RecordPreview from '../../../components/pages/recordPreview/RecordPreview';
@@ -17,6 +17,10 @@ class Preview extends Component {
       this.props.fetchRecord(this.props.match.params.id);
     }
     
+  }
+  
+  componentWillUnmount() {
+    this.props.removeActiveRecord();
   }
   
   render() {
@@ -48,5 +52,5 @@ Preview.propTypes = {
 
 export default connect(
   ({record}) => ({record: record.activeRecord}),
-  {fetchRecord, fetchPublicRecord}
+  {fetchRecord, fetchPublicRecord, removeActiveRecord}
 )(Preview);

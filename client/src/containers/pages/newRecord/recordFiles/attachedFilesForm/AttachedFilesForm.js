@@ -19,6 +19,7 @@ class AttachedFilesForm extends Component {
   
   renderAttachedFiles() {
     const { fields } = this.props;
+    console.log(fields);
     return fields.map((name, index) =>
         <AttachedFile key={index}
                       name={name}
