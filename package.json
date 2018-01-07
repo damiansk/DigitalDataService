@@ -10,8 +10,11 @@
   "scripts": {
     "start": "node index.js",
     "server": "nodemon index.js",
+    "prod-serv": "node index.js",
+    "prod-client": "npm run build --prefix client",
     "client": "npm run start --prefix client",
-    "dev": "npm-run-all --parallel server client"
+    "dev": "npm-run-all --parallel server client",
+    "docker": "npm-run-all prod-client prod-serv"
   },
   "author": "damiansk",
   "license": "MIT",

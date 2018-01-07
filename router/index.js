@@ -61,9 +61,14 @@ module.exports = app => {
   app.put(API_ACCEPT_RECORD, requireAuth, Record.acceptRecord);
   app.put(API_REJECT_RECORD, requireAuth, Record.rejectRecord);
   app.put(API_RESTORE_RECORD, requireAuth, Record.restoreRecord);
+  
   app.put(API_UPDATE_RECORD, requireAuth, Record.updateRecord);
   
   app.delete(API_DELETE_RECORD, requireAuth, Record.deleteRecord);
   
   app.post(API_FILE_THUMBNAIL, FileThumbnail.generateThumbnail);
+  
+  app.get('*', function(req, res) {
+    res.redirect('/');
+  });
 };
