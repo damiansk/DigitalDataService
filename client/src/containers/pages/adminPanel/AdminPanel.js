@@ -21,6 +21,7 @@ import UpdateStatus from '../updateStatus/UpdateStatus';
 import { authVerification } from '../../../actions/auth';
 import { connect } from 'react-redux';
 import EditRecord from '../editRecord/EditRecord';
+import Account from '../account/Account';
 
 
 class AdminPanel extends Component {
@@ -51,8 +52,6 @@ class AdminPanel extends Component {
     );
   }
 }
-
-const Account = () => <div>account</div>;
 
 export default connect(
   ({auth}) => ({verificationPending: auth.isChecking}),
