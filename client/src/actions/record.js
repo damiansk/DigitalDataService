@@ -9,7 +9,7 @@ import {
   API_PUT_RECORD
 } from '../constants/api';
 import {
-  API_CALL,
+  API_CALL, RECORD_RESET_ACTIVE_RECORD,
   RECORD_GET_RECORD_PENDING, RECORD_GET_RECORD_SUCCESS, RECORD_GET_RECORD_ERROR,
   API_PUT_RECORD_UPDATE_STATE_PENDING, API_PUT_RECORD_UPDATE_STATE_SUCCESS, API_PUT_RECORD_UPDATE_STATE_ERROR,
   RECORD_UPDATE_RECORD_SUCCESS, RECORD_UPDATE_RECORD_ERROR, RECORD_UPDATE_RECORD_PENDING
@@ -132,7 +132,6 @@ export function restoreRecord(recordId) {
 
 export function updateRecord(formRecord) {
   const data = mapEditedRecordToFormData(formRecord);
-  console.log(data);
   return dispatch => dispatch({
     type: '',
     [API_CALL]: {
@@ -148,4 +147,10 @@ export function updateRecord(formRecord) {
       callback: () => dispatch(push(RECORDS))
     }
   });
+}
+
+export function removeActiveRecord() {
+  return {
+    type: RECORD_RESET_ACTIVE_RECORD
+  }
 }

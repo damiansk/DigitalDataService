@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { destroy } from 'redux-form';
 
-import { fetchRecord, updateRecord } from '../../../actions/record';
+import { fetchRecord, updateRecord, removeActiveRecord } from '../../../actions/record';
 import PrimaryHeading from '../../../components/pages/heading/PrimaryHeading';
 import StepsProgress from '../../../components/pages/stepsProgress/StepsProgress';
 import RecordGeneralInformation from '../newRecord/recordInformation/RecordGeneralInformation';
@@ -43,6 +43,7 @@ class EditRecord extends Component {
   
   componentWillUnmount() {
     this.props.destroy('wizard');
+    this.props.removeActiveRecord();
   }
   
   prevStep() {
@@ -74,5 +75,5 @@ class EditRecord extends Component {
 
 export default connect(
   null,
-  {destroy, updateRecord, fetchRecord}
+  {destroy, updateRecord, fetchRecord, removeActiveRecord}
 )(EditRecord);
