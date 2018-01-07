@@ -2,15 +2,15 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { destroy } from 'redux-form';
 
-import { saveRecord } from '../../../actions/records';
+import { fetchRecord, updateRecord } from '../../../actions/record';
 import PrimaryHeading from '../../../components/pages/heading/PrimaryHeading';
 import StepsProgress from '../../../components/pages/stepsProgress/StepsProgress';
-import RecordGeneralInformation from './recordInformation/RecordGeneralInformation';
-import RecordFiles from './recordFiles/RecordFiles';
-import RecordSummary from './recordSummary/RecordSummary';
+import RecordGeneralInformation from '../newRecord/recordInformation/RecordGeneralInformation';
+import RecordFiles from '../newRecord/recordFiles/RecordFiles';
+import RecordSummary from '../newRecord/recordSummary/RecordSummary';
 
 
-class NewRecord extends Component {
+class EditRecord extends Component {
   
   constructor(props) {
     super(props);
@@ -37,6 +37,10 @@ class NewRecord extends Component {
     ];
   }
   
+  componentWillMount() {
+    this.props.fetchRecord(this.props.match.params.id);
+  }
+  
   componentWillUnmount() {
     this.props.destroy('wizard');
   }
@@ -50,7 +54,9 @@ class NewRecord extends Component {
   }
   
   onSubmit(values) {
-    this.props.saveRecord(values);
+    values.keywords = values.keywords.join(' ');
+    console.log(values);
+    this.props.updateRecord(values);
   }
   
   render() {
@@ -58,7 +64,7 @@ class NewRecord extends Component {
     
     return (
       <section>
-        <PrimaryHeading title="New record"/>
+        <PrimaryHeading title="Edit record"/>
         <StepsProgress stepsList={this.stepsList.map(({title}) => title)} currentStep={currentStep} />
         { this.stepsList[currentStep].component }
       </section>
@@ -66,4 +72,7 @@ class NewRecord extends Component {
   }
 }
 
-export default connect(null, {destroy, saveRecord})(NewRecord);
+export default connect(
+  null,
+  {destroy, updateRecord, fetchRecord}
+)(EditRecord);

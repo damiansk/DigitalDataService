@@ -8,7 +8,7 @@ class RecordSummary extends Component {
   render() {
     const {
       handleSubmit,
-      pristine,
+      // pristine,
       previousPage,
       submitting,
       record
@@ -28,7 +28,7 @@ class RecordSummary extends Component {
             </button>
             <button type="submit"
                     className="ml-3 btn btn-primary"
-                    disabled={pristine || submitting}>
+                    disabled={submitting}>
               Submit
             </button>
           </div>

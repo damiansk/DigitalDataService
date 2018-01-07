@@ -10,6 +10,7 @@ export const API_GET_ACCEPTED_RECORDS = _ROOT + '/records/accepted';
 export const API_GET_REJECTED_RECORDS = _ROOT + '/records/rejected';
 
 export const API_POST_RECORD = _ROOT + '/records/new';
+export const API_PUT_RECORD = _ROOT + '/records/new';
 export const API_GET_RECORD = _ROOT + '/record';
 export const API_GET_RECORD_FILE = _ROOT + '/record/:recordId/file';
 

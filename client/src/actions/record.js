@@ -5,13 +5,18 @@ import {
   API_PUT_RECORD_RESTORE,
   API_GET_RECORD,
   API_DELETE_RECORD,
-  API_GET_PUBLIC_RECORD
+  API_GET_PUBLIC_RECORD,
+  API_PUT_RECORD
 } from '../constants/api';
 import {
   API_CALL,
   RECORD_GET_RECORD_PENDING, RECORD_GET_RECORD_SUCCESS, RECORD_GET_RECORD_ERROR,
-  API_PUT_RECORD_UPDATE_STATE_PENDING, API_PUT_RECORD_UPDATE_STATE_SUCCESS, API_PUT_RECORD_UPDATE_STATE_ERROR
+  API_PUT_RECORD_UPDATE_STATE_PENDING, API_PUT_RECORD_UPDATE_STATE_SUCCESS, API_PUT_RECORD_UPDATE_STATE_ERROR,
+  RECORD_UPDATE_RECORD_SUCCESS, RECORD_UPDATE_RECORD_ERROR, RECORD_UPDATE_RECORD_PENDING
 } from '../constants/actions';
+import { RECORDS } from '../constants/routes';
+import { mapEditedRecordToFormData } from '../utils/formMapping';
+import { push } from 'react-router-redux';
 
 
 export function fetchPublicRecord(recordId) {
@@ -123,4 +128,24 @@ export function restoreRecord(recordId) {
       }
     }
   }
+}
+
+export function updateRecord(formRecord) {
+  const data = mapEditedRecordToFormData(formRecord);
+  console.log(data);
+  return dispatch => dispatch({
+    type: '',
+    [API_CALL]: {
+      endpoint: API_PUT_RECORD,
+      headers: {'Content-Type': 'multipart/form-data'},
+      method: 'put',
+      data,
+      types: {
+        pending: RECORD_UPDATE_RECORD_PENDING,
+        success: RECORD_UPDATE_RECORD_SUCCESS,
+        error: RECORD_UPDATE_RECORD_ERROR
+      },
+      callback: () => dispatch(push(RECORDS))
+    }
+  });
 }

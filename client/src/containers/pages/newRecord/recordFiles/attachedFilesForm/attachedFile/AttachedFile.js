@@ -43,12 +43,18 @@ class AttachedFile extends Component {
   render() {
     const {
       file,
-      file: {name: fileName, size},
       onRemove,
       onEdit,
       activeEditing,
       name
     } = this.props;
+    
+    let fileName, size;
+    
+    if(file) {
+       fileName = file.name;
+       size = file.size;
+    }
     
     const onSave = (...args) => {
       this.props.onSave(...args);

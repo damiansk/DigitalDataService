@@ -29,7 +29,8 @@ class AttachedFilesForm extends Component {
                       }}
                       onEdit={() => this.setState({editedFieldIndex: index})}
                       onSave={() => this.setState({editedFieldIndex: null})}
-                      file={fields.get(index).file}/>
+                      file={fields.get(index).file}
+                      id={fields.get(index)._id}/>
       );
   }
   

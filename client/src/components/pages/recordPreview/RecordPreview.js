@@ -103,7 +103,10 @@ RecordPreview.propTypes = {
   ]),
   title: PropTypes.string.isRequired,
   resourceType: PropTypes.string.isRequired,
-  keywords: PropTypes.string.isRequired,
+  keywords: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.array
+  ]),
   destination: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   files: PropTypes.array

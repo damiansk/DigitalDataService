@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { FieldArray, reduxForm } from 'redux-form';
 
 import AttachedFilesForm from './attachedFilesForm/AttachedFilesForm';
@@ -28,8 +29,14 @@ class RecordFiles extends Component {
   }
 }
 
-export default reduxForm({
+RecordFiles = reduxForm({
   form: 'wizard',
   destroyOnUnmount: false,
   forceUnregisterOnUnmount: true
 })(RecordFiles);
+
+export default connect(
+  state => ({
+    initialValues: state.record.activeRecord.record
+  })
+)(RecordFiles);

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect} from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 
 import CustomTextField from '../../../../components/pages/customTextField/CustomTextField';
@@ -63,8 +64,16 @@ class RecordGeneralInformation extends Component {
   }
 }
 
-export default reduxForm({
+
+
+RecordGeneralInformation = reduxForm({
   form: 'wizard',
   destroyOnUnmount: false,
   forceUnregisterOnUnmount: true
 })(RecordGeneralInformation);
+
+export default connect(
+  state => ({
+    initialValues: state.record.activeRecord.record
+  })
+)(RecordGeneralInformation)
