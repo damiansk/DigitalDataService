@@ -8,7 +8,8 @@ import {
   RECORD_NEW,
   RECORDS,
   SIGN_OUT,
-  RECORD_UPDATE_STATUS
+  RECORD_UPDATE_STATUS,
+  RECORD_EDIT
 } from '../../../constants/routes';
 import PrivateRoute from '../auth/privateRoute/PrivateRoute';
 import Preview from '../preview/Preview';
@@ -19,6 +20,7 @@ import Records from '../records/Records';
 import UpdateStatus from '../updateStatus/UpdateStatus';
 import { authVerification } from '../../../actions/auth';
 import { connect } from 'react-redux';
+import EditRecord from '../editRecord/EditRecord';
 
 
 class AdminPanel extends Component {
@@ -37,6 +39,7 @@ class AdminPanel extends Component {
             <Route path={SIGN_IN} component={SignIn}/>
             <Route path={SIGN_OUT} component={SignOut}/>
             <PrivateRoute path={RECORD_NEW} component={NewRecord}/>
+            <PrivateRoute path={RECORD_EDIT} component={EditRecord}/>
             <PrivateRoute path={RECORDS} component={Records}/>
             <PrivateRoute path={ACCOUNT} component={Account}/>
             <PrivateRoute path={RECORD_PREVIEW} component={Preview}/>

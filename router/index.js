@@ -10,6 +10,7 @@ const Authentication = require('../controllers/authentication');
 const {
   API_AUTH_USER,
   API_CREATE_RECORD,
+  API_UPDATE_RECORD,
   API_SIGN_IN,
   API_SIGN_UP,
   API_USER_RECORDS,
@@ -60,6 +61,7 @@ module.exports = app => {
   app.put(API_ACCEPT_RECORD, requireAuth, Record.acceptRecord);
   app.put(API_REJECT_RECORD, requireAuth, Record.rejectRecord);
   app.put(API_RESTORE_RECORD, requireAuth, Record.restoreRecord);
+  app.put(API_UPDATE_RECORD, requireAuth, Record.updateRecord);
   
   app.delete(API_DELETE_RECORD, requireAuth, Record.deleteRecord);
   

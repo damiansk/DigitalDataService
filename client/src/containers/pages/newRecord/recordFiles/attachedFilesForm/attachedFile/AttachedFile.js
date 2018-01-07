@@ -11,7 +11,7 @@ import EditOrSaveButton from '../../../../../../components/pages/buttonsToolbar/
 import FilePreview from '../../../../../../components/pages/filePreview/FilePreview';
 import ImageInputWithPreview from '../../../../../../components/pages/imageInputWithPreview/ImageInputWithPreview';
 import TextAreaToLabelField from '../../../../../../components/pages/textareaToLabelField/TextAreaToLabelField';
-import { generateThumbnail } from '../../../../../../actions/file';
+import { generateThumbnail, fetchFile } from '../../../../../../actions/file';
 
 class AttachedFile extends Component {
   
@@ -19,10 +19,13 @@ class AttachedFile extends Component {
     super(props);
     
     this.state = {
-      generatePreview: false
+      generatePreview: false,
+      fetchedFile: undefined,
+      waitingForFile: false
     };
     
     this.updateThumbnail = this.updateThumbnail.bind(this);
+    this.fetchFileAndGeneratePreview = this.fetchFileAndGeneratePreview.bind(this);
   }
   
   generateFilePreviewComponent() {
@@ -30,9 +33,23 @@ class AttachedFile extends Component {
       <section className="row mb-4">
         <FilePreview
           onSaveThumbnail={this.updateThumbnail}
-          file={this.props.file}/>
+          fileExt={this.props.data.name.split('.').pop()}
+          file={this.props.file || this.state.fetchedFile}/>
       </section>
     );
+  }
+  
+  componentWillUpdate(nextProps) {
+    const fetchedFileID = nextProps.filesStoreIDs.find(id => this.props.data._id === id);
+    console.log(fetchedFileID);
+    
+    if(fetchedFileID && this.state.waitingForFile) {
+      this.setState({
+        fetchedFile: nextProps.filesStore[fetchedFileID],
+        generatePreview: true,
+        waitingForFile: false
+      });
+    }
   }
   
   updateThumbnail(value) {
@@ -40,15 +57,41 @@ class AttachedFile extends Component {
     this.props.change('wizard', `${name}.thumbnail`, value);
   }
   
+  fetchFileAndGeneratePreview() {
+    if(this.props.file) {
+      this.setState({generatePreview: true});
+    } else {
+      const fetchedFileID = this.props.filesStoreIDs.find(id => this.props.data._id === id);
+      
+      if(fetchedFileID) {
+        this.setState({
+          fetchedFile: this.props.filesStore[fetchedFileID],
+          generatePreview: true
+        });
+      } else {
+        this.props.fetchFile(this.props.activeRecord._id, this.props.data._id);
+        this.setState({waitingForFile: true});
+      }
+    }
+    
+    
+  }
+  
   render() {
     const {
       file,
-      file: {name: fileName, size},
       onRemove,
       onEdit,
       activeEditing,
       name
     } = this.props;
+    
+    const fileName = this.props.data.name;
+    let size;
+    
+    if(file) {
+       size = file.size;
+    }
     
     const onSave = (...args) => {
       this.props.onSave(...args);
@@ -66,7 +109,10 @@ class AttachedFile extends Component {
           </aside>
           
           <article className="col col-md-9 col-xl-10 text-center pb-5">
-            <p className="mb-0 text-right font-weight-light">Size: <span className="font-weight-normal">{(size / (1024*1024)).toFixed(2)}MB</span></p>
+            {size ?
+              <p className="mb-0 text-right font-weight-light">Size: <span
+                className="font-weight-normal">{(size / (1024 * 1024)).toFixed(2)}MB</span></p>
+            : null}
             <h5 className="mb-1 text-left text-truncate w-100">{fileName}</h5>
             <Field name={`${name}.description`}
                    className="font-weight-light w-100"
@@ -80,7 +126,7 @@ class AttachedFile extends Component {
         {activeEditing && !this.state.generatePreview &&
           <section className="row mb-4">
             <button type="button"
-                    onClick={() => this.setState({generatePreview: true})}
+                    onClick={this.fetchFileAndGeneratePreview}
                     style={{margin: '0 auto 60px'}}
                     className="btn btn-primary">
               Generate file preview
@@ -120,6 +166,10 @@ AttachedFile.propTypes = {
 };
 
 export default connect(
-  null,
-  dispatch => bindActionCreators({change, generateThumbnail}, dispatch)
+  ({files, record}) => ({
+    activeRecord: record.activeRecord.record,
+    filesStoreIDs: files.fetchedFilesId,
+    filesStore: files.fetchedFiles,
+  }),
+  dispatch => bindActionCreators({change, generateThumbnail, fetchFile}, dispatch)
 )(AttachedFile);

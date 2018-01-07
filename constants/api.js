@@ -5,6 +5,7 @@ module.exports = {
   API_SIGN_UP: _ROOT + '/signup',
   API_AUTH_USER: _ROOT + '/auth',
   API_CREATE_RECORD: _ROOT + '/records/new',
+  API_UPDATE_RECORD: _ROOT + '/record/edit',
   API_USER_RECORDS: _ROOT + '/records',
   API_REPORTED_RECORDS: _ROOT + '/records/reported',
   API_ACCEPTED_RECORDS: _ROOT + '/records/accepted',

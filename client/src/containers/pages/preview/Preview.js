@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { fetchRecord, fetchPublicRecord } from '../../../actions/record';
+import { fetchRecord, fetchPublicRecord, removeActiveRecord } from '../../../actions/record';
 
 import PrimaryHeading from '../../../components/pages/heading/PrimaryHeading';
 import RecordPreview from '../../../components/pages/recordPreview/RecordPreview';
@@ -19,6 +19,10 @@ class Preview extends Component {
     
   }
   
+  componentWillUnmount() {
+    this.props.removeActiveRecord();
+  }
+  
   render() {
     const { isFetching, record } = this.props.record;
   
@@ -33,6 +37,7 @@ class Preview extends Component {
               <div>Record not found...</div>
             :
               <RecordPreview isPublic={this.props.isPublic}
+                             disabled={false}
                              {...record}
                              keywords={record.keywords.join(' ')}/>
           }
@@ -48,5 +53,5 @@ Preview.propTypes = {
 
 export default connect(
   ({record}) => ({record: record.activeRecord}),
-  {fetchRecord, fetchPublicRecord}
+  {fetchRecord, fetchPublicRecord, removeActiveRecord}
 )(Preview);

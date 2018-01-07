@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Dropzone from 'react-dropzone';
+import { connect } from 'react-redux';
 
 import SecondaryHeading from '../../../../../components/pages/heading/SecondaryHeading';
 import AttachedFile from './attachedFile/AttachedFile';
@@ -18,10 +19,11 @@ class AttachedFilesForm extends Component {
   }
   
   renderAttachedFiles() {
-    const { fields } = this.props;
+    const { fields, files } = this.props;
     return fields.map((name, index) =>
         <AttachedFile key={index}
                       name={name}
+                      data={files[index]}
                       activeEditing={this.state.editedFieldIndex === index}
                       onRemove={() => {
                         this.setState({editedFieldIndex: null});
@@ -29,7 +31,8 @@ class AttachedFilesForm extends Component {
                       }}
                       onEdit={() => this.setState({editedFieldIndex: index})}
                       onSave={() => this.setState({editedFieldIndex: null})}
-                      file={fields.get(index).file}/>
+                      file={fields.get(index).file}
+                      id={fields.get(index)._id}/>
       );
   }
   
@@ -73,4 +76,8 @@ class AttachedFilesForm extends Component {
   }
 }
 
-export default AttachedFilesForm;
+export default connect(
+  ({form}) => ({
+    files: form.wizard.values.files
+  })
+)(AttachedFilesForm);

@@ -116,22 +116,24 @@ class FileDetails extends Component {
             Download
           </a>
         </section>
-        <ButtonsToolbar style={{bottom: '12px', right: '20px'}} className="position-absolute">
-          <ButtonsGroup label="Edit and save group">
-            <button type="button"
-                    onClick={this.downloadFile}
-                    className="btn btn-secondary">
-              Download
-            </button>
-          </ButtonsGroup>
-          <ButtonsGroup label="Remove group">
-            <button type="button"
-                    onClick={this.previewModel}
-                    className={`btn ${this.state.preview && file ? 'btn-outline-success': 'btn-primary'}`}>
-              {this.state.preview && file ? 'Close' : 'Preview'}
-            </button>
-          </ButtonsGroup>
-        </ButtonsToolbar>
+        {!this.props.disabled ?
+          <ButtonsToolbar style={{bottom: '12px', right: '20px'}} className="position-absolute">
+            <ButtonsGroup label="Edit and save group">
+              <button type="button"
+                      onClick={this.downloadFile}
+                      className="btn btn-secondary">
+                Download
+              </button>
+            </ButtonsGroup>
+            <ButtonsGroup label="Remove group">
+              <button type="button"
+                      onClick={this.previewModel}
+                      className={`btn ${this.state.preview && file ? 'btn-outline-success': 'btn-primary'}`}>
+                {this.state.preview && file ? 'Close' : 'Preview'}
+              </button>
+            </ButtonsGroup>
+          </ButtonsToolbar>
+          : null}
       </div>
     );
   }

@@ -116,7 +116,10 @@ class ModelPreview extends Component {
       if(this.model.type === 'Group') {
         this.model
           .children.forEach(child =>
-          child.material.color.set(meshColor));
+            child.material.color && typeof child.material.color.set === "function" ?
+              child.material.color.set(meshColor)
+              : child.material.color = meshColor
+          )
       } else {
         this.model.material.color.set(meshColor);
       }

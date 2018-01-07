@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { FieldArray, reduxForm } from 'redux-form';
 
 import AttachedFilesForm from './attachedFilesForm/AttachedFilesForm';

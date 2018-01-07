@@ -1,4 +1,5 @@
 import {
+  RECORD_RESET_ACTIVE_RECORD,
   RECORD_GET_RECORD_PENDING, RECORD_GET_RECORD_SUCCESS, RECORD_GET_RECORD_ERROR,
   API_PUT_RECORD_UPDATE_STATE_PENDING, API_PUT_RECORD_UPDATE_STATE_SUCCESS, API_PUT_RECORD_UPDATE_STATE_ERROR
 } from '../constants/actions';
@@ -55,6 +56,12 @@ export default (state = initialState, action) => {
           isPending: false,
           updated: false
         }
+      };
+      
+    case RECORD_RESET_ACTIVE_RECORD:
+      return {
+        ...state,
+        activeRecord: initialState.activeRecord
       };
       
     default:

@@ -26,7 +26,8 @@ class RecordPreview extends Component {
     return this.props
       .files.map((file, index) =>
         <li className="list-group-item position-relative mb-3" key={index}>
-          <FileDetails fetchFile={() => fetchMethod(this.props['_id'], file['_id'])}
+          <FileDetails disabled={this.props.disabled}
+                       fetchFile={() => fetchMethod(this.props['_id'], file['_id'])}
                        file={this.props.fetchedFiles[file['_id']]}
                        fileDetails={file}/>
         </li>
@@ -103,7 +104,10 @@ RecordPreview.propTypes = {
   ]),
   title: PropTypes.string.isRequired,
   resourceType: PropTypes.string.isRequired,
-  keywords: PropTypes.string.isRequired,
+  keywords: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.array
+  ]),
   destination: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   files: PropTypes.array
