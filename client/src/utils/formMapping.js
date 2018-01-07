@@ -31,7 +31,9 @@ export const mapEditedRecordToFormData = record => {
   } = record;
   const formData = new FormData();
   
-  restRecordData.keywords = restRecordData.keywords.split(' ');
+  restRecordData.keywords = Array.isArray(restRecordData.keywords)
+                              ? restRecordData.keywords
+                              : restRecordData.keywords.split(' ');
   
   const {files, filesData} =
     models.map(({file, ...rest}, index) => ({

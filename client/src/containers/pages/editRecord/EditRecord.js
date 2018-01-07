@@ -54,7 +54,7 @@ class EditRecord extends Component {
   }
   
   onSubmit(values) {
-    values.keywords = values.keywords.join(' ');
+    // values.keywords = values.keywords.join(' ');
     console.log(values);
     this.props.updateRecord(values);
   }
