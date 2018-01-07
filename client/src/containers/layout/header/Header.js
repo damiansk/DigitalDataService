@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Route, Switch } from 'react-router';
+import { push } from 'react-router-redux';
 import { Link } from 'react-router-dom';
 
-import { ACCOUNT, ADMIN, RECORD_NEW, RECORDS, SIGN_IN, SIGN_OUT } from '../../../constants/routes';
+import {
+  ACCOUNT, ADMIN, mapPathVariables, PUBLIC_SEARCH_RECORDS, RECORD_NEW, RECORDS, SIGN_IN,
+  SIGN_OUT
+} from '../../../constants/routes';
 import NavigationItem from '../../../components/layout/header/navigation/NavigationItem';
 import SearchNav from '../../../components/layout/header/search/SearchNav';
-import { searchRecords } from '../../../actions/records';
 
 class Header extends Component {
   
@@ -97,7 +100,9 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  handleSearchSubmit: value => dispatch(searchRecords(value)),
+  handleSearchSubmit: value =>
+    dispatch(push(value && value.trim ? mapPathVariables(PUBLIC_SEARCH_RECORDS, {term: value})
+                                      : '/')),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);
