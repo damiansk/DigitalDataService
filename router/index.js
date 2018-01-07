@@ -41,7 +41,7 @@ module.exports = app => {
     res.send({hi: 'there'});
   });
   app.post(API_SIGN_IN, requireSignin, Authentication.signin);
-  app.post(API_SIGN_UP, Authentication.signup);
+  app.post(API_SIGN_UP, requireAuth, Authentication.signup);
   app.post(API_AUTH_USER, requireAuth, Authentication.verifyAuth);
   
   app.post(API_CREATE_RECORD, requireAuth, Records.createRecord);

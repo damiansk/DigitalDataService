@@ -10,7 +10,8 @@ import {
 
 import {
   API_AUTH_USER,
-  API_SIGN_IN
+  API_SIGN_IN,
+  API_SIGN_UP
 } from '../constants/api';
 
 
@@ -25,6 +26,18 @@ export function signInUser(email, password, redirect) {
           payload: response.data.user
         });
         dispatch(push(redirect));
+      })
+      .catch(() => dispatch(authError('Wrong email or password')));
+  };
+}
+
+export function signUpUser(firstName, lastName, email, password, callback) {
+  const token = localStorage.getItem('token');
+  return dispatch => {
+    axios.post(API_SIGN_UP, { firstName, lastName, email, password },
+      {headers: {authorization: token}})
+      .then(response => {
+        callback();
       })
       .catch(() => dispatch(authError('Wrong email or password')));
   };
