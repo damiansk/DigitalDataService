@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import dateFormat from 'dateformat';
 import PropTypes from 'prop-types';
 
-import { fetchFile, removeFiles } from '../../../actions/file';
+import { fetchFile, fetchPublicFile, removeFiles } from '../../../actions/file';
 import SecondaryHeading from '../heading/SecondaryHeading';
 import FileDetails from '../fileDetails/FileDetails';
 
@@ -21,10 +21,12 @@ class RecordPreview extends Component {
   }
   
   mapFilesToList() {
+    const fetchMethod = this.props.isPublic ? this.props.fetchPublicFile
+                                            : this.props.fetchFile;
     return this.props
       .files.map((file, index) =>
         <li className="list-group-item position-relative mb-3" key={index}>
-          <FileDetails fetchFile={() => this.props.fetchFile(this.props['_id'], file['_id'])}
+          <FileDetails fetchFile={() => fetchMethod(this.props['_id'], file['_id'])}
                        file={this.props.fetchedFiles[file['_id']]}
                        fileDetails={file}/>
         </li>
@@ -109,5 +111,5 @@ RecordPreview.propTypes = {
 
 export default connect(
   ({files}) => ({fetchedFiles: files.fetchedFiles}),
-  {fetchFile, removeFiles}
+  {fetchFile, fetchPublicFile, removeFiles}
 )(RecordPreview);

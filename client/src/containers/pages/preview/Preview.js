@@ -32,7 +32,9 @@ class Preview extends Component {
             : !record ?
               <div>Record not found...</div>
             :
-              <RecordPreview {...record} keywords={record.keywords.join(' ')}/>
+              <RecordPreview isPublic={this.props.isPublic}
+                             {...record}
+                             keywords={record.keywords.join(' ')}/>
           }
         </article>
       </section>

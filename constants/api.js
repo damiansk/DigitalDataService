@@ -9,15 +9,16 @@ module.exports = {
   API_REPORTED_RECORDS: _ROOT + '/records/reported',
   API_ACCEPTED_RECORDS: _ROOT + '/records/accepted',
   API_REJECTED_RECORDS: _ROOT + '/records/rejected',
-  API_PUBLIC_RECORDS: _ROOT + '/records/public',
+  API_PUBLIC_RECORDS: _ROOT + '/public/records',
   API_RECORD: _ROOT + '/record',
-  API_PUBLIC_RECORD: _ROOT + '/record/public',
+  API_PUBLIC_RECORD: _ROOT + '/public/record',
   API_REPORT_RECORD: _ROOT + '/record/report',
   API_ACCEPT_RECORD: _ROOT + '/record/accept',
   API_REJECT_RECORD: _ROOT + '/record/reject',
   API_RESTORE_RECORD: _ROOT + '/record/restore',
   API_DELETE_RECORD: _ROOT + '/record/remove',
   API_RECORD_FILE: _ROOT + '/record/:recordID/file',
+  API_PUBLIC_RECORD_FILE: _ROOT + '/public/record/:recordID/file',
   API_FILE_THUMBNAIL: _ROOT + '/file/thumbnail'
 };
 

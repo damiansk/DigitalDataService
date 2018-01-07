@@ -127,8 +127,8 @@ class FileDetails extends Component {
           <ButtonsGroup label="Remove group">
             <button type="button"
                     onClick={this.previewModel}
-                    className={`btn ${this.state.preview ? 'btn-outline-success': 'btn-primary'}`}>
-              {this.state.preview ? 'Close' : 'Preview'}
+                    className={`btn ${this.state.preview && file ? 'btn-outline-success': 'btn-primary'}`}>
+              {this.state.preview && file ? 'Close' : 'Preview'}
             </button>
           </ButtonsGroup>
         </ButtonsToolbar>
