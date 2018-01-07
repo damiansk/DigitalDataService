@@ -22,8 +22,8 @@ class PublicRecords extends Component {
     const nextTerm = nextProps.match.params.term;
   
     if(term !== nextTerm) {
-      if(term) {
-        this.props.searchRecords(term);
+      if(nextTerm) {
+        this.props.searchRecords(nextTerm);
       } else {
         this.props.fetchPublicRecords();
       }
