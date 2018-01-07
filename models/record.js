@@ -66,6 +66,11 @@ recordSchema.statics.getPublicRecord = function(recordId) {
 };
 
 recordSchema.statics.getRecordFiles = function(recordID) {
+  return this.findOne({_id: recordID})
+    .select('-_id files');
+};
+
+recordSchema.statics.getPublicRecordFiles = function(recordID) {
   return this.findOne({_id: recordID, status: 'accepted'})
     .select('-_id files');
 };

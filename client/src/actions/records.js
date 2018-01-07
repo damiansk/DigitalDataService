@@ -6,7 +6,7 @@ import {
   API_GET_ACCEPTED_RECORDS,
   API_GET_REPORTED_RECORDS,
   API_GET_USER_RECORDS,
-  API_GET_RECORDS_PUBLIC,
+  API_GET_PUBLIC_RECORDS,
   API_GET_REJECTED_RECORDS
 } from '../constants/api';
 import { RECORDS } from '../constants/routes';
@@ -100,7 +100,7 @@ export function fetchPublicRecords() {
     type: '',
     [API_CALL]: {
       unsecured: true,
-      endpoint: API_GET_RECORDS_PUBLIC,
+      endpoint: API_GET_PUBLIC_RECORDS,
       types: {
         pending: API_GET_PUBLIC_RECORDS_PENDING,
         success: API_GET_PUBLIC_RECORDS_SUCCESS,

@@ -29,7 +29,6 @@ exports.getPublicRecord = (req, res) => {
 };
 
 exports.getRecordFile = (req, res) => {
-  console.log('doszedlem');
   const { recordID } = req.params;
   const fileID = req.query.id;
   Record.getRecordFiles(recordID)
@@ -51,7 +50,33 @@ exports.getRecordFile = (req, res) => {
           res.send(404);
         }
       },
-      err => console.log(err)
+      err => res.send(404)
+    );
+};
+
+exports.getPublicRecordFile = (req, res) => {
+  const { recordID } = req.params;
+  const fileID = req.query.id;
+  Record.getPublicRecordFiles(recordID)
+    .then(
+      ({files}) => {
+        const file = files.find(file => file['_id'].equals(fileID));
+        console.log('found');
+        if(file) {
+          res.status(200)
+            .download(
+              path.join(__dirname, '../', file.path),
+              file.name,
+              {headers: {
+                  'content-type': 'multipart/form-data',
+                  'content-id': fileID
+                }}
+            );
+        } else {
+          res.send(404);
+        }
+      },
+      err => res.send(404)
     );
 };
 

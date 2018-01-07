@@ -5,7 +5,7 @@ import {
   API_PUT_RECORD_RESTORE,
   API_GET_RECORD,
   API_DELETE_RECORD,
-  API_GET_RECORD_PUBLIC
+  API_GET_PUBLIC_RECORD
 } from '../constants/api';
 import {
   API_CALL,
@@ -19,7 +19,7 @@ export function fetchPublicRecord(recordId) {
     type: '',
     [API_CALL]: {
       unsecured: true,
-      endpoint: API_GET_RECORD_PUBLIC,
+      endpoint: API_GET_PUBLIC_RECORD,
       params: {id: recordId},
       types: {
         pending: RECORD_GET_RECORD_PENDING,

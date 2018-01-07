@@ -18,8 +18,9 @@ export const API_PUT_RECORD_ACCEPT = _ROOT + '/record/accept';
 export const API_PUT_RECORD_REJECT = _ROOT + '/record/reject';
 export const API_PUT_RECORD_RESTORE = _ROOT + '/record/restore';
 
-export const API_GET_RECORDS_PUBLIC = _ROOT + '/records/public';
-export const API_GET_RECORD_PUBLIC = _ROOT + '/record/public';
+export const API_GET_PUBLIC_RECORDS = _ROOT + '/public/records';
+export const API_GET_PUBLIC_RECORD = _ROOT + '/public/record';
+export const API_GET_PUBLIC_RECORD_FILE = _ROOT + '/public/record/:recordId/file';
 
 export const API_DELETE_RECORD = _ROOT + '/record/remove';
 
