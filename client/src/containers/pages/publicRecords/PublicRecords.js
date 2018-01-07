@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { fetchPublicRecords } from '../../../actions/records';
+import { fetchPublicRecords, searchRecords } from '../../../actions/records';
 import PublicRecordsTable from '../../../components/pages/recordsTables/PublicRecordsTable';
 import PrimaryHeading from '../../../components/pages/heading/PrimaryHeading';
 
@@ -9,7 +9,25 @@ import PrimaryHeading from '../../../components/pages/heading/PrimaryHeading';
 class PublicRecords extends Component {
   
   componentWillMount() {
-    this.props.fetchPublicRecords();
+    const term = this.props.match.params.term;
+    if(term) {
+      this.props.searchRecords(term);
+    } else {
+      this.props.fetchPublicRecords();
+    }
+  }
+  
+  componentWillUpdate(nextProps) {
+    const term = this.props.match.params.term;
+    const nextTerm = nextProps.match.params.term;
+  
+    if(term !== nextTerm) {
+      if(nextTerm) {
+        this.props.searchRecords(nextTerm);
+      } else {
+        this.props.fetchPublicRecords();
+      }
+    }
   }
   
   render() {
@@ -26,5 +44,5 @@ class PublicRecords extends Component {
 
 export default connect(
   ({records}) => ({records: records.publicRecords}),
-  {fetchPublicRecords}
+  {fetchPublicRecords, searchRecords}
 )(PublicRecords);

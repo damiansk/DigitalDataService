@@ -16,6 +16,7 @@ export const RECORDS_REJECTED = ADMIN + '/records/rejected';
 
 export const ACCOUNT = ADMIN + '/account';
 
+export const PUBLIC_SEARCH_RECORDS = '/search/:term';
 export const PUBLIC_RECORD_PREVIEW = '/record/preview/:id';
 
 export const mapPathVariables = (path, pathVars) => {

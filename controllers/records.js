@@ -115,3 +115,14 @@ exports.getPublicRecords = (req, res) => {
         .json({error: 'There was an error when fetching data'})
     );
 };
+
+exports.searchPublicRecords = (req, res) => {
+  const term = req.query.term;
+  Record.searchPublicRecords(term)
+    .then(
+      data => res.status(200)
+        .json({records: [...data]}),
+      err => res.status(500)
+        .json({error: 'There was an error when fetching data'})
+    );
+};

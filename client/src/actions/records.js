@@ -7,7 +7,8 @@ import {
   API_GET_REPORTED_RECORDS,
   API_GET_USER_RECORDS,
   API_GET_PUBLIC_RECORDS,
-  API_GET_REJECTED_RECORDS
+  API_GET_REJECTED_RECORDS,
+  API_SEARCH_RECORDS
 } from '../constants/api';
 import { RECORDS } from '../constants/routes';
 import {
@@ -101,6 +102,23 @@ export function fetchPublicRecords() {
     [API_CALL]: {
       unsecured: true,
       endpoint: API_GET_PUBLIC_RECORDS,
+      types: {
+        pending: API_GET_PUBLIC_RECORDS_PENDING,
+        success: API_GET_PUBLIC_RECORDS_SUCCESS,
+        error: API_GET_PUBLIC_RECORDS_ERROR
+      }
+    }
+  };
+}
+
+export function searchRecords(term) {
+  console.log(term);
+  return {
+    type: '',
+    [API_CALL]: {
+      unsecured: true,
+      endpoint: API_SEARCH_RECORDS,
+      params: {term: term},
       types: {
         pending: API_GET_PUBLIC_RECORDS_PENDING,
         success: API_GET_PUBLIC_RECORDS_SUCCESS,

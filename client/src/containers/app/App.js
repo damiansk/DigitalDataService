@@ -6,7 +6,7 @@ import Footer from '../../components/layout/footer/Footer';
 import PublicRecords from '../pages/publicRecords/PublicRecords';
 import AdminPanel from '../pages/adminPanel/AdminPanel';
 import Preview from '../pages/preview/Preview';
-import { ADMIN, PUBLIC_RECORD_PREVIEW } from '../../constants/routes';
+import { ADMIN, PUBLIC_RECORD_PREVIEW, PUBLIC_SEARCH_RECORDS } from '../../constants/routes';
 
 
 const App = () => (
@@ -15,6 +15,7 @@ const App = () => (
     <main className="container">
         <Switch>
           <Route exact path="/" component={PublicRecords}/>
+          <Route path={PUBLIC_SEARCH_RECORDS} component={PublicRecords}/>
           <Route path={PUBLIC_RECORD_PREVIEW} render={props => <Preview {...props} isPublic/>}/>
           <Route path={ADMIN} component={AdminPanel}/>
           <Route component={() => <Redirect to={{pathname: '/'}}/>}/>

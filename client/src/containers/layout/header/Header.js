@@ -1,9 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Route, Switch } from 'react-router';
+import { push } from 'react-router-redux';
 import { Link } from 'react-router-dom';
 
-import { ACCOUNT, RECORD_NEW, RECORDS, SIGN_IN, SIGN_OUT } from '../../../constants/routes';
+import {
+  ACCOUNT, ADMIN, mapPathVariables, PUBLIC_SEARCH_RECORDS, RECORD_NEW, RECORDS, SIGN_IN,
+  SIGN_OUT
+} from '../../../constants/routes';
 import NavigationItem from '../../../components/layout/header/navigation/NavigationItem';
+import SearchNav from '../../../components/layout/header/search/SearchNav';
 
 class Header extends Component {
   
@@ -48,28 +54,39 @@ class Header extends Component {
               <i className="fa fa-folder-open" aria-hidden="true"/>
               {` ${this.title}`}
             </Link>
-            {this.props.authenticated &&
-              <button className="navbar-toggler" type="button"
-                      data-toggle="collapse" data-target="#navbarNav"
-                      aria-controls="navbarNav" aria-expanded="false"
-                      aria-label="Toggle navigation">
-                <span className="navbar-toggler-icon"/>
-              </button>
-            }
-            {this.props.authenticated ?
-              <div className="collapse navbar-collapse justify-content-end"
-                   id="navbarNav">
-                <ul className="navbar-nav">
-                  {this.renderLinks()}
-                </ul>
-              </div>
-              :
-              <div className="justify-content-end" id="navbarNav">
-                <ul className="navbar-nav">
-                  <NavigationItem name="Sign in" iconClass="fa-sign-in" link={SIGN_IN}/>
-                </ul>
-              </div>
-            }
+            
+  
+            <Switch>
+              <Route path={ADMIN} render={() => (
+                <React.Fragment>
+                  {this.props.authenticated ?
+                    <button className="navbar-toggler" type="button"
+                            data-toggle="collapse" data-target="#navbarNav"
+                            aria-controls="navbarNav" aria-expanded="false"
+                            aria-label="Toggle navigation">
+                      <span className="navbar-toggler-icon"/>
+                    </button>
+                  : null}
+                  {this.props.authenticated ?
+                    <div className="collapse navbar-collapse justify-content-end"
+                         id="navbarNav">
+                      <ul className="navbar-nav">
+                       {this.renderLinks()}
+                      </ul>
+                    </div>
+                    :
+                    <div className="justify-content-end" id="navbarNav">
+                      <ul className="navbar-nav">
+                        <NavigationItem name="Sign in" iconClass="fa-sign-in" link={SIGN_IN}/>
+                      </ul>
+                    </div>
+                  }
+                </React.Fragment>
+              )}/>
+              <Route render={() => (
+                <SearchNav onSubmit={values => this.props.handleSearchSubmit(values.search)}/>
+                )}/>
+            </Switch>
           </div>
         </nav>
       </header>
@@ -77,10 +94,16 @@ class Header extends Component {
   }
 }
 
-
 const mapStateToProps = state => ({
   location: state.router.location,
   authenticated: state.auth.authenticated
 });
 
-export default connect(mapStateToProps)(Header);
+const mapDispatchToProps = (dispatch) => ({
+  handleSearchSubmit: value =>
+    dispatch(push(value && value.trim ? mapPathVariables(PUBLIC_SEARCH_RECORDS, {term: value})
+                                      : '/')),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);
+
