@@ -26,7 +26,8 @@ class RecordPreview extends Component {
     return this.props
       .files.map((file, index) =>
         <li className="list-group-item position-relative mb-3" key={index}>
-          <FileDetails fetchFile={() => fetchMethod(this.props['_id'], file['_id'])}
+          <FileDetails disabled={this.props.disabled}
+                       fetchFile={() => fetchMethod(this.props['_id'], file['_id'])}
                        file={this.props.fetchedFiles[file['_id']]}
                        fileDetails={file}/>
         </li>

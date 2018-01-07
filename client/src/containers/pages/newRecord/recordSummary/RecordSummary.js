@@ -18,6 +18,7 @@ class RecordSummary extends Component {
       <article className="container">
         <RecordPreview date={new Date()}
                        declarant={this.props.user}
+                       disabled={true}
                        {...record} />
         <form onSubmit={handleSubmit}>
           <div>
