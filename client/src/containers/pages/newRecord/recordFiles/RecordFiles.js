@@ -29,14 +29,8 @@ class RecordFiles extends Component {
   }
 }
 
-RecordFiles = reduxForm({
+export default reduxForm({
   form: 'wizard',
   destroyOnUnmount: false,
   forceUnregisterOnUnmount: true
 })(RecordFiles);
-
-export default connect(
-  ({form}) => ({
-    files: form.wizard.values.files
-  })
-)(RecordFiles);

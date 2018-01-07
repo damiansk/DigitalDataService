@@ -23,6 +23,7 @@ class AttachedFile extends Component {
     };
     
     this.updateThumbnail = this.updateThumbnail.bind(this);
+    this.fetchFileAndGeneratePreview = this.fetchFileAndGeneratePreview.bind(this);
   }
   
   generateFilePreviewComponent() {
@@ -30,7 +31,7 @@ class AttachedFile extends Component {
       <section className="row mb-4">
         <FilePreview
           onSaveThumbnail={this.updateThumbnail}
-          file={this.props.file}/>
+          file={this.props.file || this.state.file}/>
       </section>
     );
   }
@@ -38,6 +39,10 @@ class AttachedFile extends Component {
   updateThumbnail(value) {
     const { name } = this.props;
     this.props.change('wizard', `${name}.thumbnail`, value);
+  }
+  
+  fetchFileAndGeneratePreview() {
+    this.setState({generatePreview: true});
   }
   
   render() {
@@ -49,10 +54,10 @@ class AttachedFile extends Component {
       name
     } = this.props;
     
-    let fileName, size;
+    const fileName = this.props.data.name;
+    let size;
     
     if(file) {
-       fileName = file.name;
        size = file.size;
     }
     
@@ -72,7 +77,10 @@ class AttachedFile extends Component {
           </aside>
           
           <article className="col col-md-9 col-xl-10 text-center pb-5">
-            <p className="mb-0 text-right font-weight-light">Size: <span className="font-weight-normal">{(size / (1024*1024)).toFixed(2)}MB</span></p>
+            {size ?
+              <p className="mb-0 text-right font-weight-light">Size: <span
+                className="font-weight-normal">{(size / (1024 * 1024)).toFixed(2)}MB</span></p>
+            : null}
             <h5 className="mb-1 text-left text-truncate w-100">{fileName}</h5>
             <Field name={`${name}.description`}
                    className="font-weight-light w-100"
@@ -86,7 +94,7 @@ class AttachedFile extends Component {
         {activeEditing && !this.state.generatePreview &&
           <section className="row mb-4">
             <button type="button"
-                    onClick={() => this.setState({generatePreview: true})}
+                    onClick={this.fetchFileAndGeneratePreview}
                     style={{margin: '0 auto 60px'}}
                     className="btn btn-primary">
               Generate file preview
