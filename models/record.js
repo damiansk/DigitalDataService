@@ -53,6 +53,18 @@ recordSchema.statics.getPreviewsOfPublicRecords = function() {
     .select('title description date');
 };
 
+recordSchema.statics.searchPublicRecords = function(term) {
+  return this.find({
+      status: 'accepted',
+      $or:[
+        {title: new RegExp(term, "i")},
+        {description: new RegExp(term, "i")},
+        {keywords: new RegExp('^'+term+'$', "i")}
+      ]
+  })
+    .select('title description date');
+};
+
 recordSchema.statics.getRecord = function(recordId) {
   return this.findOne({_id: recordId})
     .populate('declarant', '-_id firstName lastName')

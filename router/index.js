@@ -17,6 +17,7 @@ const {
   API_ACCEPTED_RECORDS,
   API_REJECTED_RECORDS,
   API_PUBLIC_RECORDS,
+  API_PUBLIC_RECORDS_SEARCH,
   API_RECORD,
   API_PUBLIC_RECORD,
   API_REPORT_RECORD,
@@ -49,6 +50,7 @@ module.exports = app => {
   app.get(API_ACCEPTED_RECORDS, requireAuth, Records.getAcceptedRecords);
   app.get(API_REJECTED_RECORDS, requireAuth, Records.getRejectedRecords);
   app.get(API_PUBLIC_RECORDS, Records.getPublicRecords);
+  app.get(API_PUBLIC_RECORDS_SEARCH, Records.searchPublicRecords);
   app.get(API_RECORD, requireAuth, Record.getRecord);
   app.get(API_PUBLIC_RECORD, Record.getPublicRecord);
   app.get(API_RECORD_FILE,requireAuth, Record.getRecordFile);

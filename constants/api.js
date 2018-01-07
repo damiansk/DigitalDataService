@@ -10,6 +10,7 @@ module.exports = {
   API_ACCEPTED_RECORDS: _ROOT + '/records/accepted',
   API_REJECTED_RECORDS: _ROOT + '/records/rejected',
   API_PUBLIC_RECORDS: _ROOT + '/public/records',
+  API_PUBLIC_RECORDS_SEARCH: _ROOT + '/public/records/search',
   API_RECORD: _ROOT + '/record',
   API_PUBLIC_RECORD: _ROOT + '/public/record',
   API_REPORT_RECORD: _ROOT + '/record/report',
