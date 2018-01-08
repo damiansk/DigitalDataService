@@ -1,39 +1,39 @@
 import React from 'react';
 import { MemoryRouter } from 'react-router'
-import { shallow, mount } from 'enzyme';
-import AcceptIconLink from './AcceptIconLink';
+import { mount } from 'enzyme';
+import ResetIconLink from './ResetIconLink';
 import { mapPathVariables, RECORD_UPDATE_STATUS } from '../../../constants/routes';
 
-describe('<AcceptIconLink/>', () => {
+describe('<ResetIconLink/>', () => {
   
   it('renders without crashing', () => {
     mount(
       <MemoryRouter>
-        <AcceptIconLink recordId="10"/>
+        <ResetIconLink recordId="10"/>
       </MemoryRouter>
     );
   });
   
   it('have tag with correct url in href attribute', () => {
     const recordId = '20';
-    const path = mapPathVariables(RECORD_UPDATE_STATUS, {recordId, newStatus: 'accept'});
+    const path = mapPathVariables(RECORD_UPDATE_STATUS, {recordId, newStatus: 'restore'});
     const wrapper = mount(
       <MemoryRouter>
-        <AcceptIconLink recordId={recordId}/>
+        <ResetIconLink recordId={recordId}/>
       </MemoryRouter>
     );
-  
+    
     expect(wrapper.find('a').prop('href')).toContain(path);
   });
   
   it('render correct icon', () => {
-    const iconClass = 'fa-check-square-o';
+    const iconClass = 'fa-repeat';
     const wrapper = mount(
       <MemoryRouter>
-        <AcceptIconLink recordId="20"/>
+        <ResetIconLink recordId="20"/>
       </MemoryRouter>
     );
-  
+    
     expect(wrapper.find('i').hasClass(iconClass)).toBeTruthy();
   })
   

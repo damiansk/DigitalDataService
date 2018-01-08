@@ -9,7 +9,7 @@ describe('<SecondaryHeading/>', () => {
   });
   
   it('contains correct tag elements', () => {
-    const wrapper = shallow(<SecondaryHeading title="Test"/>);
+    const wrapper = mount(<SecondaryHeading title="Test"/>);
     
     expect(wrapper.find('header')).toBeTruthy();
     expect(wrapper.find('h3')).toBeTruthy();
