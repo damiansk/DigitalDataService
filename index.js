@@ -16,10 +16,27 @@ setTimeout(() => {
   app.use(morgan('combined'));
   app.use(bodyParser.json());
   app.use('/', express.static(path.join( __dirname, 'client', 'build' )));
+  app.use('/admin', express.static(path.join( __dirname, 'client', 'build' )));
   router(app);
   
   app.listen(PORT);
   
   console.log(`Server running on port ${PORT}`);
+  
+  const User = require('./models/user');
+  
+  setTimeout(() => {
+    const user = new User({
+      email: 'mail@mail.com',
+      password: 'test123',
+      firstName: 'Damian',
+      lastName: 'Stolarek',
+    });
+  
+    user.save(err => {
+      console.log(err);
+      console.log('User saved');
+    });
+  }, 8000);
 }, 4000);
 
