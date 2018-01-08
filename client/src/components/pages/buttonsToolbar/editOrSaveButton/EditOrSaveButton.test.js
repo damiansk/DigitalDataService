@@ -22,7 +22,10 @@ describe('<EditOrSaveButton/>', () => {
   });
   
   it('is set to save', () => {
-    const wrapper = shallow(<EditOrSaveButton isTextEnable={true} isEdited={true}/>);
+    const wrapper = shallow(<EditOrSaveButton onSave={() => {}}
+                                              onEdit={() => {}}
+                                              isTextEnable={true}
+                                              isEdited={true}/>);
     const editClass = '.fa-floppy-o';
     const buttonText = 'Save';
     const buttonClassName = 'btn-outline-success';
@@ -37,7 +40,8 @@ describe('<EditOrSaveButton/>', () => {
   
   it('called save function', () => {
     const saveFunc = jest.fn();
-    const wrapper = shallow(<EditOrSaveButton onSave={saveFunc}
+    const wrapper = shallow(<EditOrSaveButton onEdit={() => {}}
+                                              onSave={saveFunc}
                                               isEdited={true}/>);
   
     wrapper.find('button').simulate('click');
@@ -46,7 +50,8 @@ describe('<EditOrSaveButton/>', () => {
   
   it('called save function', () => {
     const editFunc = jest.fn();
-    const wrapper = shallow(<EditOrSaveButton onEdit={editFunc}
+    const wrapper = shallow(<EditOrSaveButton onSave={() => {}}
+                                              onEdit={editFunc}
                                               isEdited={false}/>);
     
     wrapper.find('button').simulate('click');
